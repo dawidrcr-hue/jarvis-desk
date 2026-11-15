@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-15T19:11:39+01:00",
+ "generated": "2026-11-15T19:14:24+01:00",
  "mode": "live",
  "wallet": "Gyt2TBaQTGskoZ2PfUNcVTC3brSRvmgTQEexvgZ4MP34",
  "equity_usd": 12.618,
@@ -651,7 +651,7 @@
       "copy_decision": "dokupienie istniejącej pozycji – pomijam"
      }
     ],
-    "last_poll": "2026-11-15T19:11:09+01:00"
+    "last_poll": "2026-11-15T19:11:37+01:00"
    },
    {
     "address": "nAWy4pMBkTsVhK6JWGvVm5VKsyxns3sFz4iYGi38qNc",
@@ -736,7 +736,7 @@
       "fraction": null
      }
     ],
-    "last_poll": "2026-11-15T19:11:11+01:00"
+    "last_poll": "2026-11-15T19:11:39+01:00"
    }
   ]
  },
@@ -745,9 +745,9 @@
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone (heartbeat + timeout cyklu 90 s)",
-   "age_s": 1,
+   "age_s": 166,
    "hb_ts": 1794766298.4999962,
-   "ok": true,
+   "ok": false,
    "status": "ok",
    "restarts": 0
   },
@@ -755,8 +755,8 @@
    "key": "xwatch",
    "name": "Obserwator X",
    "desc": "Co ~10 min: wszystkie 181 obserwowane konta w każdym przebiegu (bez rotacji) + wyszukiwanie otwarte",
-   "age_s": 116,
-   "hb_ts": 1794766184.0001009,
+   "age_s": 281,
+   "hb_ts": 1794766184.0000532,
    "ok": true,
    "status": "przebiegów: 851",
    "restarts": 0
@@ -765,9 +765,9 @@
    "key": "trader",
    "name": "Egzekutor",
    "desc": "Kupuje i sprzedaje przez Phantom, pilnuje celów i stop-lossów",
-   "age_s": 1,
-   "hb_ts": 1794766298.8984606,
-   "ok": true,
+   "age_s": 162,
+   "hb_ts": 1794766302.8996358,
+   "ok": false,
    "status": "ok",
    "restarts": 3
   },
@@ -793,8 +793,8 @@
    "key": "copywatch",
    "name": "Copy-Watcher",
    "desc": "Śledzi 3 portfele na łańcuchu co ~25 s: @unipcs aktywny ($10 na każdą nową pozycję), pozostałe 2 od $150 zysku",
-   "age_s": 28,
-   "hb_ts": 1794766272.212488,
+   "age_s": 164,
+   "hb_ts": 1794766300.4125051,
    "ok": true,
    "status": "ok",
    "restarts": 4
@@ -803,7 +803,7 @@
    "key": "scout",
    "name": "Scout",
    "desc": "Szuka nowych tokenów DexScreener powiązanych z kontami z listy",
-   "age_s": 11,
+   "age_s": 176,
    "hb_ts": 1794766288.8488154,
    "ok": true,
    "status": "ok",
@@ -813,8 +813,8 @@
    "key": "publisher",
    "name": "Publisher",
    "desc": "Aktualizuje tę stronę",
-   "age_s": 90,
-   "hb_ts": 1794766209.8744352,
+   "age_s": 164,
+   "hb_ts": 1794766301.008093,
    "ok": true,
    "status": "published",
    "restarts": 4
@@ -1952,10 +1952,6 @@
  ],
  "equity_history": [
   {
-   "t": 1794707327,
-   "e": 20.034
-  },
-  {
    "t": 1794707421,
    "e": 19.9962
   },
@@ -2910,6 +2906,10 @@
   {
    "t": 1794766300,
    "e": 12.618
+  },
+  {
+   "t": 1794766465,
+   "e": 12.618
   }
  ],
  "equity_change": {
@@ -2923,7 +2923,7 @@
  "sol_market": {
   "price": 71.3210501,
   "price_src": "Phantom",
-  "change_24h": -1.6194386585516873,
+  "change_24h": -1.9226073252677154,
   "change_src": "CoinGecko",
   "high_24h": 73.1187,
   "low_24h": 67.602,
@@ -4090,7 +4090,11 @@
     71.3211
    ],
    [
-    1794766300,
+    1794766465,
+    71.3211
+   ],
+   [
+    1794766465,
     71.3211
    ]
   ],
