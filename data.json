@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-15T20:56:00+01:00",
+ "generated": "2026-11-15T20:57:31+01:00",
  "mode": "live",
  "wallet": "Gyt2TBaQTGskoZ2PfUNcVTC3brSRvmgTQEexvgZ4MP34",
- "equity_usd": 12.6935,
+ "equity_usd": 12.685,
  "start_equity_usd": 22.3022,
  "sol": 0.176918384,
- "sol_price": 71.74794811,
- "free_usd": 12.693531034937054,
+ "sol_price": 71.6994858,
+ "free_usd": 12.684957161366949,
  "realized_pnl_usd": 0.0,
  "unrealized_pnl_usd": 0,
  "trades": 0,
@@ -667,7 +667,7 @@
       "copy_decision": "dokupienie istniejącej pozycji – pomijam"
      }
     ],
-    "last_poll": "2026-11-15T20:55:34+01:00"
+    "last_poll": "2026-11-15T20:56:02+01:00"
    },
    {
     "address": "nAWy4pMBkTsVhK6JWGvVm5VKsyxns3sFz4iYGi38qNc",
@@ -752,7 +752,7 @@
       "fraction": null
      }
     ],
-    "last_poll": "2026-11-15T20:55:36+01:00"
+    "last_poll": "2026-11-15T20:56:04+01:00"
    }
   ]
  },
@@ -761,8 +761,8 @@
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone (heartbeat + timeout cyklu 90 s)",
-   "age_s": 1,
-   "hb_ts": 1794772559.165017,
+   "age_s": 3,
+   "hb_ts": 1794772648.9489727,
    "ok": true,
    "status": "ok",
    "restarts": 0
@@ -771,8 +771,8 @@
    "key": "xwatch",
    "name": "Obserwator X",
    "desc": "Co ~10 min: wszystkie 181 obserwowane konta w każdym przebiegu (bez rotacji) + wyszukiwanie otwarte",
-   "age_s": 83,
-   "hb_ts": 1794772477.0001597,
+   "age_s": 175,
+   "hb_ts": 1794772477.000058,
    "ok": true,
    "status": "przebiegów: 902",
    "restarts": 0
@@ -781,8 +781,8 @@
    "key": "trader",
    "name": "Egzekutor",
    "desc": "Kupuje i sprzedaje przez Phantom, pilnuje celów i stop-lossów",
-   "age_s": 1,
-   "hb_ts": 1794772559.0497172,
+   "age_s": 2,
+   "hb_ts": 1794772649.4993117,
    "ok": true,
    "status": "ok",
    "restarts": 8
@@ -809,8 +809,8 @@
    "key": "copywatch",
    "name": "Copy-Watcher",
    "desc": "Śledzi 3 portfele na łańcuchu co ~25 s: @unipcs aktywny ($10 na każdą nową pozycję), pozostałe 2 od $150 zysku",
-   "age_s": 23,
-   "hb_ts": 1794772537.2157779,
+   "age_s": 86,
+   "hb_ts": 1794772565.4733946,
    "ok": true,
    "status": "ok",
    "restarts": 10
@@ -819,8 +819,8 @@
    "key": "scout",
    "name": "Scout",
    "desc": "Szuka nowych tokenów DexScreener powiązanych z kontami z listy",
-   "age_s": 21,
-   "hb_ts": 1794772539.3820927,
+   "age_s": 3,
+   "hb_ts": 1794772648.9888656,
    "ok": true,
    "status": "ok",
    "restarts": 14
@@ -830,7 +830,7 @@
    "name": "Publisher",
    "desc": "Aktualizuje tę stronę",
    "age_s": 90,
-   "hb_ts": 1794772470.367208,
+   "hb_ts": 1794772561.5964644,
    "ok": true,
    "status": "published",
    "restarts": 11
@@ -1975,10 +1975,6 @@
  ],
  "equity_history": [
   {
-   "t": 1794714138,
-   "e": 21.0909
-  },
-  {
    "t": 1794714615,
    "e": 21.0909
   },
@@ -2933,20 +2929,24 @@
   {
    "t": 1794772560,
    "e": 12.6935
+  },
+  {
+   "t": 1794772652,
+   "e": 12.685
   }
  ],
  "equity_change": {
-  "since_start_usd": -9.6087,
-  "since_start_pct": -43.08,
+  "since_start_usd": -9.6172,
+  "since_start_pct": -43.12,
   "h24_complete": true,
   "h24_from_ts": 1794685820,
-  "h24_usd": -8.5669,
-  "h24_pct": -40.3
+  "h24_usd": -8.5754,
+  "h24_pct": -40.34
  },
  "sol_market": {
-  "price": 71.74794811,
+  "price": 71.6994858,
   "price_src": "Phantom",
-  "change_24h": -0.5380002844737131,
+  "change_24h": -0.4425765226546476,
   "change_src": "CoinGecko",
   "high_24h": 73.1187,
   "low_24h": 67.602,
@@ -4093,28 +4093,32 @@
     71.6771
    ],
    [
-    1794771880,
-    71.7958
+    1794771900,
+    71.7963
    ],
    [
-    1794771973,
-    71.6439
+    1794772200,
+    71.8663
    ],
    [
-    1794772064,
-    71.8233
+    1794772500,
+    71.7709
    ],
    [
-    1794772469,
-    71.7533
-   ],
-   [
-    1794772560,
-    71.7479
+    1794772550,
+    71.7877
    ],
    [
     1794772560,
     71.7479
+   ],
+   [
+    1794772652,
+    71.6995
+   ],
+   [
+    1794772652,
+    71.6995
    ]
   ],
   "chart_src": "CoinGecko + desk"
