@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-15T20:27:42+01:00",
+ "generated": "2026-11-15T20:29:33+01:00",
  "mode": "live",
  "wallet": "Gyt2TBaQTGskoZ2PfUNcVTC3brSRvmgTQEexvgZ4MP34",
- "equity_usd": 12.6593,
+ "equity_usd": 12.6629,
  "start_equity_usd": 22.3022,
  "sol": 0.176918384,
- "sol_price": 71.55428348,
- "free_usd": 12.659268201559497,
+ "sol_price": 71.57500147,
+ "free_usd": 12.662933594870026,
  "realized_pnl_usd": 0.0,
  "unrealized_pnl_usd": 0,
  "trades": 0,
@@ -668,7 +668,7 @@
       "copy_decision": "dokupienie istniejącej pozycji – pomijam"
      }
     ],
-    "last_poll": "2026-11-15T20:27:36+01:00"
+    "last_poll": "2026-11-15T20:28:04+01:00"
    },
    {
     "address": "nAWy4pMBkTsVhK6JWGvVm5VKsyxns3sFz4iYGi38qNc",
@@ -753,7 +753,7 @@
       "fraction": null
      }
     ],
-    "last_poll": "2026-11-15T20:27:38+01:00"
+    "last_poll": "2026-11-15T20:28:07+01:00"
    }
   ]
  },
@@ -762,8 +762,8 @@
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone (heartbeat + timeout cyklu 90 s)",
-   "age_s": 1,
-   "hb_ts": 1794770861.1029983,
+   "age_s": 0,
+   "hb_ts": 1794770973.9601877,
    "ok": true,
    "status": "ok",
    "restarts": 0
@@ -772,8 +772,8 @@
    "key": "xwatch",
    "name": "Obserwator X",
    "desc": "Co ~10 min: wszystkie 181 obserwowane konta w każdym przebiegu (bez rotacji) + wyszukiwanie otwarte",
-   "age_s": 85,
-   "hb_ts": 1794770778.0001178,
+   "age_s": 196,
+   "hb_ts": 1794770778.0000467,
    "ok": true,
    "status": "przebiegów: 887",
    "restarts": 0
@@ -782,8 +782,8 @@
    "key": "trader",
    "name": "Egzekutor",
    "desc": "Kupuje i sprzedaje przez Phantom, pilnuje celów i stop-lossów",
-   "age_s": 0,
-   "hb_ts": 1794770862.2810547,
+   "age_s": 71,
+   "hb_ts": 1794770902.8573778,
    "ok": true,
    "status": "ok",
    "restarts": 6
@@ -810,8 +810,8 @@
    "key": "copywatch",
    "name": "Copy-Watcher",
    "desc": "Śledzi 3 portfele na łańcuchu co ~25 s: @unipcs aktywny ($10 na każdą nową pozycję), pozostałe 2 od $150 zysku",
-   "age_s": 3,
-   "hb_ts": 1794770859.8848062,
+   "age_s": 86,
+   "hb_ts": 1794770888.0672417,
    "ok": true,
    "status": "ok",
    "restarts": 7
@@ -820,8 +820,8 @@
    "key": "scout",
    "name": "Scout",
    "desc": "Szuka nowych tokenów DexScreener powiązanych z kontami z listy",
-   "age_s": 1,
-   "hb_ts": 1794770861.3220685,
+   "age_s": 83,
+   "hb_ts": 1794770891.3545167,
    "ok": true,
    "status": "ok",
    "restarts": 11
@@ -830,8 +830,8 @@
    "key": "publisher",
    "name": "Publisher",
    "desc": "Aktualizuje tę stronę",
-   "age_s": 90,
-   "hb_ts": 1794770772.5317898,
+   "age_s": 110,
+   "hb_ts": 1794770863.9145532,
    "ok": true,
    "status": "published",
    "restarts": 9
@@ -1970,10 +1970,6 @@
  ],
  "equity_history": [
   {
-   "t": 1794712629,
-   "e": 21.182
-  },
-  {
    "t": 1794713251,
    "e": 21.1202
   },
@@ -2928,20 +2924,24 @@
   {
    "t": 1794770863,
    "e": 12.6593
+  },
+  {
+   "t": 1794770974,
+   "e": 12.6629
   }
  ],
  "equity_change": {
-  "since_start_usd": -9.6429,
-  "since_start_pct": -43.24,
+  "since_start_usd": -9.6393,
+  "since_start_pct": -43.22,
   "h24_complete": true,
   "h24_from_ts": 1794684155,
-  "h24_usd": -8.5339,
-  "h24_pct": -40.27
+  "h24_usd": -8.5303,
+  "h24_pct": -40.25
  },
  "sol_market": {
-  "price": 71.55428348,
+  "price": 71.57500147,
   "price_src": "Phantom",
-  "change_24h": -0.5728139539144063,
+  "change_24h": -0.883983482155105,
   "change_src": "CoinGecko",
   "high_24h": 73.1187,
   "low_24h": 67.602,
@@ -4108,8 +4108,12 @@
     71.5543
    ],
    [
-    1794770863,
-    71.5543
+    1794770974,
+    71.575
+   ],
+   [
+    1794770974,
+    71.575
    ]
   ],
   "chart_src": "CoinGecko + desk"
