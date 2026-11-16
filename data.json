@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-16T02:43:46+01:00",
+ "generated": "2026-11-16T02:45:48+01:00",
  "mode": "live",
  "wallet": "Gyt2TBaQTGskoZ2PfUNcVTC3brSRvmgTQEexvgZ4MP34",
- "equity_usd": 12.5845,
+ "equity_usd": 12.5997,
  "start_equity_usd": 22.3022,
  "sol": 0.176918384,
- "sol_price": 71.13154738,
- "free_usd": 12.584478413889036,
+ "sol_price": 71.2175728,
+ "free_usd": 12.599697892178355,
  "realized_pnl_usd": 0.0,
  "unrealized_pnl_usd": 0,
  "trades": 0,
@@ -677,7 +677,7 @@
       "copy_decision": "dokupienie istniejącej pozycji – pomijam"
      }
     ],
-    "last_poll": "2026-11-16T02:43:21+01:00"
+    "last_poll": "2026-11-16T02:45:14+01:00"
    },
    {
     "address": "nAWy4pMBkTsVhK6JWGvVm5VKsyxns3sFz4iYGi38qNc",
@@ -762,7 +762,7 @@
       "fraction": null
      }
     ],
-    "last_poll": "2026-11-16T02:43:23+01:00"
+    "last_poll": "2026-11-16T02:45:16+01:00"
    }
   ]
  },
@@ -771,8 +771,8 @@
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone (heartbeat + timeout cyklu 90 s)",
-   "age_s": 8,
-   "hb_ts": 1794793417.997808,
+   "age_s": 20,
+   "hb_ts": 1794793528.0087566,
    "ok": true,
    "status": "ok",
    "restarts": 0
@@ -781,8 +781,8 @@
    "key": "xwatch",
    "name": "Obserwator X",
    "desc": "Co ~10 min: wszystkie 181 obserwowane konta w każdym przebiegu (bez rotacji) + wyszukiwanie otwarte",
-   "age_s": 247,
-   "hb_ts": 1794793179.0000546,
+   "age_s": 369,
+   "hb_ts": 1794793179.0000336,
    "ok": true,
    "status": "przebiegów: 1066",
    "restarts": 0
@@ -791,8 +791,8 @@
    "key": "trader",
    "name": "Egzekutor",
    "desc": "Kupuje i sprzedaje przez Phantom, pilnuje celów i stop-lossów",
-   "age_s": 2,
-   "hb_ts": 1794793423.8788948,
+   "age_s": 22,
+   "hb_ts": 1794793525.9731777,
    "ok": true,
    "status": "ok",
    "restarts": 21
@@ -819,8 +819,8 @@
    "key": "copywatch",
    "name": "Copy-Watcher",
    "desc": "Śledzi 3 portfele na łańcuchu co ~25 s: @unipcs aktywny ($10 na każdą nową pozycję), pozostałe 2 od $150 zysku",
-   "age_s": 22,
-   "hb_ts": 1794793404.2532191,
+   "age_s": 31,
+   "hb_ts": 1794793517.301183,
    "ok": true,
    "status": "ok",
    "restarts": 28
@@ -829,8 +829,8 @@
    "key": "scout",
    "name": "Scout",
    "desc": "Szuka nowych tokenów DexScreener powiązanych z kontami z listy",
-   "age_s": 28,
-   "hb_ts": 1794793398.5086,
+   "age_s": 29,
+   "hb_ts": 1794793518.6623223,
    "ok": true,
    "status": "ok",
    "restarts": 42
@@ -839,10 +839,10 @@
    "key": "publisher",
    "name": "Publisher",
    "desc": "Aktualizuje tę stronę",
-   "age_s": 90,
-   "hb_ts": 1794793336.0564706,
+   "age_s": 98,
+   "hb_ts": 1794793450.2105443,
    "ok": true,
-   "status": "published",
+   "status": "push failed: fatal: unable to access 'https://github.com/dawikoro-tech/jarvis-desk.git/': GnuTLS, handshake failed: The TLS connection was non-properly terminated.\n",
    "restarts": 34
   }
  ],
@@ -1978,10 +1978,6 @@
  ],
  "equity_history": [
   {
-   "t": 1794733777,
-   "e": 21.2781
-  },
-  {
    "t": 1794733868,
    "e": 21.2486
   },
@@ -2936,29 +2932,29 @@
   {
    "t": 1794793426,
    "e": 12.5845
+  },
+  {
+   "t": 1794793548,
+   "e": 12.5997
   }
  ],
  "equity_change": {
-  "since_start_usd": -9.7177,
-  "since_start_pct": -43.57,
+  "since_start_usd": -9.7025,
+  "since_start_pct": -43.5,
   "h24_complete": true,
   "h24_from_ts": 1794706855,
-  "h24_usd": -7.4278,
-  "h24_pct": -37.12
+  "h24_usd": -7.4126,
+  "h24_pct": -37.04
  },
  "sol_market": {
-  "price": 71.13154738,
+  "price": 71.2175728,
   "price_src": "Phantom",
-  "change_24h": 4.886692672010158,
+  "change_24h": 5.2249842630366485,
   "change_src": "CoinGecko",
   "high_24h": 73.1187,
   "low_24h": 67.602,
-  "open_24h": 67.671,
+  "open_24h": 67.8255,
   "chart": [
-   [
-    1794707100,
-    67.671
-   ],
    [
     1794707400,
     67.8255
@@ -4128,8 +4124,12 @@
     71.1315
    ],
    [
-    1794793426,
-    71.1315
+    1794793548,
+    71.2176
+   ],
+   [
+    1794793548,
+    71.2176
    ]
   ],
   "chart_src": "CoinGecko + desk"
