@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-16T21:30:30+01:00",
+ "generated": "2026-11-16T21:32:01+01:00",
  "mode": "live",
  "wallet": "Gyt2TBaQTGskoZ2PfUNcVTC3brSRvmgTQEexvgZ4MP34",
- "equity_usd": 12.6419,
+ "equity_usd": 12.6363,
  "start_equity_usd": 22.3022,
  "sol": 0.176918384,
- "sol_price": 71.45618115,
- "free_usd": 12.641912095869264,
+ "sol_price": 71.42425241,
+ "free_usd": 12.636263314785305,
  "realized_pnl_usd": 0.0,
  "unrealized_pnl_usd": 0,
  "trades": 0,
@@ -723,7 +723,7 @@
       "copy_decision": "transfer/airdrop bez zapłaty – pomijam"
      }
     ],
-    "last_poll": "2026-11-16T21:30:25+01:00"
+    "last_poll": "2026-11-16T21:31:53+01:00"
    },
    {
     "address": "nAWy4pMBkTsVhK6JWGvVm5VKsyxns3sFz4iYGi38qNc",
@@ -808,7 +808,7 @@
       "fraction": null
      }
     ],
-    "last_poll": "2026-11-16T21:30:27+01:00"
+    "last_poll": "2026-11-16T21:31:55+01:00"
    },
    {
     "address": "6DQAGJT7VZPVBsuG4kn3AvpyHCEi7B2RFFvMZdbqQqqP",
@@ -892,7 +892,7 @@
       "copy_decision": "dokupienie istniejącej pozycji – pomijam"
      }
     ],
-    "last_poll": "2026-11-16T21:30:28+01:00"
+    "last_poll": "2026-11-16T21:31:57+01:00"
    }
   ]
  },
@@ -901,8 +901,8 @@
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone (heartbeat + timeout cyklu 90 s)",
-   "age_s": 3,
-   "hb_ts": 1794861027.1491904,
+   "age_s": 4,
+   "hb_ts": 1794861117.1575115,
    "ok": true,
    "status": "ok",
    "restarts": 0
@@ -911,8 +911,8 @@
    "key": "xwatch",
    "name": "Obserwator X",
    "desc": "Co ~10 min: wszystkie 181 obserwowane konta w każdym przebiegu (bez rotacji) + wyszukiwanie otwarte",
-   "age_s": 18,
-   "hb_ts": 1794861012.000128,
+   "age_s": 110,
+   "hb_ts": 1794861012.0000744,
    "ok": true,
    "status": "przebiegów: 1484",
    "restarts": 0
@@ -921,8 +921,8 @@
    "key": "trader",
    "name": "Egzekutor",
    "desc": "Kupuje i sprzedaje przez Phantom, pilnuje celów i stop-lossów",
-   "age_s": 3,
-   "hb_ts": 1794861027.2990098,
+   "age_s": 1,
+   "hb_ts": 1794861120.473909,
    "ok": true,
    "status": "ok",
    "restarts": 67
@@ -949,8 +949,8 @@
    "key": "copywatch",
    "name": "Copy-Watcher",
    "desc": "Śledzi 4 portfele na łańcuchu co ~25 s: @unipcs i @Cupseyy aktywni ($10 na każdą nową pozycję), pozostałe 2 od $150 zysku",
-   "age_s": 1,
-   "hb_ts": 1794861029.7187283,
+   "age_s": 3,
+   "hb_ts": 1794861118.0951097,
    "ok": true,
    "status": "ok",
    "restarts": 80
@@ -959,8 +959,8 @@
    "key": "scout",
    "name": "Scout",
    "desc": "Szuka nowych tokenów DexScreener powiązanych z kontami z listy",
-   "age_s": 3,
-   "hb_ts": 1794861027.274636,
+   "age_s": 4,
+   "hb_ts": 1794861117.4088247,
    "ok": true,
    "status": "ok",
    "restarts": 114
@@ -969,8 +969,8 @@
    "key": "publisher",
    "name": "Publisher",
    "desc": "Aktualizuje tę stronę",
-   "age_s": 264,
-   "hb_ts": 1794860766.1773016,
+   "age_s": 90,
+   "hb_ts": 1794861031.5571418,
    "ok": true,
    "status": "published",
    "restarts": 95
@@ -2112,10 +2112,6 @@
  ],
  "equity_history": [
   {
-   "t": 1794800898,
-   "e": 12.6806
-  },
-  {
    "t": 1794800989,
    "e": 12.678
   },
@@ -3070,20 +3066,24 @@
   {
    "t": 1794861030,
    "e": 12.6419
+  },
+  {
+   "t": 1794861122,
+   "e": 12.6363
   }
  ],
  "equity_change": {
-  "since_start_usd": -9.6603,
-  "since_start_pct": -43.32,
+  "since_start_usd": -9.6659,
+  "since_start_pct": -43.34,
   "h24_complete": true,
-  "h24_from_ts": 1794774609,
-  "h24_usd": -0.0174,
-  "h24_pct": -0.14
+  "h24_from_ts": 1794774700,
+  "h24_usd": -0.0405,
+  "h24_pct": -0.32
  },
  "sol_market": {
-  "price": 71.45618115,
+  "price": 71.42425241,
   "price_src": "Phantom",
-  "change_24h": -0.12396653740567228,
+  "change_24h": -0.2823056058884674,
   "change_src": "CoinGecko",
   "high_24h": 72.8351,
   "low_24h": 70.1297,
@@ -4250,8 +4250,12 @@
     71.4562
    ],
    [
-    1794861030,
-    71.4562
+    1794861122,
+    71.4243
+   ],
+   [
+    1794861122,
+    71.4243
    ]
   ],
   "chart_src": "CoinGecko + desk"
