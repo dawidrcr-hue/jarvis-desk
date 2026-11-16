@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-16T16:24:10+01:00",
+ "generated": "2026-11-16T16:26:44+01:00",
  "mode": "live",
  "wallet": "Gyt2TBaQTGskoZ2PfUNcVTC3brSRvmgTQEexvgZ4MP34",
  "equity_usd": 12.4138,
@@ -867,9 +867,9 @@
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone (heartbeat + timeout cyklu 90 s)",
-   "age_s": 6,
+   "age_s": 160,
    "hb_ts": 1794842645.106337,
-   "ok": true,
+   "ok": false,
    "status": "ok",
    "restarts": 0
   },
@@ -877,8 +877,8 @@
    "key": "xwatch",
    "name": "Obserwator X",
    "desc": "Co ~10 min: wszystkie 181 obserwowane konta w każdym przebiegu (bez rotacji) + wyszukiwanie otwarte",
-   "age_s": 359,
-   "hb_ts": 1794842292.0000408,
+   "age_s": 513,
+   "hb_ts": 1794842292.0000427,
    "ok": true,
    "status": "przebiegów: 1374",
    "restarts": 0
@@ -887,9 +887,9 @@
    "key": "trader",
    "name": "Egzekutor",
    "desc": "Kupuje i sprzedaje przez Phantom, pilnuje celów i stop-lossów",
-   "age_s": 1,
-   "hb_ts": 1794842650.015009,
-   "ok": true,
+   "age_s": 151,
+   "hb_ts": 1794842654.0159504,
+   "ok": false,
    "status": "ok",
    "restarts": 53
   },
@@ -915,7 +915,7 @@
    "key": "copywatch",
    "name": "Copy-Watcher",
    "desc": "Śledzi 4 portfele na łańcuchu co ~25 s: @unipcs i @Cupseyy aktywni ($10 na każdą nową pozycję), pozostałe 2 od $150 zysku",
-   "age_s": 6,
+   "age_s": 160,
    "hb_ts": 1794842644.6473758,
    "ok": true,
    "status": "ok",
@@ -925,7 +925,7 @@
    "key": "scout",
    "name": "Scout",
    "desc": "Szuka nowych tokenów DexScreener powiązanych z kontami z listy",
-   "age_s": 5,
+   "age_s": 159,
    "hb_ts": 1794842645.7185466,
    "ok": true,
    "status": "ok",
@@ -935,8 +935,8 @@
    "key": "publisher",
    "name": "Publisher",
    "desc": "Aktualizuje tę stronę",
-   "age_s": 90,
-   "hb_ts": 1794842560.9868069,
+   "age_s": 153,
+   "hb_ts": 1794842652.1701007,
    "ok": true,
    "status": "published",
    "restarts": 80
@@ -1860,6 +1860,28 @@
  },
  "activity": [
   {
+   "ts": "2026-11-16T16:26:44+01:00",
+   "c": "watchdog",
+   "msg": "started scout",
+   "pid": 1231849
+  },
+  {
+   "ts": "2026-11-16T16:26:44+01:00",
+   "c": "watchdog",
+   "msg": "restart scout: brak heartbeatu od 159 s (zawieszony)"
+  },
+  {
+   "ts": "2026-11-16T16:26:44+01:00",
+   "c": "watchdog",
+   "msg": "started trader",
+   "pid": 1231833
+  },
+  {
+   "ts": "2026-11-16T16:26:44+01:00",
+   "c": "watchdog",
+   "msg": "restart trader: brak heartbeatu od 150 s (zawieszony)"
+  },
+  {
    "ts": "2026-11-16T16:18:12+01:00",
    "c": "xbridge",
    "msg": "ingest open: 8 posts, 0 signals"
@@ -2059,36 +2081,9 @@
    "c": "scout",
    "msg": "scout started",
    "pid": 1221536
-  },
-  {
-   "ts": "2026-11-16T15:28:47+01:00",
-   "c": "copywatch",
-   "msg": "copywatch started",
-   "pid": 1221535
-  },
-  {
-   "ts": "2026-11-16T15:28:47+01:00",
-   "c": "watchdog",
-   "msg": "started publisher",
-   "pid": 1221537
-  },
-  {
-   "ts": "2026-11-16T15:28:47+01:00",
-   "c": "watchdog",
-   "msg": "restart publisher: brak heartbeatu od 986 s (zawieszony)"
-  },
-  {
-   "ts": "2026-11-16T15:28:47+01:00",
-   "c": "watchdog",
-   "msg": "started scout",
-   "pid": 1221536
   }
  ],
  "equity_history": [
-  {
-   "t": 1794780267,
-   "e": 12.7439
-  },
   {
    "t": 1794780508,
    "e": 12.7449
@@ -3044,29 +3039,29 @@
   {
    "t": 1794842651,
    "e": 12.4138
+  },
+  {
+   "t": 1794842805,
+   "e": 12.4138
   }
  ],
  "equity_change": {
   "since_start_usd": -9.8884,
   "since_start_pct": -44.34,
   "h24_complete": true,
-  "h24_from_ts": 1794755736,
-  "h24_usd": -2.1802,
-  "h24_pct": -14.94
+  "h24_from_ts": 1794756318,
+  "h24_usd": -2.1551,
+  "h24_pct": -14.79
  },
  "sol_market": {
   "price": 70.16687711,
   "price_src": "Phantom",
-  "change_24h": -1.3399745848798537,
+  "change_24h": -1.3634098761044438,
   "change_src": "CoinGecko",
   "high_24h": 72.8351,
   "low_24h": 70.1165,
-  "open_24h": 71.0991,
+  "open_24h": 71.1755,
   "chart": [
-   [
-    1794756300,
-    71.0991
-   ],
    [
     1794756600,
     71.1755
@@ -4236,7 +4231,11 @@
     70.1669
    ],
    [
-    1794842651,
+    1794842805,
+    70.1669
+   ],
+   [
+    1794842805,
     70.1669
    ]
   ],
