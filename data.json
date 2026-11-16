@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-16T19:36:24+01:00",
+ "generated": "2026-11-16T19:36:25+01:00",
  "mode": "live",
  "wallet": "Gyt2TBaQTGskoZ2PfUNcVTC3brSRvmgTQEexvgZ4MP34",
  "equity_usd": 12.6281,
@@ -895,9 +895,9 @@
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone (heartbeat + timeout cyklu 90 s)",
-   "age_s": 611,
-   "hb_ts": 1794853574.1117218,
-   "ok": false,
+   "age_s": 0,
+   "hb_ts": 1794854185.334822,
+   "ok": true,
    "status": "ok",
    "restarts": 0
   },
@@ -906,7 +906,7 @@
    "name": "Obserwator X",
    "desc": "Co ~10 min: wszystkie 181 obserwowane konta w każdym przebiegu (bez rotacji) + wyszukiwanie otwarte",
    "age_s": 761,
-   "hb_ts": 1794853424.000622,
+   "hb_ts": 1794853424.0000265,
    "ok": true,
    "status": "przebiegów: 1419",
    "restarts": 0
@@ -919,7 +919,7 @@
    "hb_ts": 1794853574.1179159,
    "ok": false,
    "status": "ok",
-   "restarts": 61
+   "restarts": 62
   },
   {
    "key": "analyst",
@@ -943,11 +943,11 @@
    "key": "copywatch",
    "name": "Copy-Watcher",
    "desc": "Śledzi 4 portfele na łańcuchu co ~25 s: @unipcs i @Cupseyy aktywni ($10 na każdą nową pozycję), pozostałe 2 od $150 zysku",
-   "age_s": 663,
+   "age_s": 664,
    "hb_ts": 1794853521.881838,
    "ok": false,
    "status": "ok",
-   "restarts": 76
+   "restarts": 77
   },
   {
    "key": "scout",
@@ -957,17 +957,17 @@
    "hb_ts": 1794853574.157096,
    "ok": false,
    "status": "ok",
-   "restarts": 103
+   "restarts": 104
   },
   {
    "key": "publisher",
    "name": "Publisher",
    "desc": "Aktualizuje tę stronę",
-   "age_s": 693,
+   "age_s": 694,
    "hb_ts": 1794853491.7062576,
    "ok": false,
    "status": "published",
-   "restarts": 86
+   "restarts": 87
   }
  ],
  "accounts": {
@@ -1888,6 +1888,62 @@
  },
  "activity": [
   {
+   "ts": "2026-11-16T19:36:25+01:00",
+   "c": "scout",
+   "msg": "scout started",
+   "pid": 1262339
+  },
+  {
+   "ts": "2026-11-16T19:36:25+01:00",
+   "c": "copywatch",
+   "msg": "copywatch started",
+   "pid": 1262338
+  },
+  {
+   "ts": "2026-11-16T19:36:25+01:00",
+   "c": "watchdog",
+   "msg": "started publisher",
+   "pid": 1262341
+  },
+  {
+   "ts": "2026-11-16T19:36:25+01:00",
+   "c": "watchdog",
+   "msg": "restart publisher: brak heartbeatu od 693 s (zawieszony)"
+  },
+  {
+   "ts": "2026-11-16T19:36:25+01:00",
+   "c": "watchdog",
+   "msg": "started scout",
+   "pid": 1262339
+  },
+  {
+   "ts": "2026-11-16T19:36:25+01:00",
+   "c": "watchdog",
+   "msg": "restart scout: brak heartbeatu od 611 s (zawieszony)"
+  },
+  {
+   "ts": "2026-11-16T19:36:25+01:00",
+   "c": "watchdog",
+   "msg": "started copywatch",
+   "pid": 1262338
+  },
+  {
+   "ts": "2026-11-16T19:36:25+01:00",
+   "c": "watchdog",
+   "msg": "restart copywatch: brak heartbeatu od 663 s (zawieszony)"
+  },
+  {
+   "ts": "2026-11-16T19:36:25+01:00",
+   "c": "watchdog",
+   "msg": "started trader",
+   "pid": 1262335
+  },
+  {
+   "ts": "2026-11-16T19:36:25+01:00",
+   "c": "watchdog",
+   "msg": "restart trader: brak heartbeatu od 611 s (zawieszony)"
+  },
+  {
    "ts": "2026-11-16T19:23:44+01:00",
    "c": "xbridge",
    "msg": "ingest open: 0 posts, 0 signals"
@@ -2049,59 +2105,6 @@
    "ts": "2026-11-16T19:13:52+01:00",
    "c": "watchdog",
    "msg": "restart copywatch: brak heartbeatu od 553 s (zawieszony)"
-  },
-  {
-   "ts": "2026-11-16T19:13:52+01:00",
-   "c": "watchdog",
-   "msg": "started trader",
-   "pid": 1259302
-  },
-  {
-   "ts": "2026-11-16T19:13:52+01:00",
-   "c": "watchdog",
-   "msg": "restart trader: brak heartbeatu od 546 s (zawieszony)"
-  },
-  {
-   "ts": "2026-11-16T19:01:59+01:00",
-   "c": "xbridge",
-   "msg": "ingest A4_page: 0 posts, 0 signals"
-  },
-  {
-   "ts": "2026-11-16T19:01:55+01:00",
-   "c": "xbridge",
-   "msg": "ingest open: 2 posts, 0 signals"
-  },
-  {
-   "ts": "2026-11-16T19:01:49+01:00",
-   "c": "xbridge",
-   "msg": "ingest A4: 2 posts, 0 signals"
-  },
-  {
-   "ts": "2026-11-16T19:01:45+01:00",
-   "c": "xbridge",
-   "msg": "ingest A3: 8 posts, 0 signals"
-  },
-  {
-   "ts": "2026-11-16T19:01:40+01:00",
-   "c": "xbridge",
-   "msg": "ingest A2: 4 posts, 0 signals"
-  },
-  {
-   "ts": "2026-11-16T19:01:36+01:00",
-   "c": "xbridge",
-   "msg": "ingest A1: 1 posts, 0 signals"
-  },
-  {
-   "ts": "2026-11-16T19:01:32+01:00",
-   "c": "scout",
-   "msg": "scout started",
-   "pid": 1257993
-  },
-  {
-   "ts": "2026-11-16T19:01:32+01:00",
-   "c": "watchdog",
-   "msg": "started scout",
-   "pid": 1257993
   }
  ],
  "equity_history": [
