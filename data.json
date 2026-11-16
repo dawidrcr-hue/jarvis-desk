@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-16T18:24:45+01:00",
+ "generated": "2026-11-16T18:26:17+01:00",
  "mode": "live",
  "wallet": "Gyt2TBaQTGskoZ2PfUNcVTC3brSRvmgTQEexvgZ4MP34",
- "equity_usd": 12.6187,
+ "equity_usd": 12.6927,
  "start_equity_usd": 22.3022,
  "sol": 0.176918384,
- "sol_price": 71.32517601,
- "free_usd": 12.61873487820477,
+ "sol_price": 71.74343106,
+ "free_usd": 12.692731885750609,
  "realized_pnl_usd": 0.0,
  "unrealized_pnl_usd": 0,
  "trades": 0,
@@ -685,7 +685,7 @@
       "copy_decision": "transfer/airdrop bez zapłaty – pomijam"
      }
     ],
-    "last_poll": "2026-11-16T17:58:13+01:00"
+    "last_poll": "2026-11-16T18:25:45+01:00"
    },
    {
     "address": "nAWy4pMBkTsVhK6JWGvVm5VKsyxns3sFz4iYGi38qNc",
@@ -703,6 +703,17 @@
     "alloc_usd": 0.0,
     "deployed_usd": 0,
     "recent": [
+     {
+      "ts": "2026-11-16T18:24:48+01:00",
+      "block_time": 1794849687,
+      "sig": "4hcnBCoUPN6EAzqznKugrxidgTViA8gGbgabJfvrT4Ere9YV439h19YT45CqSZET71RwrCs4C5VP8PWw7gqSGWdZ",
+      "sol_spent": 0.0,
+      "mint": "TTWofwAge91oFhZs7kpQdyrVRkmevgM88xijGvQFbKo",
+      "pre": 1.060608,
+      "post": 1.061109,
+      "side": "buy",
+      "fraction": null
+     },
      {
       "ts": "2026-11-16T17:56:47+01:00",
       "block_time": 1794847724,
@@ -757,20 +768,9 @@
       "post": 0.0,
       "side": "sell",
       "fraction": 1.0
-     },
-     {
-      "ts": "2026-11-16T17:08:31+01:00",
-      "block_time": 1794844381,
-      "sig": "UZYrfNHhvCWqFycnWmrsds1uiKnuyXwm3HNZZVMMVrPhEeamiu15Ci9xwQHsoJ3g9mkRJkMqoddYZcG1nqCfrrh",
-      "sol_spent": 0.0,
-      "mint": "Pren1FvFX6J3E4kXhJuCiAD5aDmGEb7qJRncwA8Lkhw",
-      "pre": 0.006524855,
-      "post": 0.006525761,
-      "side": "buy",
-      "fraction": null
      }
     ],
-    "last_poll": "2026-11-16T17:58:16+01:00"
+    "last_poll": "2026-11-16T18:25:47+01:00"
    },
    {
     "address": "6DQAGJT7VZPVBsuG4kn3AvpyHCEi7B2RFFvMZdbqQqqP",
@@ -854,7 +854,7 @@
       "copy_decision": "dokupienie istniejącej pozycji – pomijam"
      }
     ],
-    "last_poll": "2026-11-16T17:58:17+01:00"
+    "last_poll": "2026-11-16T18:25:48+01:00"
    }
   ]
  },
@@ -863,8 +863,8 @@
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone (heartbeat + timeout cyklu 90 s)",
-   "age_s": 0,
-   "hb_ts": 1794849885.603394,
+   "age_s": 2,
+   "hb_ts": 1794849975.6144366,
    "ok": true,
    "status": "ok",
    "restarts": 0
@@ -873,8 +873,8 @@
    "key": "xwatch",
    "name": "Obserwator X",
    "desc": "Co ~10 min: wszystkie 181 obserwowane konta w każdym przebiegu (bez rotacji) + wyszukiwanie otwarte",
-   "age_s": 4195,
-   "hb_ts": 1794845691.0000374,
+   "age_s": 4286,
+   "hb_ts": 1794845691.0001268,
    "ok": false,
    "status": "przebiegów: 1385",
    "restarts": 0
@@ -883,9 +883,9 @@
    "key": "trader",
    "name": "Egzekutor",
    "desc": "Kupuje i sprzedaje przez Phantom, pilnuje celów i stop-lossów",
-   "age_s": 1506,
-   "hb_ts": 1794848379.3968358,
-   "ok": false,
+   "age_s": 4,
+   "hb_ts": 1794849973.2163808,
+   "ok": true,
    "status": "ok",
    "restarts": 56
   },
@@ -911,9 +911,9 @@
    "key": "copywatch",
    "name": "Copy-Watcher",
    "desc": "Śledzi 4 portfele na łańcuchu co ~25 s: @unipcs i @Cupseyy aktywni ($10 na każdą nową pozycję), pozostałe 2 od $150 zysku",
-   "age_s": 1588,
-   "hb_ts": 1794848298.176091,
-   "ok": false,
+   "age_s": 28,
+   "hb_ts": 1794849949.591605,
+   "ok": true,
    "status": "ok",
    "restarts": 74
   },
@@ -921,9 +921,9 @@
    "key": "scout",
    "name": "Scout",
    "desc": "Szuka nowych tokenów DexScreener powiązanych z kontami z listy",
-   "age_s": 1507,
-   "hb_ts": 1794848378.8598654,
-   "ok": false,
+   "age_s": 1,
+   "hb_ts": 1794849975.89788,
+   "ok": true,
    "status": "ok",
    "restarts": 97
   },
@@ -931,9 +931,9 @@
    "key": "publisher",
    "name": "Publisher",
    "desc": "Aktualizuje tę stronę",
-   "age_s": 1506,
-   "hb_ts": 1794848380.1279767,
-   "ok": false,
+   "age_s": 90,
+   "hb_ts": 1794849887.1962101,
+   "ok": true,
    "status": "published",
    "restarts": 84
   }
@@ -1856,6 +1856,12 @@
  },
  "activity": [
   {
+   "ts": "2026-11-16T18:25:52+01:00",
+   "c": "trader",
+   "msg": "cycle error: Failed to get wallet addresses: Request failed with status code 500",
+   "tb": "\n    ~~~~~~~^^\n  File \"/workspace/jarvis-live/agents/trader.py\", line 338, in cycle\n    self.refresh_balances()\n    ~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/workspace/jarvis-live/agents/trader.py\", line 50, in refresh_balances\n    sol, px, toks = self.ph.sol_balance_and_tokens()\n                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/workspace/jarvis-live/lib/phantom.py\", line 108, in sol_balance_and_tokens\n    return self.parse_balances(self.call(\"wallet_balances\", {\"networks\": [\"solana\"]}))\n                               ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/jarvis-live/lib/phantom.py\", line 80, in call\n    raise PhantomError(text or json.dumps(m.get(\"error\")))\nlib.phantom.PhantomError: Failed to get wallet addresses: Request failed with status code 500\n"
+  },
+  {
    "ts": "2026-11-16T18:24:45+01:00",
    "c": "scout",
    "msg": "scout started",
@@ -2053,18 +2059,9 @@
    "c": "watchdog",
    "msg": "started trader",
    "pid": 1234981
-  },
-  {
-   "ts": "2026-11-16T16:52:33+01:00",
-   "c": "watchdog",
-   "msg": "restart trader: brak heartbeatu od 196 s (zawieszony)"
   }
  ],
  "equity_history": [
-  {
-   "t": 1794787907,
-   "e": 12.8104
-  },
   {
    "t": 1794787998,
    "e": 12.7979
@@ -3020,29 +3017,29 @@
   {
    "t": 1794849886,
    "e": 12.6187
+  },
+  {
+   "t": 1794849977,
+   "e": 12.6927
   }
  ],
  "equity_change": {
-  "since_start_usd": -9.6835,
-  "since_start_pct": -43.42,
+  "since_start_usd": -9.6095,
+  "since_start_pct": -43.09,
   "h24_complete": true,
-  "h24_from_ts": 1794762886,
-  "h24_usd": 0.0358,
-  "h24_pct": 0.28
+  "h24_from_ts": 1794763538,
+  "h24_usd": 0.1061,
+  "h24_pct": 0.84
  },
  "sol_market": {
-  "price": 71.32517601,
+  "price": 71.74343106,
   "price_src": "Phantom",
-  "change_24h": 0.5743140000296859,
+  "change_24h": 0.5179537200390844,
   "change_src": "CoinGecko",
   "high_24h": 72.8351,
   "low_24h": 70.1297,
-  "open_24h": 71.3743,
+  "open_24h": 71.3783,
   "chart": [
-   [
-    1794763500,
-    71.3743
-   ],
    [
     1794763800,
     71.3783
@@ -4200,8 +4197,12 @@
     71.3252
    ],
    [
-    1794849886,
-    71.3252
+    1794849977,
+    71.7434
+   ],
+   [
+    1794849977,
+    71.7434
    ]
   ],
   "chart_src": "CoinGecko + desk"
