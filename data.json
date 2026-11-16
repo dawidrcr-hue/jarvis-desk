@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-16T21:43:04+01:00",
+ "generated": "2026-11-16T21:51:50+01:00",
  "mode": "live",
  "wallet": "Gyt2TBaQTGskoZ2PfUNcVTC3brSRvmgTQEexvgZ4MP34",
- "equity_usd": 12.6129,
+ "equity_usd": 12.6071,
  "start_equity_usd": 22.3022,
  "sol": 0.176918384,
- "sol_price": 71.29238008,
- "free_usd": 12.612932675267391,
+ "sol_price": 71.25969451,
+ "free_usd": 12.607149997042873,
  "realized_pnl_usd": 0.0,
  "unrealized_pnl_usd": 0,
  "trades": 0,
@@ -727,7 +727,7 @@
       "copy_decision": "transfer/airdrop bez zapłaty – pomijam"
      }
     ],
-    "last_poll": "2026-11-16T21:42:32+01:00"
+    "last_poll": "2026-11-16T21:44:12+01:00"
    },
    {
     "address": "nAWy4pMBkTsVhK6JWGvVm5VKsyxns3sFz4iYGi38qNc",
@@ -812,7 +812,7 @@
       "fraction": null
      }
     ],
-    "last_poll": "2026-11-16T21:42:34+01:00"
+    "last_poll": "2026-11-16T21:44:15+01:00"
    },
    {
     "address": "6DQAGJT7VZPVBsuG4kn3AvpyHCEi7B2RFFvMZdbqQqqP",
@@ -896,7 +896,7 @@
       "copy_decision": "dokupienie istniejącej pozycji – pomijam"
      }
     ],
-    "last_poll": "2026-11-16T21:42:35+01:00"
+    "last_poll": "2026-11-16T21:44:16+01:00"
    }
   ]
  },
@@ -905,8 +905,8 @@
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone (heartbeat + timeout cyklu 90 s)",
-   "age_s": 2,
-   "hb_ts": 1794861782.9003878,
+   "age_s": 0,
+   "hb_ts": 1794862310.6360219,
    "ok": true,
    "status": "ok",
    "restarts": 0
@@ -915,8 +915,8 @@
    "key": "xwatch",
    "name": "Obserwator X",
    "desc": "Co ~10 min: wszystkie 181 obserwowane konta w każdym przebiegu (bez rotacji) + wyszukiwanie otwarte",
-   "age_s": 70,
-   "hb_ts": 1794861714.0001528,
+   "age_s": 597,
+   "hb_ts": 1794861714.0000381,
    "ok": true,
    "status": "przebiegów: 1489",
    "restarts": 0
@@ -925,11 +925,11 @@
    "key": "trader",
    "name": "Egzekutor",
    "desc": "Kupuje i sprzedaje przez Phantom, pilnuje celów i stop-lossów",
-   "age_s": 2,
-   "hb_ts": 1794861782.8151028,
-   "ok": true,
+   "age_s": 454,
+   "hb_ts": 1794861856.7932541,
+   "ok": false,
    "status": "ok",
-   "restarts": 68
+   "restarts": 69
   },
   {
    "key": "analyst",
@@ -953,31 +953,31 @@
    "key": "copywatch",
    "name": "Copy-Watcher",
    "desc": "Śledzi 4 portfele na łańcuchu co ~25 s: @unipcs i @Cupseyy aktywni ($10 na każdą nową pozycję), pozostałe 2 od $150 zysku",
-   "age_s": 28,
-   "hb_ts": 1794861756.361264,
-   "ok": true,
+   "age_s": 454,
+   "hb_ts": 1794861857.1836698,
+   "ok": false,
    "status": "ok",
-   "restarts": 81
+   "restarts": 82
   },
   {
    "key": "scout",
    "name": "Scout",
    "desc": "Szuka nowych tokenów DexScreener powiązanych z kontami z listy",
-   "age_s": 1,
-   "hb_ts": 1794861783.194164,
-   "ok": true,
+   "age_s": 458,
+   "hb_ts": 1794861852.8345482,
+   "ok": false,
    "status": "ok",
-   "restarts": 115
+   "restarts": 116
   },
   {
    "key": "publisher",
    "name": "Publisher",
    "desc": "Aktualizuje tę stronę",
-   "age_s": 90,
-   "hb_ts": 1794861694.399758,
-   "ok": true,
+   "age_s": 525,
+   "hb_ts": 1794861785.7828753,
+   "ok": false,
    "status": "published",
-   "restarts": 96
+   "restarts": 97
   }
  ],
  "accounts": {
@@ -1898,6 +1898,68 @@
  },
  "activity": [
   {
+   "ts": "2026-11-16T21:51:50+01:00",
+   "c": "scout",
+   "msg": "scout started",
+   "pid": 1283331
+  },
+  {
+   "ts": "2026-11-16T21:51:50+01:00",
+   "c": "copywatch",
+   "msg": "copywatch started",
+   "pid": 1283328
+  },
+  {
+   "ts": "2026-11-16T21:51:50+01:00",
+   "c": "trader",
+   "msg": "trader started",
+   "pid": 1283327
+  },
+  {
+   "ts": "2026-11-16T21:51:50+01:00",
+   "c": "watchdog",
+   "msg": "started publisher",
+   "pid": 1283332
+  },
+  {
+   "ts": "2026-11-16T21:51:50+01:00",
+   "c": "watchdog",
+   "msg": "restart publisher: brak heartbeatu od 524 s (zawieszony)"
+  },
+  {
+   "ts": "2026-11-16T21:51:50+01:00",
+   "c": "watchdog",
+   "msg": "started scout",
+   "pid": 1283331
+  },
+  {
+   "ts": "2026-11-16T21:51:50+01:00",
+   "c": "watchdog",
+   "msg": "restart scout: brak heartbeatu od 457 s (zawieszony)"
+  },
+  {
+   "ts": "2026-11-16T21:51:50+01:00",
+   "c": "watchdog",
+   "msg": "started copywatch",
+   "pid": 1283328
+  },
+  {
+   "ts": "2026-11-16T21:51:50+01:00",
+   "c": "watchdog",
+   "msg": "restart copywatch: brak heartbeatu od 453 s (zawieszony)"
+  },
+  {
+   "ts": "2026-11-16T21:51:50+01:00",
+   "c": "watchdog",
+   "msg": "started trader",
+   "pid": 1283327
+  },
+  {
+   "ts": "2026-11-16T21:51:50+01:00",
+   "c": "watchdog",
+   "msg": "restart trader: brak heartbeatu od 453 s (zawieszony)"
+  },
+  {
    "ts": "2026-11-16T21:41:54+01:00",
    "c": "xbridge",
    "msg": "ingest open: 2 posts, 0 signals"
@@ -2050,75 +2112,9 @@
    "ts": "2026-11-16T21:24:37+01:00",
    "c": "xbridge",
    "msg": "ingest A1: 3 posts, 0 signals"
-  },
-  {
-   "ts": "2026-11-16T21:24:33+01:00",
-   "c": "scout",
-   "msg": "scout started",
-   "pid": 1278718
-  },
-  {
-   "ts": "2026-11-16T21:24:33+01:00",
-   "c": "copywatch",
-   "msg": "copywatch started",
-   "pid": 1278717
-  },
-  {
-   "ts": "2026-11-16T21:24:33+01:00",
-   "c": "trader",
-   "msg": "trader started",
-   "pid": 1278715
-  },
-  {
-   "ts": "2026-11-16T21:24:32+01:00",
-   "c": "watchdog",
-   "msg": "started publisher",
-   "pid": 1278719
-  },
-  {
-   "ts": "2026-11-16T21:24:32+01:00",
-   "c": "watchdog",
-   "msg": "restart publisher: brak heartbeatu od 756 s (zawieszony)"
-  },
-  {
-   "ts": "2026-11-16T21:24:32+01:00",
-   "c": "watchdog",
-   "msg": "started scout",
-   "pid": 1278718
-  },
-  {
-   "ts": "2026-11-16T21:24:32+01:00",
-   "c": "watchdog",
-   "msg": "restart scout: brak heartbeatu od 757 s (zawieszony)"
-  },
-  {
-   "ts": "2026-11-16T21:24:32+01:00",
-   "c": "watchdog",
-   "msg": "started copywatch",
-   "pid": 1278717
-  },
-  {
-   "ts": "2026-11-16T21:24:32+01:00",
-   "c": "watchdog",
-   "msg": "restart copywatch: brak heartbeatu od 847 s (zawieszony)"
-  },
-  {
-   "ts": "2026-11-16T21:24:32+01:00",
-   "c": "watchdog",
-   "msg": "started trader",
-   "pid": 1278715
-  },
-  {
-   "ts": "2026-11-16T21:24:32+01:00",
-   "c": "watchdog",
-   "msg": "restart trader: brak heartbeatu od 756 s (zawieszony)"
   }
  ],
  "equity_history": [
-  {
-   "t": 1794801560,
-   "e": 12.7593
-  },
   {
    "t": 1794801755,
    "e": 12.7317
@@ -3074,33 +3070,29 @@
   {
    "t": 1794861784,
    "e": 12.6129
+  },
+  {
+   "t": 1794862311,
+   "e": 12.6071
   }
  ],
  "equity_change": {
-  "since_start_usd": -9.6893,
-  "since_start_pct": -43.45,
+  "since_start_usd": -9.6951,
+  "since_start_pct": -43.47,
   "h24_complete": true,
-  "h24_from_ts": 1794775371,
-  "h24_usd": -0.1096,
-  "h24_pct": -0.86
+  "h24_from_ts": 1794775462,
+  "h24_usd": -0.1198,
+  "h24_pct": -0.94
  },
  "sol_market": {
-  "price": 71.29238008,
+  "price": 71.25969451,
   "price_src": "Phantom",
-  "change_24h": -0.8876693341865212,
+  "change_24h": -0.7206977741698767,
   "change_src": "CoinGecko",
   "high_24h": 72.8351,
   "low_24h": 70.1297,
-  "open_24h": 71.9093,
+  "open_24h": 71.9165,
   "chart": [
-   [
-    1794775500,
-    71.9093
-   ],
-   [
-    1794775800,
-    71.9501
-   ],
    [
     1794776100,
     71.9165
@@ -4246,16 +4238,24 @@
     71.2055
    ],
    [
-    1794861693,
-    71.4243
+    1794861900,
+    71.3158
    ],
    [
-    1794861784,
-    71.2924
+    1794862200,
+    71.4259
    ],
    [
-    1794861784,
-    71.2924
+    1794862220,
+    71.4647
+   ],
+   [
+    1794862311,
+    71.2597
+   ],
+   [
+    1794862311,
+    71.2597
    ]
   ],
   "chart_src": "CoinGecko + desk"
