@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-16T09:13:12+01:00",
+ "generated": "2026-11-16T09:14:47+01:00",
  "mode": "live",
  "wallet": "Gyt2TBaQTGskoZ2PfUNcVTC3brSRvmgTQEexvgZ4MP34",
- "equity_usd": 12.563,
+ "equity_usd": 12.5544,
  "start_equity_usd": 22.3022,
  "sol": 0.176918384,
- "sol_price": 71.01000115,
- "free_usd": 12.562974651296141,
+ "sol_price": 70.96172739,
+ "free_usd": 12.554434135687337,
  "realized_pnl_usd": 0.0,
  "unrealized_pnl_usd": 0,
  "trades": 0,
@@ -691,7 +691,7 @@
       "copy_decision": "dokupienie istniejącej pozycji – pomijam"
      }
     ],
-    "last_poll": "2026-11-16T09:12:47+01:00"
+    "last_poll": "2026-11-16T09:13:46+01:00"
    },
    {
     "address": "nAWy4pMBkTsVhK6JWGvVm5VKsyxns3sFz4iYGi38qNc",
@@ -776,7 +776,7 @@
       "fraction": null
      }
     ],
-    "last_poll": "2026-11-16T09:12:49+01:00"
+    "last_poll": "2026-11-16T09:13:48+01:00"
    },
    {
     "address": "6DQAGJT7VZPVBsuG4kn3AvpyHCEi7B2RFFvMZdbqQqqP",
@@ -860,7 +860,7 @@
       "copy_decision": "dokupienie istniejącej pozycji – pomijam"
      }
     ],
-    "last_poll": "2026-11-16T09:12:50+01:00"
+    "last_poll": "2026-11-16T09:13:49+01:00"
    }
   ]
  },
@@ -869,8 +869,8 @@
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone (heartbeat + timeout cyklu 90 s)",
-   "age_s": 1,
-   "hb_ts": 1794816792.094121,
+   "age_s": 0,
+   "hb_ts": 1794816887.7273424,
    "ok": true,
    "status": "ok",
    "restarts": 0
@@ -879,8 +879,8 @@
    "key": "xwatch",
    "name": "Obserwator X",
    "desc": "Co ~10 min: wszystkie 181 obserwowane konta w każdym przebiegu (bez rotacji) + wyszukiwanie otwarte",
-   "age_s": 67,
-   "hb_ts": 1794816726.000135,
+   "age_s": 162,
+   "hb_ts": 1794816726.000097,
    "ok": true,
    "status": "przebiegów: 1261",
    "restarts": 0
@@ -889,8 +889,8 @@
    "key": "trader",
    "name": "Egzekutor",
    "desc": "Kupuje i sprzedaje przez Phantom, pilnuje celów i stop-lossów",
-   "age_s": 4,
-   "hb_ts": 1794816789.3358512,
+   "age_s": 19,
+   "hb_ts": 1794816869.0533805,
    "ok": true,
    "status": "ok",
    "restarts": 33
@@ -917,8 +917,8 @@
    "key": "copywatch",
    "name": "Copy-Watcher",
    "desc": "Śledzi 4 portfele na łańcuchu co ~25 s: @unipcs i @Cupseyy aktywni ($10 na każdą nową pozycję), pozostałe 2 od $150 zysku",
-   "age_s": 21,
-   "hb_ts": 1794816771.846575,
+   "age_s": 57,
+   "hb_ts": 1794816830.4303172,
    "ok": true,
    "status": "ok",
    "restarts": 54
@@ -927,8 +927,8 @@
    "key": "scout",
    "name": "Scout",
    "desc": "Szuka nowych tokenów DexScreener powiązanych z kontami z listy",
-   "age_s": 1,
-   "hb_ts": 1794816791.5626612,
+   "age_s": 19,
+   "hb_ts": 1794816869.1326506,
    "ok": true,
    "status": "ok",
    "restarts": 68
@@ -937,8 +937,8 @@
    "key": "publisher",
    "name": "Publisher",
    "desc": "Aktualizuje tę stronę",
-   "age_s": 213,
-   "hb_ts": 1794816579.4790597,
+   "age_s": 94,
+   "hb_ts": 1794816794.0480814,
    "ok": true,
    "status": "published",
    "restarts": 61
@@ -2074,10 +2074,6 @@
  ],
  "equity_history": [
   {
-   "t": 1794754859,
-   "e": 14.6572
-  },
-  {
    "t": 1794754950,
    "e": 14.5992
   },
@@ -3032,20 +3028,24 @@
   {
    "t": 1794816793,
    "e": 12.563
+  },
+  {
+   "t": 1794816888,
+   "e": 12.5544
   }
  ],
  "equity_change": {
-  "since_start_usd": -9.7392,
-  "since_start_pct": -43.67,
+  "since_start_usd": -9.7478,
+  "since_start_pct": -43.71,
   "h24_complete": true,
-  "h24_from_ts": 1794730341,
-  "h24_usd": -8.0739,
-  "h24_pct": -39.12
+  "h24_from_ts": 1794730433,
+  "h24_usd": -8.0864,
+  "h24_pct": -39.18
  },
  "sol_market": {
-  "price": 71.01000115,
+  "price": 70.96172739,
   "price_src": "Phantom",
-  "change_24h": 1.4933041716559303,
+  "change_24h": 1.5759919193275937,
   "change_src": "CoinGecko",
   "high_24h": 73.1187,
   "low_24h": 69.8596,
@@ -4216,8 +4216,12 @@
     71.01
    ],
    [
-    1794816793,
-    71.01
+    1794816888,
+    70.9617
+   ],
+   [
+    1794816888,
+    70.9617
    ]
   ],
   "chart_src": "CoinGecko + desk"
