@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-16T14:15:18+01:00",
+ "generated": "2026-11-16T14:16:50+01:00",
  "mode": "live",
  "wallet": "Gyt2TBaQTGskoZ2PfUNcVTC3brSRvmgTQEexvgZ4MP34",
- "equity_usd": 12.5313,
+ "equity_usd": 12.5669,
  "start_equity_usd": 22.3022,
  "sol": 0.176918384,
- "sol_price": 70.83074324,
- "free_usd": 12.531260631539725,
+ "sol_price": 71.03232289,
+ "free_usd": 12.56692377746501,
  "realized_pnl_usd": 0.0,
  "unrealized_pnl_usd": 0,
  "trades": 0,
@@ -693,7 +693,7 @@
       "copy_decision": "dokupienie istniejącej pozycji – pomijam"
      }
     ],
-    "last_poll": "2026-11-16T14:10:02+01:00"
+    "last_poll": "2026-11-16T14:16:27+01:00"
    },
    {
     "address": "nAWy4pMBkTsVhK6JWGvVm5VKsyxns3sFz4iYGi38qNc",
@@ -778,7 +778,7 @@
       "fraction": null
      }
     ],
-    "last_poll": "2026-11-16T14:10:04+01:00"
+    "last_poll": "2026-11-16T14:16:29+01:00"
    },
    {
     "address": "6DQAGJT7VZPVBsuG4kn3AvpyHCEi7B2RFFvMZdbqQqqP",
@@ -862,7 +862,7 @@
       "copy_decision": "dokupienie istniejącej pozycji – pomijam"
      }
     ],
-    "last_poll": "2026-11-16T14:10:05+01:00"
+    "last_poll": "2026-11-16T14:16:30+01:00"
    }
   ]
  },
@@ -871,8 +871,8 @@
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone (heartbeat + timeout cyklu 90 s)",
-   "age_s": 0,
-   "hb_ts": 1794834918.5921063,
+   "age_s": 2,
+   "hb_ts": 1794835008.620971,
    "ok": true,
    "status": "ok",
    "restarts": 0
@@ -881,8 +881,8 @@
    "key": "xwatch",
    "name": "Obserwator X",
    "desc": "Co ~10 min: wszystkie 181 obserwowane konta w każdym przebiegu (bez rotacji) + wyszukiwanie otwarte",
-   "age_s": 655,
-   "hb_ts": 1794834264.0002744,
+   "age_s": 747,
+   "hb_ts": 1794834264.0001042,
    "ok": true,
    "status": "przebiegów: 1367",
    "restarts": 0
@@ -891,9 +891,9 @@
    "key": "trader",
    "name": "Egzekutor",
    "desc": "Kupuje i sprzedaje przez Phantom, pilnuje celów i stop-lossów",
-   "age_s": 287,
-   "hb_ts": 1794834631.2545414,
-   "ok": false,
+   "age_s": 3,
+   "hb_ts": 1794835007.8119528,
+   "ok": true,
    "status": "ok",
    "restarts": 46
   },
@@ -919,28 +919,28 @@
    "key": "copywatch",
    "name": "Copy-Watcher",
    "desc": "Śledzi 4 portfele na łańcuchu co ~25 s: @unipcs i @Cupseyy aktywni ($10 na każdą nową pozycję), pozostałe 2 od $150 zysku",
-   "age_s": 312,
-   "hb_ts": 1794834606.7660794,
-   "ok": false,
+   "age_s": 19,
+   "hb_ts": 1794834991.75254,
+   "ok": true,
    "status": "ok",
-   "restarts": 67
+   "restarts": 68
   },
   {
    "key": "scout",
    "name": "Scout",
    "desc": "Szuka nowych tokenów DexScreener powiązanych z kontami z listy",
-   "age_s": 293,
-   "hb_ts": 1794834625.3350716,
-   "ok": false,
+   "age_s": 22,
+   "hb_ts": 1794834988.7801313,
+   "ok": true,
    "status": "ok",
-   "restarts": 81
+   "restarts": 82
   },
   {
    "key": "publisher",
    "name": "Publisher",
    "desc": "Aktualizuje tę stronę",
-   "age_s": 370,
-   "hb_ts": 1794834548.1785166,
+   "age_s": 90,
+   "hb_ts": 1794834920.929063,
    "ok": true,
    "status": "published",
    "restarts": 74
@@ -1864,6 +1864,45 @@
  },
  "activity": [
   {
+   "ts": "2026-11-16T14:15:28+01:00",
+   "c": "scout",
+   "msg": "scout started",
+   "pid": 1214397
+  },
+  {
+   "ts": "2026-11-16T14:15:28+01:00",
+   "c": "copywatch",
+   "msg": "copywatch started",
+   "pid": 1214393
+  },
+  {
+   "ts": "2026-11-16T14:15:28+01:00",
+   "c": "watchdog",
+   "msg": "started scout",
+   "pid": 1214397
+  },
+  {
+   "ts": "2026-11-16T14:15:28+01:00",
+   "c": "watchdog",
+   "msg": "restart scout: brak heartbeatu od 303 s (zawieszony)"
+  },
+  {
+   "ts": "2026-11-16T14:15:28+01:00",
+   "c": "watchdog",
+   "msg": "started copywatch",
+   "pid": 1214393
+  },
+  {
+   "ts": "2026-11-16T14:15:28+01:00",
+   "c": "watchdog",
+   "msg": "restart copywatch: brak heartbeatu od 321 s (zawieszony)"
+  },
+  {
+   "ts": "2026-11-16T14:15:27+01:00",
+   "c": "copywatch",
+   "msg": "poll @unipcs failed: The read operation timed out"
+  },
+  {
    "ts": "2026-11-16T14:04:24+01:00",
    "c": "xbridge",
    "msg": "ingest open: 4 posts, 0 signals"
@@ -1975,50 +2014,9 @@
    "c": "copywatch",
    "msg": "copywatch started",
    "pid": 1194480
-  },
-  {
-   "ts": "2026-11-16T13:08:12+01:00",
-   "c": "watchdog",
-   "msg": "started publisher",
-   "pid": 1194481
-  },
-  {
-   "ts": "2026-11-16T13:08:12+01:00",
-   "c": "watchdog",
-   "msg": "restart publisher: brak heartbeatu od 1144 s (zawieszony)"
-  },
-  {
-   "ts": "2026-11-16T13:08:12+01:00",
-   "c": "watchdog",
-   "msg": "started copywatch",
-   "pid": 1194480
-  },
-  {
-   "ts": "2026-11-16T13:08:12+01:00",
-   "c": "watchdog",
-   "msg": "restart copywatch: brak heartbeatu od 1087 s (zawieszony)"
-  },
-  {
-   "ts": "2026-11-16T13:08:12+01:00",
-   "c": "xbridge",
-   "msg": "ingest A4: 3 posts, 0 signals"
-  },
-  {
-   "ts": "2026-11-16T12:48:05+01:00",
-   "c": "xbridge",
-   "msg": "ingest A2: 15 posts, 0 signals"
-  },
-  {
-   "ts": "2026-11-16T12:48:01+01:00",
-   "c": "xbridge",
-   "msg": "ingest A1: 9 posts, 0 signals"
   }
  ],
  "equity_history": [
-  {
-   "t": 1794772064,
-   "e": 12.7069
-  },
   {
    "t": 1794772469,
    "e": 12.6945
@@ -2974,20 +2972,24 @@
   {
    "t": 1794834919,
    "e": 12.5313
+  },
+  {
+   "t": 1794835011,
+   "e": 12.5669
   }
  ],
  "equity_change": {
-  "since_start_usd": -9.7709,
-  "since_start_pct": -43.81,
+  "since_start_usd": -9.7353,
+  "since_start_pct": -43.65,
   "h24_complete": true,
   "h24_from_ts": 1794748404,
-  "h24_usd": -9.001,
-  "h24_pct": -41.8
+  "h24_usd": -8.9654,
+  "h24_pct": -41.64
  },
  "sol_market": {
-  "price": 70.83074324,
+  "price": 71.03232289,
   "price_src": "Phantom",
-  "change_24h": -3.055862530218693,
+  "change_24h": -3.0425999901146015,
   "change_src": "CoinGecko",
   "high_24h": 73.1187,
   "low_24h": 70.5382,
@@ -4150,8 +4152,12 @@
     70.8307
    ],
    [
-    1794834919,
-    70.8307
+    1794835011,
+    71.0323
+   ],
+   [
+    1794835011,
+    71.0323
    ]
   ],
   "chart_src": "CoinGecko + desk"
