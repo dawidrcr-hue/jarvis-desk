@@ -1,5 +1,5 @@
-/* Jarvis Desk — simple app-shell cache. data.json always goes to the network first. */
-const CACHE = "jarvis-desk-paper-v2";
+/* Jarvis Momentum Desk (PAPIER) — app-shell cache. data.json always network-first. */
+const CACHE = "jarvis-momentum-v3";
 const SHELL = ["./","index.html","manifest.webmanifest","icon-192.png","icon-512.png","apple-touch-icon.png"];
 
 self.addEventListener("install", (event) => {
