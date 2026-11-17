@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-17T08:42:13+01:00",
+ "generated": "2026-11-17T08:43:54+01:00",
  "mode": "halted",
  "wallet": "Gyt2TBaQTGskoZ2PfUNcVTC3brSRvmgTQEexvgZ4MP34",
- "equity_usd": 3.3756,
+ "equity_usd": 3.3754,
  "start_equity_usd": 22.3022,
  "sol": 0.033879925,
- "sol_price": 72.81978336,
- "free_usd": 2.467128798753048,
+ "sol_price": 72.81386038,
+ "free_usd": 2.466928128634871,
  "realized_pnl_usd": 0.0,
  "unrealized_pnl_usd": -9.0915,
  "trades": 0,
@@ -38,7 +38,7 @@
    "copy_wallet": "6DQAGJT7VZPVBsuG4kn3AvpyHCEi7B2RFFvMZdbqQqqP",
    "copy_label": "@Cupseyy",
    "peak_mcap": 27059,
-   "last_px_ts": "2026-11-17T08:42:07+01:00"
+   "last_px_ts": "2026-11-17T08:43:33+01:00"
   }
  ],
  "closed": [],
@@ -829,7 +829,7 @@
       "copy_decision": "transfer/airdrop bez zapłaty – pomijam"
      }
     ],
-    "last_poll": "2026-11-17T08:41:57+01:00"
+    "last_poll": "2026-11-17T08:43:25+01:00"
    },
    {
     "address": "nAWy4pMBkTsVhK6JWGvVm5VKsyxns3sFz4iYGi38qNc",
@@ -914,7 +914,7 @@
       "fraction": null
      }
     ],
-    "last_poll": "2026-11-17T08:41:59+01:00"
+    "last_poll": "2026-11-17T08:43:27+01:00"
    },
    {
     "address": "6DQAGJT7VZPVBsuG4kn3AvpyHCEi7B2RFFvMZdbqQqqP",
@@ -998,7 +998,7 @@
       "copy_decision": "dokupienie istniejącej pozycji – pomijam"
      }
     ],
-    "last_poll": "2026-11-17T08:42:00+01:00"
+    "last_poll": "2026-11-17T08:43:29+01:00"
    }
   ]
  },
@@ -1007,8 +1007,8 @@
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone (heartbeat + timeout cyklu 90 s)",
-   "age_s": 6,
-   "hb_ts": 1794901328.1169991,
+   "age_s": 0,
+   "hb_ts": 1794901434.9515193,
    "ok": true,
    "status": "ok",
    "restarts": 0
@@ -1017,8 +1017,8 @@
    "key": "xwatch",
    "name": "Obserwator X",
    "desc": "Co ~10 min: wszystkie 181 obserwowane konta w każdym przebiegu (bez rotacji) + wyszukiwanie otwarte",
-   "age_s": 38,
-   "hb_ts": 1794901296.00015,
+   "age_s": 139,
+   "hb_ts": 1794901296.0001464,
    "ok": true,
    "status": "przebiegów: 1764",
    "restarts": 0
@@ -1027,8 +1027,8 @@
    "key": "trader",
    "name": "Egzekutor",
    "desc": "Kupuje i sprzedaje przez Phantom, pilnuje celów i stop-lossów",
-   "age_s": 2,
-   "hb_ts": 1794901331.7996624,
+   "age_s": 18,
+   "hb_ts": 1794901417.4023092,
    "ok": true,
    "status": "ok",
    "restarts": 95
@@ -1055,8 +1055,8 @@
    "key": "copywatch",
    "name": "Copy-Watcher",
    "desc": "Śledzi 4 portfele na łańcuchu co ~25 s: @unipcs i @Cupseyy aktywni ($10 na każdą nową pozycję), pozostałe 2 od $150 zysku",
-   "age_s": 12,
-   "hb_ts": 1794901321.8682795,
+   "age_s": 25,
+   "hb_ts": 1794901410.2744272,
    "ok": true,
    "status": "ok",
    "restarts": 113
@@ -1065,8 +1065,8 @@
    "key": "scout",
    "name": "Scout",
    "desc": "Szuka nowych tokenów DexScreener powiązanych z kontami z listy",
-   "age_s": 25,
-   "hb_ts": 1794901308.322524,
+   "age_s": 37,
+   "hb_ts": 1794901398.4466462,
    "ok": true,
    "status": "ok",
    "restarts": 163
@@ -1075,8 +1075,8 @@
    "key": "publisher",
    "name": "Publisher",
    "desc": "Aktualizuje tę stronę",
-   "age_s": 362,
-   "hb_ts": 1794900971.6282637,
+   "age_s": 100,
+   "hb_ts": 1794901335.123064,
    "ok": true,
    "status": "published",
    "restarts": 131
@@ -2216,10 +2216,6 @@
  ],
  "equity_history": [
   {
-   "t": 1794834547,
-   "e": 12.5441
-  },
-  {
    "t": 1794834919,
    "e": 12.5313
   },
@@ -3174,20 +3170,24 @@
   {
    "t": 1794901334,
    "e": 3.3756
+  },
+  {
+   "t": 1794901435,
+   "e": 3.3754
   }
  ],
  "equity_change": {
-  "since_start_usd": -18.9266,
-  "since_start_pct": -84.86,
+  "since_start_usd": -18.9268,
+  "since_start_pct": -84.87,
   "h24_complete": true,
   "h24_from_ts": 1794814702,
-  "h24_usd": -9.2518,
+  "h24_usd": -9.252,
   "h24_pct": -73.27
  },
  "sol_market": {
-  "price": 72.81978336,
+  "price": 72.81386038,
   "price_src": "Phantom",
-  "change_24h": 2.0325923725093316,
+  "change_24h": 2.08570305895343,
   "change_src": "CoinGecko",
   "high_24h": 73.0654,
   "low_24h": 70.1297,
@@ -4354,8 +4354,12 @@
     72.8198
    ],
    [
-    1794901334,
-    72.8198
+    1794901435,
+    72.8139
+   ],
+   [
+    1794901435,
+    72.8139
    ]
   ],
   "chart_src": "CoinGecko + desk"
