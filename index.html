@@ -145,7 +145,7 @@ footer{text-align:center;color:var(--mu2);font-size:12px;margin-top:30px}
    <div class="steps">
     <div class="step"><div class="t">start</div><div class="x">stop -6%</div></div>
     <div class="step"><div class="t">po +12%</div><div class="x">stop 0%</div></div>
-    <div class="step"><div class="t">po +24%</div><div class="x">stop +12%</div></div>
+    <div class="step"><div class="t">od +24%</div><div class="x">szczyt −12</div></div>
    </div>
    <div class="rules" id="rules"></div>
   </div>
@@ -184,7 +184,7 @@ const big=v=>v==null?'–':v>=1e6?'$'+nf(v/1e6,2)+' mln':v>=1e3?'$'+nf(v/1e3,1)+
 const esc=s=>String(s??'').replace(/[&<>"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
 const tm=iso=>iso?new Date(iso).toLocaleString('pl-PL',{timeZone:'Europe/Warsaw',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):'–';
 const ago=s=>s==null?'–':s<90?Math.round(s)+' s':s<5400?Math.round(s/60)+' min':nf(s/3600,1)+' h';
-const stopL=s=>s<0?'-6%':s===0?'0% · wejście':pct(s,0);
+const stopL=s=>s<0?'-6%':s===0?'0% · wejście':pct(s,1);
 function chart(h,start){
  if(!h||h.length<2)return '<div class="none">Wykres salda pojawi się po kilku minutach pracy</div>';
  const W=1000,H=190,ys=h.map(x=>x.e).concat([start]);let lo=Math.min(...ys),hi=Math.max(...ys);const pad=Math.max((hi-lo)*.15,.3);lo-=pad;hi+=pad;
@@ -199,7 +199,7 @@ function chart(h,start){
  <div style="position:absolute;left:6px;top:${Math.max(0,Math.min(170,Y(start)/H*190-18))}px;font:500 10.5px 'IBM Plex Mono';color:#fbbf24aa">start $${start}</div>`;
 }
 function track(p){
- const lo=-0.10,hi=0.32,x=v=>Math.max(0,Math.min(100,(v-lo)/(hi-lo)*100));
+ const lo=-0.10,hi=Math.max(0.32,(p.peak_gain||0)+0.08),x=v=>Math.max(0,Math.min(100,(v-lo)/(hi-lo)*100));
  const g=p.last_gain||0,pk=p.peak_gain||0,s=p.stop_pct;
  const a=x(Math.min(0,g)),b=x(Math.max(0,g));
  return `<div class="trk"><div class="rail"></div><div class="fill" style="left:${x(0)<a?x(0):a}%;width:${Math.abs(x(g)-x(0))}%"></div>
@@ -219,7 +219,7 @@ async function load(){
  $('stats').innerHTML=[['Transakcje',s.closed,`otwarte: ${s.open}`],['Win rate',s.win_rate==null?'–':Math.round(s.win_rate*100)+'%',`${s.wins} zysk · ${s.closed-s.wins} strata`],
   ['Śr. wynik',`<span class="${c(s.avg_pnl_pct)}">${pct(s.avg_pnl_pct,2)}</span>`,'netto na transakcję'],['Koszty',usd(s.costs_paid),'poślizg + opłaty']]
   .map(k=>`<div class="st"><div class="l">${k[0]}</div><div class="v">${k[1]}</div><div class="s">${k[2]}</div></div>`).join('');
- $('rules').textContent=`Ruch liczony od ceny wejścia (brutto). Stop nigdy nie schodzi w dół. Wynik netto uwzględnia poślizg (min. 1% na stronę) i opłatę sieci. Kapitalizacja przy wejściu: $${nf(d.rules.min_mcap/1e3,0)} tys.–$${nf((d.rules.max_mcap||0)/1e6,0)} mln.`;
+ $('rules').textContent=`Od +24% stop jedzie za ceną: zawsze 12 pkt proc. poniżej szczytu (szczyt +24% → stop +12%, szczyt +60% → stop +48%). Ruch liczony od ceny wejścia (brutto). Stop nigdy nie schodzi w dół. Wynik netto uwzględnia poślizg (min. 1% na stronę) i opłatę sieci. Kapitalizacja przy wejściu: $${nf(d.rules.min_mcap/1e3,0)} tys.–$${nf((d.rules.max_mcap||0)/1e6,0)} mln.`;
  $('npos').textContent=`${d.positions.length} / ${d.rules.max_open}`;
  $('pos').innerHTML=d.positions.length?d.positions.map(p=>`<div class="pc"><div class="t"><div><div class="sym"><a href="${esc(p.url)}" target="_blank" rel="noopener">$${esc(p.symbol)}</a></div><div class="sub">od ${tm(p.entry_iso)} · ${usd(p.cost_usd)} · kap. ${big(p.entry_mcap)}</div></div><div class="mv ${c(p.last_gain)}">${pct(p.last_gain)}</div></div>
   ${track(p)}<div class="kv"><div><span>Szczyt</span><b class="up">${pct(p.peak_gain)}</b></div><div><span>Stop</span><b class="sb">${stopL(p.stop_pct)}</b></div><div><span>Ocena</span><b>${p.score??'–'}</b></div></div></div>`).join(''):'<div class="none">Brak otwartych pozycji — bot czeka na coin w trendzie wzrostowym</div>';
