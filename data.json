@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-17T13:16:07+01:00",
+ "generated": "2026-11-17T13:21:53+01:00",
  "mode": "halted",
  "wallet": "Gyt2TBaQTGskoZ2PfUNcVTC3brSRvmgTQEexvgZ4MP34",
  "equity_usd": 3.3629,
@@ -38,7 +38,7 @@
    "copy_wallet": "6DQAGJT7VZPVBsuG4kn3AvpyHCEi7B2RFFvMZdbqQqqP",
    "copy_label": "@Cupseyy",
    "peak_mcap": 27059,
-   "last_px_ts": "2026-11-17T13:16:05+01:00"
+   "last_px_ts": "2026-11-17T13:16:17+01:00"
   }
  ],
  "closed": [],
@@ -997,9 +997,9 @@
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone (heartbeat + timeout cyklu 90 s)",
-   "age_s": 1,
-   "hb_ts": 1794917766.0536366,
-   "ok": true,
+   "age_s": 327,
+   "hb_ts": 1794917786.057658,
+   "ok": false,
    "status": "ok",
    "restarts": 0
   },
@@ -1007,8 +1007,8 @@
    "key": "xwatch",
    "name": "Obserwator X",
    "desc": "Co ~10 min: wszystkie 181 obserwowane konta w każdym przebiegu (bez rotacji) + wyszukiwanie otwarte",
-   "age_s": 86,
-   "hb_ts": 1794917682.00015,
+   "age_s": 431,
+   "hb_ts": 1794917682.0000916,
    "ok": true,
    "status": "przebiegów: 1899",
    "restarts": 0
@@ -1017,9 +1017,9 @@
    "key": "trader",
    "name": "Egzekutor",
    "desc": "Kupuje i sprzedaje przez Phantom, pilnuje celów i stop-lossów",
-   "age_s": 2,
-   "hb_ts": 1794917765.874735,
-   "ok": true,
+   "age_s": 327,
+   "hb_ts": 1794917785.9659069,
+   "ok": false,
    "status": "ok",
    "restarts": 107
   },
@@ -1045,9 +1045,9 @@
    "key": "copywatch",
    "name": "Copy-Watcher",
    "desc": "Śledzi 4 portfele na łańcuchu co ~25 s: @unipcs i @Cupseyy aktywni ($10 na każdą nową pozycję), pozostałe 2 od $150 zysku",
-   "age_s": 5,
+   "age_s": 351,
    "hb_ts": 1794917762.441875,
-   "ok": true,
+   "ok": false,
    "status": "ok",
    "restarts": 126
   },
@@ -1055,9 +1055,9 @@
    "key": "scout",
    "name": "Scout",
    "desc": "Szuka nowych tokenów DexScreener powiązanych z kontami z listy",
-   "age_s": 1,
+   "age_s": 347,
    "hb_ts": 1794917766.4130905,
-   "ok": true,
+   "ok": false,
    "status": "ok",
    "restarts": 184
   },
@@ -1065,8 +1065,8 @@
    "key": "publisher",
    "name": "Publisher",
    "desc": "Aktualizuje tę stronę",
-   "age_s": 90,
-   "hb_ts": 1794917677.5447304,
+   "age_s": 344,
+   "hb_ts": 1794917768.9092922,
    "ok": true,
    "status": "published",
    "restarts": 148
@@ -2209,10 +2209,6 @@
  ],
  "equity_history": [
   {
-   "t": 1794848180,
-   "e": 12.5922
-  },
-  {
    "t": 1794848271,
    "e": 12.611
   },
@@ -3167,29 +3163,29 @@
   {
    "t": 1794917768,
    "e": 3.3629
+  },
+  {
+   "t": 1794918113,
+   "e": 3.3629
   }
  ],
  "equity_change": {
   "since_start_usd": -18.9393,
   "since_start_pct": -84.92,
   "h24_complete": true,
-  "h24_from_ts": 1794831259,
-  "h24_usd": -9.1359,
-  "h24_pct": -73.09
+  "h24_from_ts": 1794831530,
+  "h24_usd": -9.1285,
+  "h24_pct": -73.08
  },
  "sol_market": {
   "price": 73.11836395,
   "price_src": "Phantom",
-  "change_24h": 3.2427213439714606,
+  "change_24h": 3.4147707145490562,
   "change_src": "CoinGecko",
   "high_24h": 73.4173,
   "low_24h": 70.1297,
-  "open_24h": 70.7576,
+  "open_24h": 70.7779,
   "chart": [
-   [
-    1794831600,
-    70.7576
-   ],
    [
     1794831900,
     70.7779
@@ -4347,7 +4343,11 @@
     73.1184
    ],
    [
-    1794917768,
+    1794918113,
+    73.1184
+   ],
+   [
+    1794918113,
     73.1184
    ]
   ],
