@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-17T18:38:16+01:00",
+ "generated": "2026-11-17T18:39:17+01:00",
  "mode": "PAPER",
  "stats": {
-  "equity": 101.3644,
+  "equity": 101.3596,
   "start": 100.0,
   "cash": 74.4218,
   "realized": -0.5982,
-  "unrealized": 1.9626,
+  "unrealized": 1.9578,
   "open": 5,
   "closed": 1,
   "wins": 0,
@@ -46,7 +46,7 @@
    "entry_mcap": 145060662.0,
    "entry_liq": 3085590.74,
    "score": 60.2,
-   "last_quote_iso": "2026-11-17T18:37:57+01:00"
+   "last_quote_iso": "2026-11-17T18:39:00+01:00"
   },
   {
    "symbol": "STONK",
@@ -55,14 +55,14 @@
    "entry_iso": "2026-11-17T18:10:16+01:00",
    "cost_usd": 4.99,
    "entry_price": 0.04333,
-   "last_price": 0.04373,
-   "last_gain": 0.009231479344564919,
+   "last_price": 0.04391,
+   "last_gain": 0.013385645049619033,
    "peak_gain": 0.01753981075467337,
    "stop_pct": -0.06,
    "entry_mcap": 43338143.0,
    "entry_liq": 1982418.05,
    "score": 62.3,
-   "last_quote_iso": "2026-11-17T18:37:57+01:00"
+   "last_quote_iso": "2026-11-17T18:39:00+01:00"
   },
   {
    "symbol": "DacityCoin",
@@ -71,14 +71,14 @@
    "entry_iso": "2026-11-17T18:11:46+01:00",
    "cost_usd": 4.96,
    "entry_price": 0.006273,
-   "last_price": 0.00786,
-   "last_gain": 0.25298900047824024,
+   "last_price": 0.007784,
+   "last_gain": 0.2408735852064403,
    "peak_gain": 0.3430575482225411,
    "stop_pct": 0.12,
    "entry_mcap": 6087267.0,
    "entry_liq": 352257.26,
    "score": 77.0,
-   "last_quote_iso": "2026-11-17T18:37:57+01:00"
+   "last_quote_iso": "2026-11-17T18:39:00+01:00"
   },
   {
    "symbol": "ANSEM",
@@ -94,7 +94,7 @@
    "entry_mcap": 58861.0,
    "entry_liq": 91482.03,
    "score": 78.2,
-   "last_quote_iso": "2026-11-17T18:37:57+01:00"
+   "last_quote_iso": "2026-11-17T18:39:00+01:00"
   },
   {
    "symbol": "INFI",
@@ -103,14 +103,14 @@
    "entry_iso": "2026-11-17T18:20:45+01:00",
    "cost_usd": 5.01,
    "entry_price": 5.373e-05,
-   "last_price": 6.297e-05,
-   "last_gain": 0.17197096594081507,
-   "peak_gain": 0.17197096594081507,
+   "last_price": 6.334e-05,
+   "last_gain": 0.17885724920900792,
+   "peak_gain": 0.17885724920900792,
    "stop_pct": 0.0,
    "entry_mcap": 53730.0,
    "entry_liq": 57007.07,
    "score": 67.9,
-   "last_quote_iso": "2026-11-17T18:37:57+01:00"
+   "last_quote_iso": "2026-11-17T18:39:00+01:00"
   }
  ],
  "closed": [
@@ -176,6 +176,10 @@
   {
    "t": 1794937096,
    "e": 101.3644
+  },
+  {
+   "t": 1794937158,
+   "e": 101.3596
   }
  ],
  "filter": {
@@ -416,7 +420,7 @@
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone",
-   "age_s": 3,
+   "age_s": 4,
    "ok": true,
    "restarts": 0
   },
@@ -424,7 +428,7 @@
    "key": "scanner",
    "name": "Scanner + Analityk",
    "desc": "Zbiera coiny z DexScreenera, Jupitera, Raydiuma, GeckoTerminala i ocenia momentum (0–100)",
-   "age_s": 44,
+   "age_s": 60,
    "ok": true,
    "restarts": 0
   },
@@ -432,7 +436,7 @@
    "key": "filter",
    "name": "Filtr",
    "desc": "Odrzuca coiny spoza $40 tys.–$2 mln, bez trendu wzrostowego, z małą płynnością; loguje powody",
-   "age_s": 2,
+   "age_s": 4,
    "ok": true,
    "restarts": 0
   },
@@ -440,7 +444,7 @@
    "key": "trader",
    "name": "Trader (papier)",
    "desc": "Symuluje kupno/sprzedaż z poślizgiem i opłatami, pilnuje drabinki stopu co 20 s",
-   "age_s": 1,
+   "age_s": 2,
    "ok": true,
    "restarts": 0
   },
