@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-17T18:40:18+01:00",
+ "generated": "2026-11-17T18:41:20+01:00",
  "mode": "PAPER",
  "stats": {
-  "equity": 101.4412,
+  "equity": 101.3322,
   "start": 100.0,
   "cash": 74.4218,
   "realized": -0.5982,
-  "unrealized": 2.0394,
+  "unrealized": 1.9304,
   "open": 5,
   "closed": 1,
   "wins": 0,
@@ -39,14 +39,14 @@
    "entry_iso": "2026-11-17T18:07:11+01:00",
    "cost_usd": 5.0,
    "entry_price": 0.1628,
-   "last_price": 0.1611,
-   "last_gain": -0.010442260442260487,
+   "last_price": 0.1618,
+   "last_gain": -0.00614250614250611,
    "peak_gain": 0.0012285012285011554,
    "stop_pct": -0.06,
    "entry_mcap": 145060662.0,
    "entry_liq": 3085590.74,
    "score": 60.2,
-   "last_quote_iso": "2026-11-17T18:40:03+01:00"
+   "last_quote_iso": "2026-11-17T18:41:06+01:00"
   },
   {
    "symbol": "STONK",
@@ -62,7 +62,7 @@
    "entry_mcap": 43338143.0,
    "entry_liq": 1982418.05,
    "score": 62.3,
-   "last_quote_iso": "2026-11-17T18:40:03+01:00"
+   "last_quote_iso": "2026-11-17T18:41:06+01:00"
   },
   {
    "symbol": "DacityCoin",
@@ -71,14 +71,14 @@
    "entry_iso": "2026-11-17T18:11:46+01:00",
    "cost_usd": 4.96,
    "entry_price": 0.006273,
-   "last_price": 0.007792,
-   "last_gain": 0.24214889207715617,
+   "last_price": 0.007612,
+   "last_gain": 0.21345448748605134,
    "peak_gain": 0.3430575482225411,
    "stop_pct": 0.12,
    "entry_mcap": 6087267.0,
    "entry_liq": 352257.26,
    "score": 77.0,
-   "last_quote_iso": "2026-11-17T18:40:03+01:00"
+   "last_quote_iso": "2026-11-17T18:41:06+01:00"
   },
   {
    "symbol": "ANSEM",
@@ -94,7 +94,7 @@
    "entry_mcap": 58861.0,
    "entry_liq": 91482.03,
    "score": 78.2,
-   "last_quote_iso": "2026-11-17T18:40:03+01:00"
+   "last_quote_iso": "2026-11-17T18:41:06+01:00"
   },
   {
    "symbol": "INFI",
@@ -103,14 +103,14 @@
    "entry_iso": "2026-11-17T18:20:45+01:00",
    "cost_usd": 5.01,
    "entry_price": 5.373e-05,
-   "last_price": 6.416e-05,
-   "last_gain": 0.19411874185743527,
-   "peak_gain": 0.19411874185743527,
+   "last_price": 6.427e-05,
+   "last_gain": 0.1961660152614928,
+   "peak_gain": 0.20361064582170108,
    "stop_pct": 0.0,
    "entry_mcap": 53730.0,
    "entry_liq": 57007.07,
    "score": 67.9,
-   "last_quote_iso": "2026-11-17T18:40:03+01:00"
+   "last_quote_iso": "2026-11-17T18:41:06+01:00"
   }
  ],
  "closed": [
@@ -184,30 +184,35 @@
   {
    "t": 1794937219,
    "e": 101.4412
+  },
+  {
+   "t": 1794937280,
+   "e": 101.3322
   }
  ],
  "filter": {
-  "ts": "2026-11-17T18:39:29+01:00",
-  "n": 806,
+  "ts": "2026-11-17T18:41:19+01:00",
+  "n": 809,
   "passed": 1,
   "reject_counts": {
-   "mcap<40000": 517,
-   "pair_too_new": 358,
+   "pair_too_new": 365,
+   "mcap<40000": 524,
    "overextended_m5": 29,
-   "liq<10000": 497,
-   "vol_h1<5000": 544,
+   "liq<10000": 505,
+   "overextended_h1": 15,
+   "vol_h1<5000": 549,
    "low_activity_m5": 595,
-   "overextended_h1": 12,
-   "downtrend_h6": 447,
-   "sells>buys_m5": 574,
-   "downtrend_m5": 656,
-   "mcap>2000000": 138,
-   "sells>buys_h1": 318,
-   "downtrend_h1": 542,
    "reentry_cooldown": 1,
-   "volume_fading": 596,
+   "volume_fading": 592,
+   "sells>buys_m5": 575,
+   "downtrend_m5": 649,
+   "downtrend_h6": 441,
+   "mcap>2000000": 136,
+   "sells>buys_h1": 329,
+   "downtrend_h1": 542,
    "already_held": 5,
-   "no_price": 21
+   "no_price": 26,
+   "score<50": 1
   }
  },
  "reason_pl": {
@@ -232,26 +237,14 @@
  },
  "near": [
   {
-   "symbol": "OPNW",
-   "score": 11.1,
-   "mcap": 95420,
-   "liq": 15309,
+   "symbol": "ANT",
+   "score": 26.9,
+   "mcap": 1480233,
+   "liq": 125070,
    "chg_m5": 0.1,
-   "chg_h1": 0.14,
+   "chg_h1": 2.19,
    "reasons": [
-    "sells>buys_h1 (0.99)"
-   ]
-  },
-  {
-   "symbol": "swordcat",
-   "score": 40.0,
-   "mcap": 562336,
-   "liq": 92547,
-   "chg_m5": 2.2,
-   "chg_h1": 1.67,
-   "reasons": [
-    "vol_h1<5000",
-    "low_activity_m5"
+    "score<50 (26.9)"
    ]
   },
   {
@@ -267,119 +260,134 @@
    ]
   },
   {
-   "symbol": "Peekhole",
-   "score": 38.2,
-   "mcap": 556643,
-   "liq": 77394,
-   "chg_m5": -4.7,
-   "chg_h1": 14.08,
+   "symbol": "WANTED",
+   "score": 36.9,
+   "mcap": 307259,
+   "liq": 51912,
+   "chg_m5": 7.07,
+   "chg_h1": 23.57,
    "reasons": [
-    "downtrend_m5 (-4.7%)",
-    "sells>buys_m5 (0.77)"
+    "sells>buys_h1 (0.89)",
+    "volume_fading (0.30)"
    ]
   },
   {
-   "symbol": "GROKIA",
-   "score": 36.6,
-   "mcap": 40663,
-   "liq": 18978,
-   "chg_m5": 2.43,
-   "chg_h1": 16.46,
+   "symbol": "swordcat",
+   "score": 36.1,
+   "mcap": 562336,
+   "liq": 92547,
+   "chg_m5": 0.25,
+   "chg_h1": 1.67,
    "reasons": [
-    "low_activity_m5",
-    "volume_fading (0.20)"
+    "vol_h1<5000",
+    "low_activity_m5"
+   ]
+  },
+  {
+   "symbol": "HUNG",
+   "score": 34.4,
+   "mcap": 98183,
+   "liq": 35598,
+   "chg_m5": 4.26,
+   "chg_h1": -12.32,
+   "reasons": [
+    "downtrend_h1 (-12.32%)",
+    "volume_fading (0.73)"
    ]
   },
   {
    "symbol": "UVXY",
-   "score": 35.1,
-   "mcap": 395515,
-   "liq": 67444,
-   "chg_m5": 0.99,
-   "chg_h1": -2.84,
+   "score": 33.6,
+   "mcap": 396928,
+   "liq": 67547,
+   "chg_m5": 0.9,
+   "chg_h1": -2.49,
    "reasons": [
-    "downtrend_h1 (-2.84%)",
-    "sells>buys_h1 (0.92)"
+    "downtrend_h1 (-2.49%)",
+    "sells>buys_h1 (0.97)"
    ]
   },
   {
-   "symbol": "REFU",
-   "score": 33.4,
-   "mcap": 176563,
-   "liq": 30085,
-   "chg_m5": 2.73,
-   "chg_h1": 310.0,
+   "symbol": "GEKKO",
+   "score": 27.4,
+   "mcap": 94766,
+   "liq": 23437,
+   "chg_m5": -17.55,
+   "chg_h1": -41.01,
    "reasons": [
-    "volume_fading (0.06)",
-    "overextended_h1 (310.0%)"
+    "downtrend_m5 (-17.55%)",
+    "downtrend_h1 (-41.01%)"
    ]
   },
   {
-   "symbol": "SPCXx",
-   "score": 29.9,
-   "mcap": 81633080,
-   "liq": 114489,
-   "chg_m5": 0.1,
-   "chg_h1": 0.24,
+   "symbol": "FTX Token",
+   "score": 23.4,
+   "mcap": 49105,
+   "liq": 32858,
+   "chg_m5": -3.41,
+   "chg_h1": 3.47,
    "reasons": [
-    "mcap>2000000 (81633080)",
-    "volume_fading (0.46)"
+    "downtrend_m5 (-3.41%)",
+    "sells>buys_m5 (0.85)"
    ]
   },
   {
-   "symbol": "ANT",
-   "score": 25.7,
-   "mcap": 1488779,
-   "liq": 125302,
-   "chg_m5": -0.09,
-   "chg_h1": 3.54,
+   "symbol": "CHAR",
+   "score": 37.0,
+   "mcap": 102412,
+   "liq": 25015,
+   "chg_m5": -10.06,
+   "chg_h1": 13.9,
    "reasons": [
-    "downtrend_m5 (-0.09%)",
-    "volume_fading (0.78)"
+    "downtrend_m5 (-10.06%)",
+    "downtrend_h6 (-30.3%)",
+    "volume_fading (0.61)"
    ]
   },
   {
-   "symbol": "WANTED",
-   "score": 25.2,
-   "mcap": 299316,
-   "liq": 51257,
-   "chg_m5": 1.92,
-   "chg_h1": 28.04,
+   "symbol": "bill",
+   "score": 36.5,
+   "mcap": 121801,
+   "liq": 40124,
+   "chg_m5": 2.33,
+   "chg_h1": -8.5,
    "reasons": [
-    "sells>buys_h1 (0.89)",
-    "volume_fading (0.33)"
+    "downtrend_h1 (-8.5%)",
+    "low_activity_m5",
+    "volume_fading (0.03)"
    ]
   },
   {
-   "symbol": "JEANPHIL",
-   "score": 21.9,
-   "mcap": 496342,
-   "liq": 48695,
-   "chg_m5": 2.08,
-   "chg_h1": 9.13,
+   "symbol": "Mikol",
+   "score": 35.3,
+   "mcap": 55160,
+   "liq": 16617,
+   "chg_m5": 1.39,
+   "chg_h1": -10.87,
    "reasons": [
-    "sells>buys_m5 (0.90)",
-    "sells>buys_h1 (0.73)"
+    "downtrend_h1 (-10.87%)",
+    "low_activity_m5",
+    "volume_fading (0.01)"
    ]
   },
   {
-   "symbol": "WBTC",
-   "score": 40.2,
-   "mcap": 246309779,
-   "liq": 1241980,
-   "chg_m5": 0.13,
-   "chg_h1": 0.21,
+   "symbol": "HOGE",
+   "score": 35.0,
+   "mcap": 790314,
+   "liq": 106335,
+   "chg_m5": -3.47,
+   "chg_h1": -4.08,
    "reasons": [
-    "mcap>2000000 (246309779)",
-    "downtrend_h6 (-1.19%)",
-    "volume_fading (0.45)"
+    "downtrend_m5 (-3.47%)",
+    "downtrend_h1 (-4.08%)",
+    "sells>buys_m5 (0.62)"
    ]
   }
  ],
  "sources": {
   "counts": {
    "ds_profiles_latest": 23,
-   "ds_profiles_recent": 23,
+   "ds_profiles_recent": 24,
    "ds_boosts_latest": 26,
    "ds_boosts_top": 28,
    "ds_cto": 8,
@@ -391,18 +399,18 @@
    "ds_search_pumpfun": 30,
    "ds_search_raydium": 30,
    "ds_search_letsbonk": 1,
-   "jup_toptrending_1h": "ERR HTTP Error 429: Too Many Requests",
-   "jup_toporganic_1h": "ERR HTTP Error 429: Too Many Requests",
-   "jup_toptrending_6h": "ERR HTTP Error 429: Too Many Requests",
+   "jup_toptrending_1h": 50,
+   "jup_toporganic_1h": 47,
+   "jup_toptrending_6h": 50,
    "jup_toporganic_6h": "ERR HTTP Error 429: Too Many Requests",
-   "jup_recent": "ERR HTTP Error 429: Too Many Requests",
+   "jup_recent": 30,
    "pump_graduated_p0": "ERR blocked (Cloudflare 403) - skipped, no bypass",
    "pump_graduated_p1": "ERR blocked (Cloudflare 403) - skipped, no bypass",
    "pump_complete_mcap": "ERR blocked (Cloudflare 403) - skipped, no bypass",
    "pump_adv_graduated": "ERR blocked (Cloudflare 403) - skipped, no bypass",
    "ray_volume": 49,
    "ray_standard": 59,
-   "launchlab_lasttrade": 150,
+   "launchlab_lasttrade": 149,
    "launchlab_new": 116,
    "gt_trending": 40,
    "gt_trend5m": 20,
@@ -418,17 +426,17 @@
    "gt_launchlab": 20,
    "gt_letsbonk": 20
   },
-  "discovered": 533,
+  "discovered": 623,
   "watch": 1000,
-  "priced": 806,
-  "ts": 1794937164.9411094
+  "priced": 809,
+  "ts": 1794937277.620324
  },
  "agents": [
   {
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone",
-   "age_s": 6,
+   "age_s": 7,
    "ok": true,
    "restarts": 0
   },
@@ -436,7 +444,7 @@
    "key": "scanner",
    "name": "Scanner + Analityk",
    "desc": "Zbiera coiny z DexScreenera, Jupitera, Raydiuma, GeckoTerminala i ocenia momentum (0–100)",
-   "age_s": 9,
+   "age_s": 2,
    "ok": true,
    "restarts": 0
   },
@@ -444,7 +452,7 @@
    "key": "filter",
    "name": "Filtr",
    "desc": "Odrzuca coiny spoza $40 tys.–$2 mln, bez trendu wzrostowego, z małą płynnością; loguje powody",
-   "age_s": 5,
+   "age_s": 1,
    "ok": true,
    "restarts": 0
   },
@@ -452,7 +460,7 @@
    "key": "trader",
    "name": "Trader (papier)",
    "desc": "Symuluje kupno/sprzedaż z poślizgiem i opłatami, pilnuje drabinki stopu co 20 s",
-   "age_s": 0,
+   "age_s": 1,
    "ok": true,
    "restarts": 0
   },
