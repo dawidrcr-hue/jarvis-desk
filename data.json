@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-19T19:28:15+01:00",
+ "generated": "2026-11-19T19:28:17+01:00",
  "mode": "PAPER",
  "stats": {
   "equity": 19.996,
@@ -26,10 +26,25 @@
   ],
   "trail_after": 0.24,
   "trail_gap": 0.12,
+  "trail_tiers": [
+   [
+    0.24,
+    0.12
+   ],
+   [
+    1.0,
+    0.2
+   ],
+   [
+    2.0,
+    0.25
+   ]
+  ],
+  "ladder_note_pl": "Stop -6%; po +12% → stop na wejściu; od +24% trailing 12 pkt, od +100% trailing 20 pkt, od +200% trailing 25 pkt",
   "min_mcap": 40000,
   "max_mcap": 300000,
   "filter": {
-   "min_liquidity_usd": 10000,
+   "min_liquidity_usd": 30000,
    "min_vol_h1_usd": 5000,
    "min_pair_age_min": 30,
    "min_m5_txns": 10,
@@ -61,7 +76,7 @@
    "entry_mcap": 76497.0,
    "entry_liq": 108202.68,
    "score": 85.1,
-   "last_quote_iso": "2026-11-19T19:28:12+01:00"
+   "last_quote_iso": "2026-11-19T19:28:15+01:00"
   }
  ],
  "closed": [
@@ -493,7 +508,7 @@
  "reason_pl": {
   "mcap<40000": "kapitalizacja < $40 tys.",
   "mcap>2000000": "kapitalizacja > $2 mln",
-  "liq<10000": "płynność < $10 tys.",
+  "liq<30000": "płynność < $30 tys.",
   "vol_h1<5000": "wolumen 1h < $5 tys.",
   "pair_too_new": "para młodsza niż 30 min",
   "downtrend_m5": "spadek 5m",
@@ -715,7 +730,7 @@
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone",
-   "age_s": 2,
+   "age_s": 5,
    "ok": true,
    "restarts": 0
   },
@@ -723,7 +738,7 @@
    "key": "scanner",
    "name": "Scanner + Analityk",
    "desc": "Zbiera coiny z DexScreenera, Jupitera, Raydiuma, GeckoTerminala i ocenia momentum (0–100)",
-   "age_s": 13,
+   "age_s": 15,
    "ok": true,
    "restarts": 0
   },
@@ -731,7 +746,7 @@
    "key": "filter",
    "name": "Filtr",
    "desc": "Odrzuca coiny spoza zakresu kapitalizacji (config), bez trendu wzrostowego, z małą płynnością; loguje powody",
-   "age_s": 1,
+   "age_s": 4,
    "ok": true,
    "restarts": 0
   },
