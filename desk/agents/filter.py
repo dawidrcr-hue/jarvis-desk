@@ -14,10 +14,24 @@ def decision_log_many(recs):
         for rec in recs:
             f.write(json.dumps(rec, ensure_ascii=False, default=str) + "\n")
 
+PROBE_MINT = "So11111111111111111111111111111111111111112"   # wrapped SOL: only checks RugCheck is reachable from this runner
+
+def probe():
+    """Reachability probe (not a buy decision). Logged like a real check so the site shows it."""
+    try:
+        rep = safety.fetch_report(PROBE_MINT, safety.conf(cfg())["timeout_s"])
+        ok, err = isinstance(rep, dict) and bool(rep.get("mint") or rep.get("token")), None
+    except Exception as e:
+        ok, err = False, repr(e)[:200]
+    log("filter", "rugcheck", symbol="PROBE", mint=PROBE_MINT, ok=ok, cached=False,
+        reasons=[] if ok else ["rugcheck_unavailable (probe)"], summary=None, err=err)
+
 def main():
-    last_ts = 0
+    last_ts = 0; last_probe = 0
     while True:
         heartbeat("filter", status="ok")
+        if time.time() - last_probe > 1800:
+            last_probe = time.time(); probe()
         try:
             snap = load(P("state", "candidates.json"), {})
             if snap.get("ts", 0) > last_ts:
