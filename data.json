@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-19T17:14:08+01:00",
+ "generated": "2026-11-19T17:24:03+01:00",
  "mode": "PAPER",
  "stats": {
-  "equity": 21.0552,
+  "equity": 20.837,
   "start": 20.0,
   "cash": 6.5588,
   "realized": -2.3012,
-  "unrealized": 3.3564,
+  "unrealized": 3.1382,
   "open": 3,
   "closed": 7,
   "wins": 1,
@@ -44,7 +44,7 @@
    "entry_mcap": 533364.0,
    "entry_liq": 105803.58,
    "score": 60.9,
-   "last_quote_iso": "2026-11-19T17:14:05+01:00"
+   "last_quote_iso": "2026-11-19T17:14:14+01:00"
   },
   {
    "symbol": "UVXY",
@@ -60,7 +60,7 @@
    "entry_mcap": 401274.0,
    "entry_liq": 69012.0,
    "score": 63.2,
-   "last_quote_iso": "2026-11-19T17:14:05+01:00"
+   "last_quote_iso": "2026-11-19T17:14:14+01:00"
   },
   {
    "symbol": "DCTY",
@@ -69,14 +69,14 @@
    "entry_iso": "2026-11-19T16:58:29+01:00",
    "cost_usd": 3.65,
    "entry_price": 9.39e-05,
-   "last_price": 0.0001823,
-   "last_gain": 0.9414270500532482,
+   "last_price": 0.0001766,
+   "last_gain": 0.8807241746538872,
    "peak_gain": 0.9414270500532482,
    "stop_pct": 0.821427,
    "entry_mcap": 89361.0,
    "entry_liq": 21295.37,
    "score": 64.1,
-   "last_quote_iso": "2026-11-19T17:14:05+01:00"
+   "last_quote_iso": "2026-11-19T17:14:14+01:00"
   }
  ],
  "closed": [
@@ -332,6 +332,10 @@
   {
    "t": 1795104848,
    "e": 21.0552
+  },
+  {
+   "t": 1795105444,
+   "e": 20.837
   }
  ],
  "filter": {
@@ -573,7 +577,7 @@
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone",
-   "age_s": 3,
+   "age_s": 0,
    "ok": true,
    "restarts": 0
   },
@@ -581,23 +585,23 @@
    "key": "scanner",
    "name": "Scanner + Analityk",
    "desc": "Zbiera coiny z DexScreenera, Jupitera, Raydiuma, GeckoTerminala i ocenia momentum (0–100)",
-   "age_s": 10,
-   "ok": true,
-   "restarts": 1
+   "age_s": 605,
+   "ok": false,
+   "restarts": 2
   },
   {
    "key": "filter",
    "name": "Filtr",
    "desc": "Odrzuca coiny spoza $40 tys.–$2 mln, bez trendu wzrostowego, z małą płynnością; loguje powody",
-   "age_s": 3,
-   "ok": true,
-   "restarts": 2
+   "age_s": 588,
+   "ok": false,
+   "restarts": 3
   },
   {
    "key": "trader",
    "name": "Trader (papier)",
    "desc": "Symuluje kupno/sprzedaż z poślizgiem i opłatami, pilnuje drabinki stopu co 20 s",
-   "age_s": 3,
+   "age_s": 0,
    "ok": true,
    "restarts": 2
   },
