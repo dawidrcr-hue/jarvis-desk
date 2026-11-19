@@ -1,13 +1,13 @@
 {
- "generated": "2026-11-19T16:25:27+01:00",
+ "generated": "2026-11-19T16:26:05+01:00",
  "mode": "PAPER",
  "stats": {
-  "equity": 20.0,
+  "equity": 19.7444,
   "start": 20.0,
-  "cash": 20.0,
+  "cash": 4.04,
   "realized": 0,
-  "unrealized": 0,
-  "open": 0,
+  "unrealized": -0.2556,
+  "open": 4,
   "closed": 0,
   "wins": 0,
   "win_rate": null,
@@ -29,7 +29,72 @@
   "min_mcap": 40000,
   "max_mcap": 2000000
  },
- "positions": [],
+ "positions": [
+  {
+   "symbol": "YUKON",
+   "mint": "HMdJzGtSqENEDYRouQ7S9Hdg6JT7wj5G7LovbHCypump",
+   "url": "https://dexscreener.com/solana/b69vr5r5xmjigydu5qqmzosqcnir3trwujdyuhbdpe9h",
+   "entry_iso": "2026-11-19T16:25:27+01:00",
+   "cost_usd": 4.0,
+   "entry_price": 6.697e-05,
+   "last_price": 6.624e-05,
+   "last_gain": -0.010900403165596595,
+   "peak_gain": 0.012990891443930064,
+   "stop_pct": -0.06,
+   "entry_mcap": 64542.0,
+   "entry_liq": 22055.27,
+   "score": 83.5,
+   "last_quote_iso": "2026-11-19T16:25:49+01:00"
+  },
+  {
+   "symbol": "Mandy",
+   "mint": "2xCd5qHX5tW6pGUo7zfgHSSAnRjJwPA7Sz1Fu4fWcJjX",
+   "url": "https://dexscreener.com/solana/cduuhndbkyxckshmjyruxpvvrcjo6gikb6hp9z9zyqwk",
+   "entry_iso": "2026-11-19T16:25:30+01:00",
+   "cost_usd": 4.0,
+   "entry_price": 0.0004476,
+   "last_price": 0.0004531,
+   "last_gain": 0.01228775692582662,
+   "peak_gain": 0.01228775692582662,
+   "stop_pct": -0.06,
+   "entry_mcap": 416218.0,
+   "entry_liq": 61758.52,
+   "score": 78.8,
+   "last_quote_iso": "2026-11-19T16:25:49+01:00"
+  },
+  {
+   "symbol": "Buncoin",
+   "mint": "8ryYEFySsfXfQskxYmykyyA6pbNKjB4s9CfcffpQpump",
+   "url": "https://dexscreener.com/solana/9jfrxyffre8kjnx8hdfeq6vtmk54y8hhzqdu4qzvkjz8",
+   "entry_iso": "2026-11-19T16:25:31+01:00",
+   "cost_usd": 3.99,
+   "entry_price": 0.0001329,
+   "last_price": 0.0001346,
+   "last_gain": 0.012791572610985513,
+   "peak_gain": 0.012791572610985513,
+   "stop_pct": -0.06,
+   "entry_mcap": 127503.0,
+   "entry_liq": 32994.63,
+   "score": 68.4,
+   "last_quote_iso": "2026-11-19T16:25:49+01:00"
+  },
+  {
+   "symbol": "PIPI",
+   "mint": "6MKD1NkLvWRqdbFtqmgACBwUV5o6GJpZry8HkNgzpump",
+   "url": "https://dexscreener.com/solana/2egutkmqkefqk3922tnsqbxmzzc6gnyuqazbecmfk4eg",
+   "entry_iso": "2026-11-19T16:25:31+01:00",
+   "cost_usd": 3.97,
+   "entry_price": 0.000997,
+   "last_price": 0.0009781,
+   "last_gain": -0.018956870611835597,
+   "peak_gain": 0.0,
+   "stop_pct": -0.06,
+   "entry_mcap": 960036.0,
+   "entry_liq": 98177.42,
+   "score": 67.0,
+   "last_quote_iso": "2026-11-19T16:25:49+01:00"
+  }
+ ],
  "closed": [],
  "equity_history": [
   {
@@ -38,9 +103,9 @@
   }
  ],
  "filter": {
-  "ts": "2026-11-19T16:23:29+01:00",
+  "ts": "2026-11-19T16:25:27+01:00",
   "n": 496,
-  "passed": 5,
+  "passed": 6,
   "reject_counts": {
    "mcap<40000": 248,
    "pair_too_new": 111,
@@ -54,10 +119,8 @@
    "downtrend_h1": 317,
    "downtrend_m5": 396,
    "downtrend_h6": 222,
-   "already_held": 2,
    "sells>buys_h1": 233,
    "sells>buys_m5": 283,
-   "reentry_cooldown": 1,
    "no_price": 18
   }
  },
@@ -273,7 +336,7 @@
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone",
-   "age_s": 0,
+   "age_s": 8,
    "ok": true,
    "restarts": 0
   },
@@ -281,7 +344,7 @@
    "key": "scanner",
    "name": "Scanner + Analityk",
    "desc": "Zbiera coiny z DexScreenera, Jupitera, Raydiuma, GeckoTerminala i ocenia momentum (0–100)",
-   "age_s": 0,
+   "age_s": 38,
    "ok": true,
    "restarts": 0
   },
@@ -289,7 +352,7 @@
    "key": "filter",
    "name": "Filtr",
    "desc": "Odrzuca coiny spoza $40 tys.–$2 mln, bez trendu wzrostowego, z małą płynnością; loguje powody",
-   "age_s": 0,
+   "age_s": 3,
    "ok": true,
    "restarts": 0
   },
@@ -297,7 +360,7 @@
    "key": "trader",
    "name": "Trader (papier)",
    "desc": "Symuluje kupno/sprzedaż z poślizgiem i opłatami, pilnuje drabinki stopu co 20 s",
-   "age_s": 0,
+   "age_s": 1,
    "ok": true,
    "restarts": 0
   },
