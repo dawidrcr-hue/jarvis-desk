@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-19T19:07:08+01:00",
+ "generated": "2026-11-19T19:07:42+01:00",
  "mode": "PAPER",
  "stats": {
   "equity": 20.9188,
@@ -372,52 +372,12 @@
   }
  ],
  "filter": {
-  "ts": "2026-11-19T19:06:24+01:00",
-  "n": 404,
-  "passed": 1,
-  "reject_counts": {
-   "mcap<40000": 149,
-   "liq<10000": 129,
-   "pair_too_new": 48,
-   "overextended_m5": 10,
-   "vol_h1<5000": 226,
-   "volume_fading": 292,
-   "overextended_h1": 5,
-   "low_activity_m5": 262,
-   "mcap>300000": 168,
-   "downtrend_h1": 203,
-   "downtrend_h6": 217,
-   "downtrend_m5": 267,
-   "sells>buys_m5": 240,
-   "sells>buys_h1": 186,
-   "reentry_cooldown": 3,
-   "already_held": 4,
-   "no_price": 12
-  }
+  "ts": null,
+  "n": null,
+  "passed": null,
+  "reject_counts": {}
  },
- "rugcheck_recent": [
-  {
-   "ts": "2026-11-19T19:06:24+01:00",
-   "symbol": "Fiona",
-   "mint": "B7ncNzYdp71UxqmMQZFL8o2idEZdC1ix9W79J1t8pump",
-   "ok": true,
-   "cached": false,
-   "reasons": [],
-   "summary": {
-    "score_norm": 1,
-    "top10_pct": 30.12,
-    "top1_pct": 3.81,
-    "creator_pct": 0.0,
-    "lp_locked_pct": 100.0,
-    "market": "pump_fun_amm",
-    "dangers": [],
-    "rugged": false,
-    "launchpad": "pump_fun",
-    "insiders": 5
-   },
-   "err": null
-  }
- ],
+ "rugcheck_recent": [],
  "reason_pl": {
   "mcap<40000": "kapitalizacja < $40 tys.",
   "mcap>2000000": "kapitalizacja > $2 mln",
@@ -454,201 +414,20 @@
   "score<65": "ocena analityka < 65",
   "mcap>300000": "kapitalizacja > $300 tys."
  },
- "near": [
-  {
-   "symbol": "Rings",
-   "score": 58.9,
-   "mcap": 82023,
-   "liq": 19750,
-   "chg_m5": 33.44,
-   "chg_h1": 171.0,
-   "reasons": [
-    "overextended_m5 (33.44%)"
-   ]
-  },
-  {
-   "symbol": "Altruists",
-   "score": 53.6,
-   "mcap": 120667,
-   "liq": 32983,
-   "chg_m5": 4.24,
-   "chg_h1": 49.77,
-   "reasons": [
-    "volume_fading (0.53)"
-   ]
-  },
-  {
-   "symbol": "GMEx",
-   "score": 27.4,
-   "mcap": 163970,
-   "liq": 383631,
-   "chg_m5": 1.26,
-   "chg_h1": 1.97,
-   "reasons": [
-    "volume_fading (0.36)"
-   ]
-  },
-  {
-   "symbol": "FTX Token",
-   "score": 26.9,
-   "mcap": 50721,
-   "liq": 40907,
-   "chg_m5": 0.52,
-   "chg_h1": 1.62,
-   "reasons": [
-    "volume_fading (0.39)"
-   ]
-  },
-  {
-   "symbol": "FLOAT",
-   "score": 69.2,
-   "mcap": 1351125,
-   "liq": 212177,
-   "chg_m5": 5.02,
-   "chg_h1": -3.72,
-   "reasons": [
-    "mcap>300000 (1351125)",
-    "downtrend_h1 (-3.72%)"
-   ]
-  },
-  {
-   "symbol": "AVENGERS",
-   "score": 61.8,
-   "mcap": 70807,
-   "liq": 18726,
-   "chg_m5": 10.73,
-   "chg_h1": 1.15,
-   "reasons": [
-    "vol_h1<5000",
-    "low_activity_m5"
-   ]
-  },
-  {
-   "symbol": "GTA6",
-   "score": 60.1,
-   "mcap": 2109463,
-   "liq": 189553,
-   "chg_m5": 2.47,
-   "chg_h1": 8.47,
-   "reasons": [
-    "mcap>300000 (2109463)",
-    "downtrend_h6 (-44.13%)"
-   ]
-  },
-  {
-   "symbol": "swordcat",
-   "score": 59.4,
-   "mcap": 594027,
-   "liq": 96685,
-   "chg_m5": 9.45,
-   "chg_h1": 2.48,
-   "reasons": [
-    "mcap>300000 (594027)",
-    "sells>buys_m5 (0.31)"
-   ]
-  },
-  {
-   "symbol": "AMD",
-   "score": 58.1,
-   "mcap": 167951,
-   "liq": 50037,
-   "chg_m5": 2.1,
-   "chg_h1": 3.56,
-   "reasons": [
-    "vol_h1<5000",
-    "low_activity_m5"
-   ]
-  },
-  {
-   "symbol": "UNITY",
-   "score": 53.7,
-   "mcap": 967285,
-   "liq": 113961,
-   "chg_m5": 7.33,
-   "chg_h1": 0.17,
-   "reasons": [
-    "mcap>300000 (967285)",
-    "volume_fading (0.63)"
-   ]
-  },
-  {
-   "symbol": "WASTED",
-   "score": 49.6,
-   "mcap": 901704,
-   "liq": 93631,
-   "chg_m5": 4.0,
-   "chg_h1": 10.96,
-   "reasons": [
-    "mcap>300000 (901704)",
-    "downtrend_h6 (-4.39%)"
-   ]
-  },
-  {
-   "symbol": "HYGG",
-   "score": 49.3,
-   "mcap": 294235,
-   "liq": 40062,
-   "chg_m5": 3.7,
-   "chg_h1": -20.62,
-   "reasons": [
-    "downtrend_h1 (-20.62%)",
-    "downtrend_h6 (-25.1%)"
-   ]
-  }
- ],
+ "near": [],
  "sources": {
-  "counts": {
-   "pump_graduated_p0": "ERR blocked (Cloudflare 403) - skipped, no bypass",
-   "ds_profiles_latest": 25,
-   "gt_trending": 40,
-   "jup_toptrending_1h": 50,
-   "ray_volume": 49,
-   "pump_graduated_p1": "ERR blocked (Cloudflare 403) - skipped, no bypass",
-   "ray_standard": 58,
-   "pump_complete_mcap": "ERR blocked (Cloudflare 403) - skipped, no bypass",
-   "ds_profiles_recent": 23,
-   "pump_adv_graduated": "ERR blocked (Cloudflare 403) - skipped, no bypass",
-   "launchlab_lasttrade": 160,
-   "launchlab_new": 151,
-   "ds_boosts_latest": 23,
-   "jup_toporganic_1h": 47,
-   "ds_boosts_top": 23,
-   "gt_trend5m": "ERR HTTP Error 429: Too Many Requests",
-   "ds_cto": 9,
-   "ds_search_pump": 22,
-   "jup_toptrending_6h": 50,
-   "ds_search_SOL": 18,
-   "gt_trend1h": "ERR HTTP Error 429: Too Many Requests",
-   "ds_search_moon": 12,
-   "ds_search_meme": 10,
-   "gt_trend6h": "ERR HTTP Error 429: Too Many Requests",
-   "jup_toporganic_6h": 47,
-   "ds_search_pumpswap": 30,
-   "ds_search_pumpfun": 30,
-   "gt_top_tx": "ERR HTTP Error 429: Too Many Requests",
-   "jup_recent": 30,
-   "ds_search_raydium": 30,
-   "gt_new": "ERR HTTP Error 429: Too Many Requests",
-   "ds_search_letsbonk": 2,
-   "gt_pumpswap_trend": 20,
-   "gt_pumpfun": "ERR HTTP Error 429: Too Many Requests",
-   "gt_pumpswap": "ERR HTTP Error 429: Too Many Requests",
-   "gt_raydium": "ERR HTTP Error 429: Too Many Requests",
-   "gt_raydium_clmm": "ERR HTTP Error 429: Too Many Requests",
-   "gt_launchlab": 20,
-   "gt_letsbonk": "ERR HTTP Error 429: Too Many Requests"
-  },
-  "discovered": 533,
-  "watch": 251,
-  "priced": 404,
-  "ts": 1795111581.768172
+  "counts": null,
+  "discovered": null,
+  "watch": null,
+  "priced": 0,
+  "ts": 0
  },
  "agents": [
   {
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone",
-   "age_s": 5,
+   "age_s": 0,
    "ok": true,
    "restarts": 0
   },
@@ -656,15 +435,15 @@
    "key": "scanner",
    "name": "Scanner + Analityk",
    "desc": "Zbiera coiny z DexScreenera, Jupitera, Raydiuma, GeckoTerminala i ocenia momentum (0–100)",
-   "age_s": 0,
-   "ok": true,
+   "age_s": 1795111663,
+   "ok": false,
    "restarts": 0
   },
   {
    "key": "filter",
    "name": "Filtr",
    "desc": "Odrzuca coiny spoza zakresu kapitalizacji (config), bez trendu wzrostowego, z małą płynnością; loguje powody",
-   "age_s": 4,
+   "age_s": 0,
    "ok": true,
    "restarts": 0
   },
@@ -672,8 +451,8 @@
    "key": "trader",
    "name": "Trader (papier)",
    "desc": "Symuluje kupno/sprzedaż z poślizgiem i opłatami, pilnuje drabinki stopu co 3 s",
-   "age_s": 0,
-   "ok": true,
+   "age_s": 1795111663,
+   "ok": false,
    "restarts": 0
   },
   {
