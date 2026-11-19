@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-19T17:38:44+01:00",
+ "generated": "2026-11-19T17:39:45+01:00",
  "mode": "PAPER",
  "stats": {
   "equity": 25.0,
@@ -42,6 +42,10 @@
   },
   {
    "t": 1795106325,
+   "e": 25.0
+  },
+  {
+   "t": 1795106386,
    "e": 25.0
   }
  ],
@@ -236,7 +240,7 @@
    "ds_boosts_latest": 23,
    "ds_boosts_top": 23,
    "ds_cto": 10,
-   "ds_search_pump": 22,
+   "ds_search_pump": 21,
    "ds_search_SOL": 18,
    "ds_search_moon": 11,
    "ds_search_meme": 10,
@@ -245,21 +249,21 @@
    "ds_search_raydium": 30,
    "ds_search_letsbonk": 2,
    "jup_toptrending_1h": 50,
-   "jup_toporganic_1h": 47,
+   "jup_toporganic_1h": "ERR HTTP Error 429: Too Many Requests",
    "jup_toptrending_6h": 50,
    "jup_toporganic_6h": 47,
-   "jup_recent": "ERR HTTP Error 429: Too Many Requests",
+   "jup_recent": 30,
    "pump_graduated_p0": "ERR blocked (Cloudflare 403) - skipped, no bypass",
    "pump_graduated_p1": "ERR blocked (Cloudflare 403) - skipped, no bypass",
    "pump_complete_mcap": "ERR blocked (Cloudflare 403) - skipped, no bypass",
    "pump_adv_graduated": "ERR blocked (Cloudflare 403) - skipped, no bypass",
    "ray_volume": 49,
    "ray_standard": 59,
-   "launchlab_lasttrade": 138,
-   "launchlab_new": 104,
-   "gt_trending": "ERR can only concatenate str (not \"int\") to str",
+   "launchlab_lasttrade": 139,
+   "launchlab_new": 105,
+   "gt_trending": 40,
    "gt_trend5m": 20,
-   "gt_trend1h": 20,
+   "gt_trend1h": "ERR HTTP Error 429: Too Many Requests",
    "gt_trend6h": 20,
    "gt_top_tx": 15,
    "gt_new": 20,
@@ -268,20 +272,20 @@
    "gt_pumpswap": 20,
    "gt_raydium": 17,
    "gt_raydium_clmm": 14,
-   "gt_launchlab": "ERR HTTP Error 429: Too Many Requests",
+   "gt_launchlab": 20,
    "gt_letsbonk": 20
   },
-  "discovered": 556,
+  "discovered": 597,
   "watch": 1000,
-  "priced": 723,
-  "ts": 1795106269.4932501
+  "priced": 739,
+  "ts": 1795106382.7185633
  },
  "agents": [
   {
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone",
-   "age_s": 2,
+   "age_s": 4,
    "ok": true,
    "restarts": 0
   },
@@ -289,7 +293,7 @@
    "key": "scanner",
    "name": "Scanner + Analityk",
    "desc": "Zbiera coiny z DexScreenera, Jupitera, Raydiuma, GeckoTerminala i ocenia momentum (0–100)",
-   "age_s": 10,
+   "age_s": 3,
    "ok": true,
    "restarts": 0
   },
@@ -297,7 +301,7 @@
    "key": "filter",
    "name": "Filtr",
    "desc": "Odrzuca coiny spoza $40 tys.–$2 mln, bez trendu wzrostowego, z małą płynnością; loguje powody",
-   "age_s": 2,
+   "age_s": 3,
    "ok": true,
    "restarts": 0
   },
@@ -305,7 +309,7 @@
    "key": "trader",
    "name": "Trader (papier)",
    "desc": "Symuluje kupno/sprzedaż z poślizgiem i opłatami, pilnuje drabinki stopu co 20 s",
-   "age_s": 2,
+   "age_s": 1,
    "ok": true,
    "restarts": 0
   },
