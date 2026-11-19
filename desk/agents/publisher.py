@@ -20,7 +20,7 @@ AG = [("watchdog", "Watchdog", "Pilnuje procesów, restartuje zawieszone", 120),
       ("filter", "Filtr", "Odrzuca coiny spoza zakresu kapitalizacji (config), bez trendu wzrostowego, z małą płynnością; loguje powody", 120),
       ("trader", "Trader (papier)", "Symuluje kupno/sprzedaż z poślizgiem i opłatami, pilnuje drabinki stopu co 3 s", 45),
       ("publisher", "Publisher", "Aktualizuje tę stronę co minutę (GitHub Actions)", 120)]
-REASON_PL = {"mcap<40000": "kapitalizacja < $40 tys.", "mcap>2000000": "kapitalizacja > $2 mln", "liq<30000": "płynność < $30 tys.",
+REASON_PL = {"mcap<40000": "kapitalizacja < $40 tys.", "mcap>2000000": "kapitalizacja > $2 mln", "liq<20000": "płynność < $20 tys.",
              "vol_h1<5000": "wolumen 1h < $5 tys.", "pair_too_new": "para młodsza niż 30 min", "downtrend_m5": "spadek 5m",
              "downtrend_h1": "spadek 1h", "downtrend_h6": "spadek 6h", "sells>buys_m5": "przewaga sprzedających 5m",
              "sells>buys_h1": "przewaga sprzedających 1h", "low_activity_m5": "< 10 transakcji w 5m", "volume_fading": "wolumen słabnie",

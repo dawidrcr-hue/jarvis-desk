@@ -80,7 +80,7 @@ def select_mints_to_price(wl, discovered, now, cfg):
     """Price newly discovered mints plus in-range / still-unknown watchlist entries. Skip known out-of-range or dead."""
     flt = (cfg or {}).get("filter") or {}
     min_m = float(flt.get("min_mcap_usd", 40000))
-    max_m = float(flt.get("max_mcap_usd", 300000))
+    max_m = float(flt.get("max_mcap_usd", 200000))
     dead = float((cfg or {}).get("dead_liq_usd", 1000))
     out = []
     for m, e in (wl or {}).items():
@@ -103,7 +103,7 @@ def annotate_and_trim(wl, priced_meta, discovered, attempted, now, cfg, watch_ma
     """Attach last mcap/liq and drop tokens outside the tradeable mcap range, dead, or stale."""
     flt = (cfg or {}).get("filter") or {}
     min_m = float(flt.get("min_mcap_usd", 40000))
-    max_m = float(flt.get("max_mcap_usd", 300000))
+    max_m = float(flt.get("max_mcap_usd", 200000))
     dead = float((cfg or {}).get("dead_liq_usd", 1000))
     wl = dict(wl or {})
     for m, e in wl.items():
