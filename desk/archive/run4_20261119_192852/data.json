@@ -1,0 +1,770 @@
+{
+ "generated": "2026-11-19T19:28:17+01:00",
+ "mode": "PAPER",
+ "stats": {
+  "equity": 19.996,
+  "start": 25.0,
+  "cash": 14.1791,
+  "realized": -5.8309,
+  "unrealized": 0.8269,
+  "open": 1,
+  "closed": 6,
+  "wins": 1,
+  "win_rate": 0.16666666666666666,
+  "avg_pnl_pct": -0.19987031383331635,
+  "costs_paid": 0.6674
+ },
+ "rules": {
+  "size_pct": 0.2,
+  "max_open": 4,
+  "initial_stop": -0.06,
+  "ladder": [
+   [
+    0.12,
+    0.0
+   ]
+  ],
+  "trail_after": 0.24,
+  "trail_gap": 0.12,
+  "trail_tiers": [
+   [
+    0.24,
+    0.12
+   ],
+   [
+    1.0,
+    0.2
+   ],
+   [
+    2.0,
+    0.25
+   ]
+  ],
+  "ladder_note_pl": "Stop -6%; po +12% → stop na wejściu; od +24% trailing 12 pkt, od +100% trailing 20 pkt, od +200% trailing 25 pkt",
+  "min_mcap": 40000,
+  "max_mcap": 300000,
+  "filter": {
+   "min_liquidity_usd": 30000,
+   "min_vol_h1_usd": 5000,
+   "min_pair_age_min": 30,
+   "min_m5_txns": 10,
+   "max_m5_change_pct": 25,
+   "max_h1_change_pct": 300,
+   "min_score": 65
+  },
+  "rugcheck": {
+   "enabled": true,
+   "max_top10_pct": 35.0,
+   "max_single_holder_pct": 15.0,
+   "max_creator_pct": 10.0,
+   "min_lp_locked_pct": 80.0,
+   "max_score_normalised": 30
+  }
+ },
+ "positions": [
+  {
+   "symbol": "CATMARIO",
+   "mint": "6E7VtgwiPzabDZDR4h32KLp89UF7DmvyFpVm6qPkG5V",
+   "url": "https://dexscreener.com/solana/dh7ecyy3modvxp6zmodrvpjvrxfdpgcagfarhsz5odnm",
+   "entry_iso": "2026-11-19T18:14:55+01:00",
+   "cost_usd": 4.99,
+   "entry_price": 7.649e-07,
+   "last_price": 9.042e-07,
+   "last_gain": 0.18211530919074392,
+   "peak_gain": 0.2040789645705321,
+   "stop_pct": 0.0,
+   "entry_mcap": 76497.0,
+   "entry_liq": 108202.68,
+   "score": 85.1,
+   "last_quote_iso": "2026-11-19T19:28:15+01:00"
+  }
+ ],
+ "closed": [
+  {
+   "symbol": "Huss",
+   "mint": "CUg7AzWL5p8imZVqqdjEPgRhUsXAkBMW5JxkSJ9fpump",
+   "url": "https://dexscreener.com/solana/gkhcyzexdi2sveqnagsg3qxrkzshdr5dxrd482km2hxx",
+   "entry_iso": "2026-11-19T18:29:15+01:00",
+   "exit_iso": "2026-11-19T19:26:10+01:00",
+   "cost_usd": 4.07,
+   "entry_price": 0.0001739,
+   "exit_price": 0.0001715,
+   "gross_pct": -0.013801035077630863,
+   "pnl_pct": -0.04299395483585784,
+   "pnl_usd": -0.17498539618194142,
+   "peak_gain": 0.1552616446233468,
+   "reason": "stop na wejściu (0%)",
+   "hold_min": 56.91834575335185,
+   "entry_mcap": 165960.0
+  },
+  {
+   "symbol": "HIGH",
+   "mint": "7ymF66Z6VhgNiwadtVhjTtT6U7iQRpSxeiRrhfufhigh",
+   "url": "https://dexscreener.com/solana/cqvmzmwdveufa5rzkubidyr4zmdqdpoljatsw6wgspmu",
+   "entry_iso": "2026-11-19T18:41:36+01:00",
+   "exit_iso": "2026-11-19T19:15:24+01:00",
+   "cost_usd": 4.0,
+   "entry_price": 0.0002844,
+   "exit_price": 0.0002611,
+   "gross_pct": -0.08192686357243306,
+   "pnl_pct": -0.10960599699210427,
+   "pnl_usd": -0.4384239879684171,
+   "peak_gain": 0.0035161744022504937,
+   "reason": "stop -6%",
+   "hold_min": 33.8140340367953,
+   "entry_mcap": 284490.0
+  },
+  {
+   "symbol": "Fiona",
+   "mint": "B7ncNzYdp71UxqmMQZFL8o2idEZdC1ix9W79J1t8pump",
+   "url": "https://dexscreener.com/solana/7nwxtckkwsukgiq5qulbttpmmq3fjjl6p76feka9tbrz",
+   "entry_iso": "2026-11-19T19:06:24+01:00",
+   "exit_iso": "2026-11-19T19:10:46+01:00",
+   "cost_usd": 4.21,
+   "entry_price": 6.011e-05,
+   "exit_price": 5.538e-05,
+   "gross_pct": -0.07868907003826309,
+   "pnl_pct": -0.10597354987552488,
+   "pnl_usd": -0.44614864497595974,
+   "peak_gain": 0.0,
+   "reason": "stop -6%",
+   "hold_min": 4.354908382892608,
+   "entry_mcap": 55396.0
+  },
+  {
+   "symbol": "MEOWL",
+   "mint": "3XiwhhcYJfyZPBT4tbDZ9hom8wwMTEM3d2YJwxLwAwYC",
+   "url": "https://dexscreener.com/solana/68tw3ryopjzwzdhxnjpf1vjgqw3ph6fr2gvegkjxymzc",
+   "entry_iso": "2026-11-19T18:45:46+01:00",
+   "exit_iso": "2026-11-19T19:04:04+01:00",
+   "cost_usd": 3.99,
+   "entry_price": 6.942e-05,
+   "exit_price": 8.545e-05,
+   "gross_pct": 0.2309132814750794,
+   "pnl_pct": 0.19547841638291388,
+   "pnl_usd": 0.7799588813678264,
+   "peak_gain": 0.41745894554883334,
+   "reason": "trailing stop +29.7% (szczyt +41.7% − 12 pkt)",
+   "hold_min": 18.29407234986623,
+   "entry_mcap": 69426.0
+  },
+  {
+   "symbol": "LUCIA",
+   "mint": "25KkRDFPuUSC9fyMMH9ScRyy2aVR1DVn6JRVtcnqpump",
+   "url": "https://dexscreener.com/solana/6c8nfautvrhwzmb85tmugxt8vzgx3eddtduapxpqmyyg",
+   "entry_iso": "2026-11-19T18:35:50+01:00",
+   "exit_iso": "2026-11-19T18:38:24+01:00",
+   "cost_usd": 4.05,
+   "entry_price": 8.779e-05,
+   "exit_price": 7.82e-05,
+   "gross_pct": -0.10923795420890758,
+   "pnl_pct": -0.13612679767932503,
+   "pnl_usd": -0.5513135306012664,
+   "peak_gain": 0.3213350039867866,
+   "reason": "trailing stop +20.1% (szczyt +32.1% − 12 pkt)",
+   "hold_min": 2.5561542471249896,
+   "entry_mcap": 86690.0
+  },
+  {
+   "symbol": "GTASZN",
+   "mint": "ArBfeoBSTPXrczwNksQLd9XocAsHJMPKA2tK8kUjxGZv",
+   "url": "https://dexscreener.com/solana/ciece5msc6yqxekqgqtfhdkpt4brp9muuck3rdyfdgrh",
+   "entry_iso": "2026-11-19T18:14:10+01:00",
+   "exit_iso": "2026-11-19T18:22:58+01:00",
+   "cost_usd": 5.0,
+   "entry_price": 6.04e-05,
+   "exit_price": 0.0,
+   "gross_pct": -1.0,
+   "pnl_pct": -1.0,
+   "pnl_usd": -5.0,
+   "peak_gain": 0.012086092715231977,
+   "reason": "rug/brak płynności",
+   "hold_min": 8.805441212654113,
+   "entry_mcap": 60400.0
+  }
+ ],
+ "equity_history": [
+  {
+   "t": 1795107874,
+   "e": 25.0
+  },
+  {
+   "t": 1795107935,
+   "e": 25.0
+  },
+  {
+   "t": 1795107997,
+   "e": 25.0
+  },
+  {
+   "t": 1795108059,
+   "e": 25.0
+  },
+  {
+   "t": 1795108120,
+   "e": 25.0
+  },
+  {
+   "t": 1795108410,
+   "e": 25.0
+  },
+  {
+   "t": 1795108472,
+   "e": 24.9323
+  },
+  {
+   "t": 1795108533,
+   "e": 24.9437
+  },
+  {
+   "t": 1795108979,
+   "e": 20.3399
+  },
+  {
+   "t": 1795109040,
+   "e": 20.4474
+  },
+  {
+   "t": 1795109102,
+   "e": 20.4358
+  },
+  {
+   "t": 1795109164,
+   "e": 20.2396
+  },
+  {
+   "t": 1795109225,
+   "e": 20.2557
+  },
+  {
+   "t": 1795109287,
+   "e": 20.3354
+  },
+  {
+   "t": 1795109381,
+   "e": 20.267
+  },
+  {
+   "t": 1795109443,
+   "e": 20.4514
+  },
+  {
+   "t": 1795109504,
+   "e": 20.4164
+  },
+  {
+   "t": 1795109565,
+   "e": 20.4122
+  },
+  {
+   "t": 1795109626,
+   "e": 20.4476
+  },
+  {
+   "t": 1795109687,
+   "e": 20.5512
+  },
+  {
+   "t": 1795109749,
+   "e": 20.2284
+  },
+  {
+   "t": 1795109810,
+   "e": 20.5848
+  },
+  {
+   "t": 1795109871,
+   "e": 21.465
+  },
+  {
+   "t": 1795109932,
+   "e": 19.8405
+  },
+  {
+   "t": 1795109993,
+   "e": 19.6398
+  },
+  {
+   "t": 1795110054,
+   "e": 19.8885
+  },
+  {
+   "t": 1795110116,
+   "e": 19.9451
+  },
+  {
+   "t": 1795110177,
+   "e": 19.9748
+  },
+  {
+   "t": 1795110238,
+   "e": 20.0215
+  },
+  {
+   "t": 1795110299,
+   "e": 20.0466
+  },
+  {
+   "t": 1795110360,
+   "e": 19.9846
+  },
+  {
+   "t": 1795110421,
+   "e": 20.4787
+  },
+  {
+   "t": 1795110482,
+   "e": 20.2618
+  },
+  {
+   "t": 1795110544,
+   "e": 20.449
+  },
+  {
+   "t": 1795110605,
+   "e": 20.4987
+  },
+  {
+   "t": 1795110666,
+   "e": 20.2567
+  },
+  {
+   "t": 1795110727,
+   "e": 20.5952
+  },
+  {
+   "t": 1795110788,
+   "e": 20.6875
+  },
+  {
+   "t": 1795110849,
+   "e": 20.3418
+  },
+  {
+   "t": 1795110911,
+   "e": 20.3627
+  },
+  {
+   "t": 1795111015,
+   "e": 20.4274
+  },
+  {
+   "t": 1795111076,
+   "e": 20.3186
+  },
+  {
+   "t": 1795111137,
+   "e": 20.5388
+  },
+  {
+   "t": 1795111198,
+   "e": 20.484
+  },
+  {
+   "t": 1795111259,
+   "e": 20.0782
+  },
+  {
+   "t": 1795111320,
+   "e": 21.8927
+  },
+  {
+   "t": 1795111381,
+   "e": 21.5908
+  },
+  {
+   "t": 1795111444,
+   "e": 21.3899
+  },
+  {
+   "t": 1795111505,
+   "e": 21.3282
+  },
+  {
+   "t": 1795111566,
+   "e": 20.7958
+  },
+  {
+   "t": 1795111627,
+   "e": 20.9188
+  },
+  {
+   "t": 1795111724,
+   "e": 20.534
+  },
+  {
+   "t": 1795111786,
+   "e": 20.9651
+  },
+  {
+   "t": 1795111847,
+   "e": 20.46
+  },
+  {
+   "t": 1795111908,
+   "e": 20.5699
+  },
+  {
+   "t": 1795111970,
+   "e": 20.7227
+  },
+  {
+   "t": 1795112032,
+   "e": 20.5832
+  },
+  {
+   "t": 1795112093,
+   "e": 20.6963
+  },
+  {
+   "t": 1795112155,
+   "e": 20.4224
+  },
+  {
+   "t": 1795112216,
+   "e": 20.3941
+  },
+  {
+   "t": 1795112277,
+   "e": 20.4646
+  },
+  {
+   "t": 1795112339,
+   "e": 20.4742
+  },
+  {
+   "t": 1795112401,
+   "e": 20.332
+  },
+  {
+   "t": 1795112463,
+   "e": 20.4205
+  },
+  {
+   "t": 1795112525,
+   "e": 20.3674
+  },
+  {
+   "t": 1795112587,
+   "e": 20.4064
+  },
+  {
+   "t": 1795112649,
+   "e": 20.2508
+  },
+  {
+   "t": 1795112710,
+   "e": 20.12
+  },
+  {
+   "t": 1795112772,
+   "e": 19.96
+  },
+  {
+   "t": 1795112834,
+   "e": 19.9098
+  },
+  {
+   "t": 1795112895,
+   "e": 19.996
+  }
+ ],
+ "filter": {
+  "ts": "2026-11-19T19:28:04+01:00",
+  "n": 397,
+  "passed": 0,
+  "reject_counts": {
+   "pair_too_new": 46,
+   "mcap>300000": 158,
+   "overextended_m5": 20,
+   "overextended_h1": 7,
+   "downtrend_h6": 196,
+   "low_activity_m5": 228,
+   "mcap<40000": 142,
+   "liq<10000": 128,
+   "vol_h1<5000": 223,
+   "downtrend_h1": 210,
+   "volume_fading": 260,
+   "reentry_cooldown": 5,
+   "sells>buys_m5": 213,
+   "downtrend_m5": 205,
+   "no_price": 14,
+   "sells>buys_h1": 173,
+   "already_held": 2
+  }
+ },
+ "rugcheck_recent": [
+  {
+   "ts": "2026-11-19T19:07:43+01:00",
+   "symbol": "PROBE",
+   "mint": "So11111111111111111111111111111111111111112",
+   "ok": true,
+   "cached": false,
+   "reasons": [],
+   "summary": null,
+   "err": null
+  }
+ ],
+ "reason_pl": {
+  "mcap<40000": "kapitalizacja < $40 tys.",
+  "mcap>2000000": "kapitalizacja > $2 mln",
+  "liq<30000": "płynność < $30 tys.",
+  "vol_h1<5000": "wolumen 1h < $5 tys.",
+  "pair_too_new": "para młodsza niż 30 min",
+  "downtrend_m5": "spadek 5m",
+  "downtrend_h1": "spadek 1h",
+  "downtrend_h6": "spadek 6h",
+  "sells>buys_m5": "przewaga sprzedających 5m",
+  "sells>buys_h1": "przewaga sprzedających 1h",
+  "low_activity_m5": "< 10 transakcji w 5m",
+  "volume_fading": "wolumen słabnie",
+  "overextended_m5": "pionowa świeca 5m (> +25%)",
+  "overextended_h1": "przegrzany 1h (> +300%)",
+  "score<50": "ocena analityka < 50",
+  "already_held": "już w portfelu",
+  "reentry_cooldown": "niedawno sprzedany (60 min)",
+  "no_price": "brak ceny",
+  "rug_flag": "RugCheck: oznaczony jako rug",
+  "rug_mint_authority": "RugCheck: mint nie odebrany",
+  "rug_freeze_authority": "RugCheck: freeze nie odebrany",
+  "rug_token_ext": "RugCheck: niebezpieczne rozszerzenia tokena",
+  "rug_transfer_fee": "RugCheck: opłata od transferu",
+  "rug_no_market": "RugCheck: brak puli",
+  "rug_lp_unlocked": "RugCheck: LP niezablokowane",
+  "rug_top10": "RugCheck: top 10 holderów za dużo",
+  "rug_single_holder": "RugCheck: jeden holder za dużo",
+  "rug_creator": "RugCheck: twórca trzyma za dużo",
+  "rug_score": "RugCheck: wysoki wynik ryzyka",
+  "rug_danger": "RugCheck: ryzyko „danger”",
+  "rugcheck_unavailable": "RugCheck niedostępny (kupno pominięte)",
+  "rugcheck_deferred": "RugCheck: limit sprawdzeń w rundzie",
+  "score<65": "ocena analityka < 65",
+  "mcap>300000": "kapitalizacja > $300 tys."
+ },
+ "near": [
+  {
+   "symbol": "AI",
+   "score": 97.4,
+   "mcap": 62617,
+   "liq": 99578,
+   "chg_m5": 10.49,
+   "chg_h1": 56.63,
+   "reasons": [
+    "pair_too_new"
+   ]
+  },
+  {
+   "symbol": "AI",
+   "score": 93.0,
+   "mcap": 288490,
+   "liq": 105459,
+   "chg_m5": 24.27,
+   "chg_h1": 125.0,
+   "reasons": [
+    "pair_too_new"
+   ]
+  },
+  {
+   "symbol": "CARDS",
+   "score": 55.3,
+   "mcap": 147347525,
+   "liq": 3152173,
+   "chg_m5": 0.05,
+   "chg_h1": 0.2,
+   "reasons": [
+    "mcap>300000 (147347525)"
+   ]
+  },
+  {
+   "symbol": "Rings",
+   "score": 50.8,
+   "mcap": 80068,
+   "liq": 19573,
+   "chg_m5": 27.55,
+   "chg_h1": 117.0,
+   "reasons": [
+    "overextended_m5 (27.55%)"
+   ]
+  },
+  {
+   "symbol": "JitoSOL",
+   "score": 41.3,
+   "mcap": 783714559,
+   "liq": 233905,
+   "chg_m5": 0.51,
+   "chg_h1": 1.07,
+   "reasons": [
+    "mcap>300000 (783714559)"
+   ]
+  },
+  {
+   "symbol": "mSOL",
+   "score": 40.6,
+   "mcap": 417892088,
+   "liq": 124273,
+   "chg_m5": 0.62,
+   "chg_h1": 1.06,
+   "reasons": [
+    "mcap>300000 (417892088)"
+   ]
+  },
+  {
+   "symbol": "GMEx",
+   "score": 34.8,
+   "mcap": 164212,
+   "liq": 408863,
+   "chg_m5": 0.03,
+   "chg_h1": -0.17,
+   "reasons": [
+    "downtrend_h1 (-0.17%)"
+   ]
+  },
+  {
+   "symbol": "DIGS",
+   "score": 27.8,
+   "mcap": 460464,
+   "liq": 69236,
+   "chg_m5": 1.65,
+   "chg_h1": 1.04,
+   "reasons": [
+    "mcap>300000 (460464)"
+   ]
+  },
+  {
+   "symbol": "jingyu",
+   "score": 27.7,
+   "mcap": 96816,
+   "liq": 22610,
+   "chg_m5": 4.86,
+   "chg_h1": 15.46,
+   "reasons": [
+    "sells>buys_m5 (0.48)"
+   ]
+  },
+  {
+   "symbol": "GRAND",
+   "score": 95.4,
+   "mcap": 892029,
+   "liq": 69243,
+   "chg_m5": 31.18,
+   "chg_h1": 96.56,
+   "reasons": [
+    "mcap>300000 (892029)",
+    "overextended_m5 (31.18%)"
+   ]
+  },
+  {
+   "symbol": "AudaCity",
+   "score": 84.0,
+   "mcap": 105588,
+   "liq": 52551,
+   "chg_m5": 75.64,
+   "chg_h1": 1577.0,
+   "reasons": [
+    "overextended_m5 (75.64%)",
+    "overextended_h1 (1577.0%)"
+   ]
+  },
+  {
+   "symbol": "xSOL",
+   "score": 61.9,
+   "mcap": 82939,
+   "liq": 116304,
+   "chg_m5": 0.56,
+   "chg_h1": 2.01,
+   "reasons": [
+    "vol_h1<5000",
+    "downtrend_h6 (-2.52%)"
+   ]
+  }
+ ],
+ "sources": {
+  "counts": {
+   "ds_profiles_latest": 26,
+   "pump_graduated_p0": "ERR blocked (Cloudflare 403) - skipped, no bypass",
+   "gt_trending": 40,
+   "jup_toptrending_1h": 50,
+   "ray_volume": 49,
+   "pump_graduated_p1": "ERR blocked (Cloudflare 403) - skipped, no bypass",
+   "ray_standard": 58,
+   "pump_complete_mcap": "ERR blocked (Cloudflare 403) - skipped, no bypass",
+   "ds_profiles_recent": 24,
+   "launchlab_lasttrade": 157,
+   "pump_adv_graduated": "ERR blocked (Cloudflare 403) - skipped, no bypass",
+   "launchlab_new": 154,
+   "ds_boosts_latest": 23,
+   "jup_toporganic_1h": 47,
+   "ds_boosts_top": 24,
+   "gt_trend5m": "ERR HTTP Error 429: Too Many Requests",
+   "ds_cto": 9,
+   "ds_search_pump": 20,
+   "jup_toptrending_6h": 50,
+   "ds_search_SOL": 17,
+   "gt_trend1h": "ERR HTTP Error 429: Too Many Requests",
+   "ds_search_moon": 12,
+   "ds_search_meme": 9,
+   "gt_trend6h": 20,
+   "jup_toporganic_6h": 47,
+   "ds_search_pumpswap": 30,
+   "gt_top_tx": "ERR HTTP Error 429: Too Many Requests",
+   "ds_search_pumpfun": 30,
+   "jup_recent": 30,
+   "ds_search_raydium": 30,
+   "gt_new": "ERR HTTP Error 429: Too Many Requests",
+   "ds_search_letsbonk": 2,
+   "gt_pumpswap_trend": "ERR HTTP Error 429: Too Many Requests",
+   "gt_pumpfun": "ERR HTTP Error 429: Too Many Requests",
+   "gt_pumpswap": "ERR HTTP Error 429: Too Many Requests",
+   "gt_raydium": 18,
+   "gt_raydium_clmm": "ERR HTTP Error 429: Too Many Requests",
+   "gt_launchlab": "ERR HTTP Error 429: Too Many Requests",
+   "gt_letsbonk": "ERR HTTP Error 429: Too Many Requests"
+  },
+  "discovered": 505,
+  "watch": 251,
+  "priced": 397,
+  "ts": 1795112882.8306625
+ },
+ "agents": [
+  {
+   "key": "watchdog",
+   "name": "Watchdog",
+   "desc": "Pilnuje procesów, restartuje zawieszone",
+   "age_s": 5,
+   "ok": true,
+   "restarts": 0
+  },
+  {
+   "key": "scanner",
+   "name": "Scanner + Analityk",
+   "desc": "Zbiera coiny z DexScreenera, Jupitera, Raydiuma, GeckoTerminala i ocenia momentum (0–100)",
+   "age_s": 15,
+   "ok": true,
+   "restarts": 0
+  },
+  {
+   "key": "filter",
+   "name": "Filtr",
+   "desc": "Odrzuca coiny spoza zakresu kapitalizacji (config), bez trendu wzrostowego, z małą płynnością; loguje powody",
+   "age_s": 4,
+   "ok": true,
+   "restarts": 0
+  },
+  {
+   "key": "trader",
+   "name": "Trader (papier)",
+   "desc": "Symuluje kupno/sprzedaż z poślizgiem i opłatami, pilnuje drabinki stopu co 3 s",
+   "age_s": 0,
+   "ok": true,
+   "restarts": 0
+  },
+  {
+   "key": "publisher",
+   "name": "Publisher",
+   "desc": "Aktualizuje tę stronę co minutę (GitHub Actions)",
+   "age_s": 0,
+   "ok": true,
+   "restarts": 0
+  }
+ ]
+}
