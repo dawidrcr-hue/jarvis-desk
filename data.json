@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-19T16:47:27+01:00",
+ "generated": "2026-11-19T16:51:22+01:00",
  "mode": "PAPER",
  "stats": {
-  "equity": 18.7552,
+  "equity": 18.8966,
   "start": 20.0,
   "cash": 3.586,
   "realized": -1.354,
-  "unrealized": 0.1093,
+  "unrealized": 0.2506,
   "open": 4,
   "closed": 5,
   "wins": 1,
@@ -44,7 +44,7 @@
    "entry_mcap": 533364.0,
    "entry_liq": 105803.58,
    "score": 60.9,
-   "last_quote_iso": "2026-11-19T16:47:24+01:00"
+   "last_quote_iso": "2026-11-19T16:51:22+01:00"
   },
   {
    "symbol": "UVXY",
@@ -60,7 +60,7 @@
    "entry_mcap": 401274.0,
    "entry_liq": 69012.0,
    "score": 63.2,
-   "last_quote_iso": "2026-11-19T16:47:24+01:00"
+   "last_quote_iso": "2026-11-19T16:51:22+01:00"
   },
   {
    "symbol": "TL",
@@ -69,14 +69,14 @@
    "entry_iso": "2026-11-19T16:37:15+01:00",
    "cost_usd": 3.73,
    "entry_price": 7.093e-05,
-   "last_price": 7.399e-05,
-   "last_gain": 0.043141125052869045,
+   "last_price": 7.672e-05,
+   "last_gain": 0.0816297758353306,
    "peak_gain": 0.1822924009586917,
    "stop_pct": 0.0,
    "entry_mcap": 68788.0,
    "entry_liq": 18168.0,
    "score": 69.4,
-   "last_quote_iso": "2026-11-19T16:47:24+01:00"
+   "last_quote_iso": "2026-11-19T16:51:22+01:00"
   },
   {
    "symbol": "ACRUX",
@@ -92,7 +92,7 @@
    "entry_mcap": 189880.0,
    "entry_liq": 28751.78,
    "score": 68.2,
-   "last_quote_iso": "2026-11-19T16:47:24+01:00"
+   "last_quote_iso": "2026-11-19T16:51:22+01:00"
   }
  ],
  "closed": [
@@ -258,6 +258,10 @@
   {
    "t": 1795103248,
    "e": 18.7552
+  },
+  {
+   "t": 1795103483,
+   "e": 18.8966
   }
  ],
  "filter": {
@@ -495,7 +499,7 @@
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone",
-   "age_s": 3,
+   "age_s": 0,
    "ok": true,
    "restarts": 0
   },
@@ -503,7 +507,7 @@
    "key": "scanner",
    "name": "Scanner + Analityk",
    "desc": "Zbiera coiny z DexScreenera, Jupitera, Raydiuma, GeckoTerminala i ocenia momentum (0–100)",
-   "age_s": 10,
+   "age_s": 245,
    "ok": true,
    "restarts": 0
   },
@@ -511,17 +515,17 @@
    "key": "filter",
    "name": "Filtr",
    "desc": "Odrzuca coiny spoza $40 tys.–$2 mln, bez trendu wzrostowego, z małą płynnością; loguje powody",
-   "age_s": 2,
-   "ok": true,
-   "restarts": 0
+   "age_s": 222,
+   "ok": false,
+   "restarts": 1
   },
   {
    "key": "trader",
    "name": "Trader (papier)",
    "desc": "Symuluje kupno/sprzedaż z poślizgiem i opłatami, pilnuje drabinki stopu co 20 s",
-   "age_s": 0,
-   "ok": true,
-   "restarts": 0
+   "age_s": 220,
+   "ok": false,
+   "restarts": 1
   },
   {
    "key": "publisher",
