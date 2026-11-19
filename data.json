@@ -1,18 +1,18 @@
 {
- "generated": "2026-11-19T17:34:27+01:00",
+ "generated": "2026-11-19T17:35:29+01:00",
  "mode": "PAPER",
  "stats": {
-  "equity": 17.9598,
+  "equity": 14.3366,
   "start": 20.0,
   "cash": 14.3366,
-  "realized": -1.8834,
-  "unrealized": -0.1568,
-  "open": 1,
-  "closed": 12,
+  "realized": -5.6634,
+  "unrealized": 0,
+  "open": 0,
+  "closed": 13,
   "wins": 2,
-  "win_rate": 0.16666666666666666,
-  "avg_pnl_pct": -0.039374202063491154,
-  "costs_paid": 1.3787
+  "win_rate": 0.15384615384615385,
+  "avg_pnl_pct": -0.11326849421245336,
+  "costs_paid": 1.4359
  },
  "rules": {
   "size_pct": 0.2,
@@ -29,25 +29,25 @@
   "min_mcap": 40000,
   "max_mcap": 300000
  },
- "positions": [
+ "positions": [],
+ "closed": [
   {
    "symbol": "KFC",
    "mint": "PmUF6Zp8dSkboXYVAi3VvmrcC2PL8qFbzjAjSsRrTn6",
    "url": "https://dexscreener.com/solana/fnxeg1wwtzdczc8b55xcjawiqsf52utvoqqvihcrbepj",
    "entry_iso": "2026-11-19T17:27:09+01:00",
+   "exit_iso": "2026-11-19T17:34:31+01:00",
    "cost_usd": 3.78,
    "entry_price": 8.483e-05,
-   "last_price": 8.256e-05,
-   "last_gain": -0.026759401155251772,
+   "exit_price": 0.0,
+   "gross_pct": -1.0,
+   "pnl_pct": -1.0,
+   "pnl_usd": -3.78,
    "peak_gain": 0.008133914888600602,
-   "stop_pct": -0.06,
-   "entry_mcap": 84836.0,
-   "entry_liq": 116793.27,
-   "score": 76.3,
-   "last_quote_iso": "2026-11-19T17:34:25+01:00"
-  }
- ],
- "closed": [
+   "reason": "rug/brak płynności",
+   "hold_min": 7.366712256272634,
+   "entry_mcap": 84836.0
+  },
   {
    "symbol": "Anthropic",
    "mint": "4r48k1Fkappj8Kf9XgKVmLAttAqLjWXiVfb2FhdfZkwp",
@@ -421,31 +421,35 @@
   {
    "t": 1795106068,
    "e": 17.9598
+  },
+  {
+   "t": 1795106129,
+   "e": 14.3366
   }
  ],
  "filter": {
-  "ts": "2026-11-19T17:32:33+01:00",
-  "n": 705,
-  "passed": 1,
+  "ts": "2026-11-19T17:34:28+01:00",
+  "n": 717,
+  "passed": 0,
   "reject_counts": {
-   "pair_too_new": 143,
-   "overextended_m5": 23,
+   "mcap>300000": 202,
+   "pair_too_new": 184,
+   "overextended_m5": 26,
    "overextended_h1": 13,
-   "mcap<40000": 418,
-   "liq<10000": 392,
-   "vol_h1<5000": 435,
-   "low_activity_m5": 495,
-   "reentry_cooldown": 24,
-   "mcap>300000": 200,
-   "downtrend_m5": 541,
-   "sells>buys_m5": 465,
-   "sells>buys_h1": 277,
-   "volume_fading": 523,
-   "already_held": 8,
-   "downtrend_h1": 478,
-   "downtrend_h6": 371,
-   "score<60": 2,
-   "no_price": 21
+   "mcap<40000": 428,
+   "liq<10000": 404,
+   "vol_h1<5000": 453,
+   "low_activity_m5": 496,
+   "reentry_cooldown": 29,
+   "downtrend_m5": 578,
+   "sells>buys_m5": 493,
+   "sells>buys_h1": 279,
+   "volume_fading": 519,
+   "downtrend_h1": 491,
+   "downtrend_h6": 386,
+   "already_held": 5,
+   "score<60": 1,
+   "no_price": 20
   }
  },
  "reason_pl": {
@@ -470,141 +474,149 @@
  },
  "near": [
   {
-   "symbol": "Phone",
-   "score": 64.9,
-   "mcap": 54239,
-   "liq": 19579,
-   "chg_m5": -9.55,
-   "chg_h1": 89.9,
+   "symbol": "JETSKI",
+   "score": 41.2,
+   "mcap": 47833,
+   "liq": 14890,
+   "chg_m5": 2.62,
+   "chg_h1": 15.53,
    "reasons": [
-    "downtrend_m5 (-9.55%)"
+    "score<60 (41.2)"
    ]
   },
   {
-   "symbol": "MORALS",
-   "score": 55.0,
-   "mcap": 101155,
-   "liq": 29159,
-   "chg_m5": 8.17,
-   "chg_h1": 234.0,
+   "symbol": "MANDY",
+   "score": 68.7,
+   "mcap": 129220,
+   "liq": 24598,
+   "chg_m5": -28.34,
+   "chg_h1": 255.0,
    "reasons": [
-    "volume_fading (0.12)"
+    "pair_too_new",
+    "downtrend_m5 (-28.34%)"
    ]
   },
   {
-   "symbol": "DCI",
-   "score": 54.2,
-   "mcap": 57194,
-   "liq": 16291,
-   "chg_m5": 16.6,
-   "chg_h1": 88.23,
-   "reasons": [
-    "score<60 (54.2)"
-   ]
-  },
-  {
-   "symbol": "WIGGLES",
-   "score": 51.0,
-   "mcap": 83138,
-   "liq": 25381,
-   "chg_m5": 4.75,
-   "chg_h1": 125.0,
-   "reasons": [
-    "volume_fading (0.35)"
-   ]
-  },
-  {
-   "symbol": "mihao",
-   "score": 44.1,
-   "mcap": 13019759,
-   "liq": 436264,
-   "chg_m5": 2.44,
-   "chg_h1": 25.08,
-   "reasons": [
-    "mcap>300000 (13019759)"
-   ]
-  },
-  {
-   "symbol": "jingyu",
-   "score": 21.0,
-   "mcap": 102541,
-   "liq": 22947,
-   "chg_m5": 3.08,
-   "chg_h1": 0.44,
-   "reasons": [
-    "score<60 (21.0)"
-   ]
-  },
-  {
-   "symbol": "DCTY",
-   "score": 80.8,
-   "mcap": 160818,
-   "liq": 29051,
-   "chg_m5": 37.37,
-   "chg_h1": 145.0,
+   "symbol": "Anthropic",
+   "score": 54.5,
+   "mcap": 40704,
+   "liq": 14729,
+   "chg_m5": -11.45,
+   "chg_h1": 94.63,
    "reasons": [
     "reentry_cooldown",
-    "overextended_m5 (37.37%)"
-   ]
-  },
-  {
-   "symbol": "Rings",
-   "score": 58.0,
-   "mcap": 1556586,
-   "liq": 91456,
-   "chg_m5": 10.51,
-   "chg_h1": 1.07,
-   "reasons": [
-    "mcap>300000 (1556586)",
-    "sells>buys_m5 (0.21)"
+    "downtrend_m5 (-11.45%)"
    ]
   },
   {
    "symbol": "GMEx",
-   "score": 56.3,
-   "mcap": 183626,
-   "liq": 376320,
-   "chg_m5": 16.32,
-   "chg_h1": 15.82,
+   "score": 43.6,
+   "mcap": 166914,
+   "liq": 442277,
+   "chg_m5": 5.74,
+   "chg_h1": 5.28,
    "reasons": [
-    "sells>buys_m5 (1.00)",
-    "sells>buys_h1 (0.98)"
+    "sells>buys_m5 (0.94)",
+    "sells>buys_h1 (0.93)"
    ]
   },
   {
-   "symbol": "CLAUDE",
-   "score": 49.5,
-   "mcap": 50793,
-   "liq": 17918,
-   "chg_m5": -14.9,
-   "chg_h1": 410.0,
+   "symbol": "Phone",
+   "score": 43.1,
+   "mcap": 52166,
+   "liq": 19169,
+   "chg_m5": -8.73,
+   "chg_h1": 86.33,
    "reasons": [
-    "downtrend_m5 (-14.9%)",
-    "overextended_h1 (410.0%)"
-   ]
-  },
-  {
-   "symbol": "TESLA",
-   "score": 48.6,
-   "mcap": 42541,
-   "liq": 13579,
-   "chg_m5": -28.11,
-   "chg_h1": 38.41,
-   "reasons": [
-    "pair_too_new",
-    "downtrend_m5 (-28.11%)"
+    "downtrend_m5 (-8.73%)",
+    "volume_fading (0.44)"
    ]
   },
   {
    "symbol": "BUCKME",
-   "score": 43.6,
-   "mcap": 201531,
-   "liq": 34629,
-   "chg_m5": 6.39,
-   "chg_h1": -7.43,
+   "score": 40.0,
+   "mcap": 204515,
+   "liq": 34863,
+   "chg_m5": 3.91,
+   "chg_h1": -10.09,
    "reasons": [
-    "downtrend_h1 (-7.43%)",
+    "downtrend_h1 (-10.09%)",
+    "volume_fading (0.13)"
+   ]
+  },
+  {
+   "symbol": "1",
+   "score": 36.7,
+   "mcap": 642771,
+   "liq": 76481,
+   "chg_m5": 3.95,
+   "chg_h1": 2.5,
+   "reasons": [
+    "mcap>300000 (642771)",
+    "sells>buys_h1 (0.76)"
+   ]
+  },
+  {
+   "symbol": "jingyu",
+   "score": 15.6,
+   "mcap": 103228,
+   "liq": 23062,
+   "chg_m5": -2.72,
+   "chg_h1": 3.4,
+   "reasons": [
+    "downtrend_m5 (-2.72%)",
+    "sells>buys_m5 (0.82)"
+   ]
+  },
+  {
+   "symbol": "DJT",
+   "score": 11.9,
+   "mcap": 80009,
+   "liq": 22690,
+   "chg_m5": -0.2,
+   "chg_h1": 1.77,
+   "reasons": [
+    "downtrend_m5 (-0.2%)",
     "volume_fading (0.19)"
+   ]
+  },
+  {
+   "symbol": "VINE",
+   "score": 68.2,
+   "mcap": 9687626,
+   "liq": 1499609,
+   "chg_m5": 9.09,
+   "chg_h1": 53.31,
+   "reasons": [
+    "mcap>300000 (9687626)",
+    "sells>buys_m5 (0.69)",
+    "sells>buys_h1 (0.69)"
+   ]
+  },
+  {
+   "symbol": "CATMARIO",
+   "score": 63.4,
+   "mcap": 295507,
+   "liq": 48803,
+   "chg_m5": 516.0,
+   "chg_h1": 516.0,
+   "reasons": [
+    "pair_too_new",
+    "overextended_m5 (516.0%)",
+    "overextended_h1 (516.0%)"
+   ]
+  },
+  {
+   "symbol": "HNT",
+   "score": 60.2,
+   "mcap": 41305006,
+   "liq": 227400,
+   "chg_m5": -0.13,
+   "chg_h1": 0.43,
+   "reasons": [
+    "mcap>300000 (41305006)",
+    "vol_h1<5000",
+    "downtrend_m5 (-0.13%)"
    ]
   }
  ],
@@ -660,7 +672,7 @@
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone",
-   "age_s": 4,
+   "age_s": 5,
    "ok": true,
    "restarts": 0
   },
@@ -668,7 +680,7 @@
    "key": "scanner",
    "name": "Scanner + Analityk",
    "desc": "Zbiera coiny z DexScreenera, Jupitera, Raydiuma, GeckoTerminala i ocenia momentum (0–100)",
-   "age_s": 3,
+   "age_s": 19,
    "ok": true,
    "restarts": 0
   },
@@ -676,7 +688,7 @@
    "key": "filter",
    "name": "Filtr",
    "desc": "Odrzuca coiny spoza $40 tys.–$2 mln, bez trendu wzrostowego, z małą płynnością; loguje powody",
-   "age_s": 4,
+   "age_s": 0,
    "ok": true,
    "restarts": 0
   },
@@ -684,7 +696,7 @@
    "key": "trader",
    "name": "Trader (papier)",
    "desc": "Symuluje kupno/sprzedaż z poślizgiem i opłatami, pilnuje drabinki stopu co 20 s",
-   "age_s": 2,
+   "age_s": 0,
    "ok": true,
    "restarts": 0
   },
