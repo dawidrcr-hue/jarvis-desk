@@ -1,6 +1,6 @@
 import os, sys, time, unittest
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from lib.strategy import ladder_update, sim_buy, sim_sell, slippage, position_size, filter_reasons, features, dead_liquidity_reason, position_mark, portfolio_equity, dead_exit, DEAD_REASON, missed_quote_limit, norm_symbol
+from lib.strategy import ladder_update, sim_buy, sim_sell, slippage, position_size, filter_reasons, features, dead_liquidity_reason, position_mark, portfolio_equity, dead_exit, DEAD_REASON, missed_quote_limit, norm_symbol, trail_gap_for, ladder_note_pl
 import json
 CFG = json.load(open(os.path.join(os.path.dirname(__file__), "..", "config.json")))
 
@@ -71,7 +71,16 @@ class TCap(unittest.TestCase):
             rs = filter_reasons(features(dict(base, marketCap=mc)), CFG["filter"])
             self.assertEqual(not rs, ok, (mc, rs))
 
-
+    def test_min_liquidity(self):
+        base = {"baseToken": {"address": "M", "symbol": "X"}, "priceUsd": "1", "marketCap": 80000,
+                "priceChange": {"m5": 3, "h1": 20, "h6": 5}, "txns": {"m5": {"buys": 30, "sells": 10}, "h1": {"buys": 300, "sells": 100}},
+                "volume": {"m5": 2000, "h1": 10000}, "pairCreatedAt": 1000}
+        want = CFG["filter"]["min_liquidity_usd"]
+        self.assertEqual(want, 30000)
+        rs_lo = filter_reasons(features(dict(base, liquidity={"usd": want - 1})), CFG["filter"])
+        rs_ok = filter_reasons(features(dict(base, liquidity={"usd": want})), CFG["filter"])
+        self.assertTrue(any(r.startswith("liq<") for r in rs_lo), rs_lo)
+        self.assertFalse(any(r.startswith("liq<") for r in rs_ok), rs_ok)
 
 
 def _healthy(**over):
@@ -83,6 +92,57 @@ def _healthy(**over):
     p.update(over)
     return features(p)
 
+
+class TTrailTiers(unittest.TestCase):
+    """Wider trailing gaps at higher peaks; stop never moves down across tiers."""
+
+    def test_config_tiers(self):
+        self.assertEqual(CFG["trail_tiers"], [[0.24, 0.12], [1.0, 0.2], [2.0, 0.25]])
+        self.assertAlmostEqual(trail_gap_for(0.23, CFG) or -1, -1)
+        self.assertAlmostEqual(trail_gap_for(0.24, CFG), 0.12)
+        self.assertAlmostEqual(trail_gap_for(0.99, CFG), 0.12)
+        self.assertAlmostEqual(trail_gap_for(1.0, CFG), 0.20)
+        self.assertAlmostEqual(trail_gap_for(1.99, CFG), 0.20)
+        self.assertAlmostEqual(trail_gap_for(2.0, CFG), 0.25)
+        note = ladder_note_pl(CFG)
+        self.assertIn("od +24% trailing 12 pkt", note)
+        self.assertIn("od +100% trailing 20 pkt", note)
+        self.assertIn("od +200% trailing 25 pkt", note)
+
+    def test_peak_150_stop_130(self):
+        pos, px, _ = run([2.5])
+        self.assertIsNone(px)
+        self.assertAlmostEqual(pos["stop_pct"], 1.30)
+
+    def test_peak_250_stop_225(self):
+        pos, px, _ = run([3.5])
+        self.assertIsNone(px)
+        self.assertAlmostEqual(pos["stop_pct"], 2.25)
+
+    def test_tier_switch_keeps_higher_stop(self):
+        # earlier stop 96%; peak +110% would trail at 90% (20 pkt), so stop stays 96%
+        pos = {"entry_price": 1.0, "stop_pct": 0.96, "peak_gain": 1.08}
+        ex, _ = ladder_update(pos, 2.10, CFG)
+        self.assertFalse(ex)
+        self.assertAlmostEqual(pos["peak_gain"], 1.10)
+        self.assertAlmostEqual(pos["stop_pct"], 0.96)  # max(0.96, 1.10-0.20=0.90)
+
+    def test_peak_100_uses_20_gap(self):
+        pos, px, _ = run([2.0])
+        self.assertIsNone(px)
+        self.assertAlmostEqual(pos["stop_pct"], 0.80)
+
+    def test_peak_200_uses_25_gap(self):
+        pos, px, _ = run([3.0])
+        self.assertIsNone(px)
+        self.assertAlmostEqual(pos["stop_pct"], 1.75)
+
+    def test_exit_at_150_tier(self):
+        pos, px, why = run([2.5, 2.30])
+        self.assertEqual(px, 2.30)
+        self.assertAlmostEqual(pos["stop_pct"], 1.30)
+        self.assertIn("+130", why)
+        self.assertIn("20 pkt", why)
 
 class TAlreadyHeld(unittest.TestCase):
     """One open position per mint, and also per ticker (copycat KFC mints)."""

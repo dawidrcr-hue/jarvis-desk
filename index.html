@@ -70,10 +70,10 @@ main{max-width:1280px;margin:0 auto;padding:18px 18px calc(60px + var(--sb))}
 .st .l{font-size:11.5px;text-transform:uppercase;letter-spacing:.12em;color:var(--mu)}
 .st .v{font:700 26px "IBM Plex Mono",monospace;margin-top:6px;letter-spacing:-.03em}.st .s{font-size:12px;color:var(--mu2);margin-top:2px}
 .strat{margin-top:16px}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:10px}
 .step{padding:12px 10px;border-radius:14px;border:1px solid var(--ln2);background:linear-gradient(180deg,#1b1030,#100a1d);text-align:center}
 .step .t{font-size:11px;color:var(--mu);text-transform:uppercase;letter-spacing:.1em}.step .x{font:700 17px "IBM Plex Mono",monospace;margin-top:4px}
-.step:nth-child(1) .x{color:var(--dn)}.step:nth-child(2) .x{color:#e9d5ff}.step:nth-child(3) .x{color:var(--up)}
+.step:nth-child(1) .x{color:var(--dn)}.step:nth-child(2) .x{color:#e9d5ff}.step:nth-child(n+3) .x{color:var(--up)}
 .rules{font-size:12.5px;color:var(--mu);margin-top:10px;line-height:1.6}
 /* positions */
 .cards{display:grid;gap:12px;grid-template-columns:1fr}@media(min-width:700px){.cards{grid-template-columns:1fr 1fr}}@media(min-width:1100px){.cards{grid-template-columns:repeat(3,1fr)}}
@@ -118,7 +118,7 @@ td.m{font-family:"IBM Plex Mono",monospace}tr:hover td{background:#170e2a}
 footer{text-align:center;color:var(--mu2);font-size:12px;margin-top:30px}
 .sk{display:inline-block;width:6ch;height:.9em;border-radius:8px;background:linear-gradient(90deg,#1c1230,#3b2566,#1c1230);background-size:200% 100%;animation:sk 1.2s infinite}
 @keyframes sk{to{background-position:-200% 0}}
-@media(max-width:560px){main{padding:14px 12px 50px}.p{padding:15px;border-radius:18px}.bn small{display:none}.live span{display:none}.steps .x{font-size:15px}.kv b{font-size:12.5px}}
+@media(max-width:560px){main{padding:14px 12px 50px}.p{padding:15px;border-radius:18px}.bn small{display:none}.live span{display:none}.steps{grid-template-columns:repeat(3,minmax(0,1fr))}.steps .x{font-size:15px}.kv b{font-size:12.5px}}
 </style>
 </head>
 <body>
@@ -146,6 +146,8 @@ footer{text-align:center;color:var(--mu2);font-size:12px;margin-top:30px}
     <div class="step"><div class="t">start</div><div class="x">stop -6%</div></div>
     <div class="step"><div class="t">po +12%</div><div class="x">stop 0%</div></div>
     <div class="step"><div class="t">od +24%</div><div class="x">szczyt −12</div></div>
+    <div class="step"><div class="t">od +100%</div><div class="x">szczyt −20</div></div>
+    <div class="step"><div class="t">od +200%</div><div class="x">szczyt −25</div></div>
    </div>
    <div class="rules" id="rules"></div>
   </div>
@@ -219,9 +221,9 @@ async function load(){
  $('stats').innerHTML=[['Transakcje',s.closed,`otwarte: ${s.open}`],['Win rate',s.win_rate==null?'–':Math.round(s.win_rate*100)+'%',`${s.wins} zysk · ${s.closed-s.wins} strata`],
   ['Śr. wynik',`<span class="${c(s.avg_pnl_pct)}">${pct(s.avg_pnl_pct,2)}</span>`,'netto na transakcję'],['Koszty',usd(s.costs_paid),'poślizg + opłaty']]
   .map(k=>`<div class="st"><div class="l">${k[0]}</div><div class="v">${k[1]}</div><div class="s">${k[2]}</div></div>`).join('');
- $('rules').textContent=`Od +24% stop jedzie za ceną: zawsze 12 pkt proc. poniżej szczytu (szczyt +24% → stop +12%, szczyt +60% → stop +48%). Ruch liczony od ceny wejścia (brutto). Stop nigdy nie schodzi w dół. Wynik netto uwzględnia poślizg (min. 1% na stronę) i opłatę sieci. Kapitalizacja przy wejściu: ${big(d.rules.min_mcap)}–${big(d.rules.max_mcap||0)}.`;
+ $('rules').textContent=`${d.rules.ladder_note_pl||'Stop -6%; po +12% → stop na wejściu; od +24% trailing 12 pkt, od +100% 20 pkt, od +200% 25 pkt'}. Ruch liczony od ceny wejścia (brutto). Stop nigdy nie schodzi w dół. Wynik netto uwzględnia poślizg (min. 1% na stronę) i opłatę sieci. Kapitalizacja przy wejściu: ${big(d.rules.min_mcap)}–${big(d.rules.max_mcap||0)}.`;
  {const f=d.rules.filter||{},r=d.rules.rugcheck||{};
-  $('frules').innerHTML=esc(`Wejście tylko gdy: kapitalizacja ${big(d.rules.min_mcap)}–${big(d.rules.max_mcap||0)} · płynność ≥ ${big(f.min_liquidity_usd??10000)} · wolumen 1h ≥ ${big(f.min_vol_h1_usd??5000)} · para ≥ ${f.min_pair_age_min??30} min · cena rośnie 5m i 1h (6h ≥ 0) · kupujący ≥ sprzedający (5m, 1h) · ≥ ${f.min_m5_txns??10} transakcji / 5m · wolumen nie słabnie · bez pionowej świecy (5m ≤ +${f.max_m5_change_pct??25}%, 1h ≤ +${f.max_h1_change_pct??300}%) · ocena analityka ≥ ${f.min_score??'–'}.`)+
+  $('frules').innerHTML=esc(`Wejście tylko gdy: kapitalizacja ${big(d.rules.min_mcap)}–${big(d.rules.max_mcap||0)} · płynność ≥ ${big(f.min_liquidity_usd??30000)} · wolumen 1h ≥ ${big(f.min_vol_h1_usd??5000)} · para ≥ ${f.min_pair_age_min??30} min · cena rośnie 5m i 1h (6h ≥ 0) · kupujący ≥ sprzedający (5m, 1h) · ≥ ${f.min_m5_txns??10} transakcji / 5m · wolumen nie słabnie · bez pionowej świecy (5m ≤ +${f.max_m5_change_pct??25}%, 1h ≤ +${f.max_h1_change_pct??300}%) · ocena analityka ≥ ${f.min_score??'–'}.`)+
    (r.enabled?`<br><b>🛡 Filtr RugCheck: WŁĄCZONY</b> — przed każdym kupnem: mint i freeze odebrane · LP zablokowane/spalone ≥ ${r.min_lp_locked_pct}% · top 10 holderów (bez puli) ≤ ${r.max_top10_pct}% · jeden holder ≤ ${r.max_single_holder_pct}% · twórca ≤ ${r.max_creator_pct}% · wynik ryzyka ≤ ${r.max_score_normalised}/100 · brak ryzyk „danger”. RugCheck niedostępny = brak kupna.`:`<br>Filtr RugCheck: wyłączony`);};
  $('npos').textContent=`${d.positions.length} / ${d.rules.max_open}`;
  $('pos').innerHTML=d.positions.length?d.positions.map(p=>`<div class="pc"><div class="t"><div><div class="sym"><a href="${esc(p.url)}" target="_blank" rel="noopener">$${esc(p.symbol)}</a></div><div class="sub">od ${tm(p.entry_iso)} · ${usd(p.cost_usd)} · kap. ${big(p.entry_mcap)}</div></div><div class="mv ${c(p.last_gain)}">${pct(p.last_gain)}</div></div>
