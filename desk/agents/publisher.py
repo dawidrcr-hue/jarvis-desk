@@ -6,6 +6,7 @@ import os, sys, time, json, hashlib, subprocess, shutil, collections, signal
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from lib.common import P, load, save, cfg, log, heartbeat, now_iso
 from lib.strategy import portfolio_equity, position_mark
+from lib import safety
 
 C = "publisher"
 # DESK_SITE = repo root (GitHub Actions checkout). Falls back to the old box clone.
@@ -24,7 +25,20 @@ REASON_PL = {"mcap<40000": "kapitalizacja < $40 tys.", "mcap>2000000": "kapitali
              "downtrend_h1": "spadek 1h", "downtrend_h6": "spadek 6h", "sells>buys_m5": "przewaga sprzedających 5m",
              "sells>buys_h1": "przewaga sprzedających 1h", "low_activity_m5": "< 10 transakcji w 5m", "volume_fading": "wolumen słabnie",
              "overextended_m5": "pionowa świeca 5m (> +25%)", "overextended_h1": "przegrzany 1h (> +300%)", "score<50": "ocena analityka < 50",
-             "already_held": "już w portfelu", "reentry_cooldown": "niedawno sprzedany (60 min)", "no_price": "brak ceny"}
+             "already_held": "już w portfelu", "reentry_cooldown": "niedawno sprzedany (60 min)", "no_price": "brak ceny",
+             "rug_flag": "RugCheck: oznaczony jako rug", "rug_mint_authority": "RugCheck: mint nie odebrany",
+             "rug_freeze_authority": "RugCheck: freeze nie odebrany", "rug_token_ext": "RugCheck: niebezpieczne rozszerzenia tokena",
+             "rug_transfer_fee": "RugCheck: opłata od transferu", "rug_no_market": "RugCheck: brak puli",
+             "rug_lp_unlocked": "RugCheck: LP niezablokowane", "rug_top10": "RugCheck: top 10 holderów za dużo",
+             "rug_single_holder": "RugCheck: jeden holder za dużo", "rug_creator": "RugCheck: twórca trzyma za dużo",
+             "rug_score": "RugCheck: wysoki wynik ryzyka", "rug_danger": "RugCheck: ryzyko „danger”",
+             "rugcheck_unavailable": "RugCheck niedostępny (kupno pominięte)", "rugcheck_deferred": "RugCheck: limit sprawdzeń w rundzie"}
+
+def reason_pl(c):
+    fc = c.get("filter", {}); rp = dict(REASON_PL)
+    rp[f"score<{fc.get('min_score')}"] = f"ocena analityka < {fc.get('min_score')}"
+    if fc.get("max_mcap_usd"): rp[f"mcap>{fc['max_mcap_usd']:.0f}"] = f"kapitalizacja > ${fc['max_mcap_usd']/1e3:.0f} tys."
+    return rp
 
 def tail_jsonl(path, n):
     try:
@@ -32,7 +46,7 @@ def tail_jsonl(path, n):
     except Exception: return []
 
 def build():
-    c = cfg(); pf = load(P("state", "portfolio.json"), {}) or {}
+    c = cfg(); pf = load(P("state", "portfolio.json"), {}) or {}; rcc = safety.conf(c)
     pos, closed = pf.get("positions", []), pf.get("closed", [])
     now = time.time()
     eq = portfolio_equity(pf, now=now, cfg=c)
@@ -47,7 +61,7 @@ def build():
               "entry_mcap", "entry_liq", "score", "last_quote_iso")
     keep_c = ("symbol", "mint", "url", "entry_iso", "exit_iso", "cost_usd", "entry_price", "exit_price", "gross_pct", "pnl_pct",
               "pnl_usd", "peak_gain", "reason", "hold_min", "entry_mcap")
-    fl = [x for x in tail_jsonl(P("logs", "filter.log"), 20) if x.get("msg") == "snapshot filtered"]
+    fl = [x for x in tail_jsonl(P("logs", "filter.log"), 80) if x.get("msg") == "snapshot filtered"]
     f = fl[-1] if fl else {}
     rc = collections.Counter()
     for k, v in (f.get("reject_counts") or {}).items(): rc[k] += v
@@ -75,12 +89,16 @@ def build():
                   "open": len(pos), "closed": len(closed), "wins": wins, "win_rate": wins / len(closed) if closed else None,
                   "avg_pnl_pct": sum(t["pnl_pct"] for t in closed) / len(closed) if closed else None, "costs_paid": round(costs, 4)},
         "rules": {"size_pct": c["position_pct_of_equity"], "max_open": c["max_open_positions"], "initial_stop": c["initial_stop"],
-                  "ladder": c["ladder"], "trail_after": c.get("trail_after"), "trail_gap": c.get("trail_gap"), "min_mcap": c["filter"]["min_mcap_usd"], "max_mcap": c["filter"].get("max_mcap_usd")},
+                  "ladder": c["ladder"], "trail_after": c.get("trail_after"), "trail_gap": c.get("trail_gap"), "min_mcap": c["filter"]["min_mcap_usd"], "max_mcap": c["filter"].get("max_mcap_usd"),
+                  "filter": {k: c["filter"].get(k) for k in ("min_liquidity_usd", "min_vol_h1_usd", "min_pair_age_min", "min_m5_txns", "max_m5_change_pct", "max_h1_change_pct", "min_score")},
+                  "rugcheck": {k: rcc.get(k) for k in ("enabled", "max_top10_pct", "max_single_holder_pct", "max_creator_pct", "min_lp_locked_pct", "max_score_normalised")}},
         "positions": [{k: p.get(k) for k in keep_p} for p in pos],
         "closed": [{k: t.get(k) for k in keep_c} for t in closed[-60:][::-1]],
         "equity_history": eh,
         "filter": {"ts": f.get("ts"), "n": f.get("n"), "passed": f.get("passed"), "reject_counts": dict(rc)},
-        "reason_pl": REASON_PL, "near": near,
+        "rugcheck_recent": [{k: r.get(k) for k in ("ts", "symbol", "mint", "ok", "cached", "reasons", "summary", "err")}
+                            for r in tail_jsonl(P("logs", "filter.log"), 400) if r.get("msg") == "rugcheck"][-12:][::-1],
+        "reason_pl": reason_pl(c), "near": near,
         "sources": {"counts": cand.get("source_counts"), "discovered": cand.get("n_discovered"), "watch": cand.get("n_watch"),
                     "priced": len(cand.get("candidates", [])), "ts": snap_ts},
         "agents": agents,

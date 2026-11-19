@@ -3,10 +3,12 @@
 - restores persisted state from desk/persist/, starts watchdog.py (scanner, filter, trader, publisher)
 - publisher commits data.json + desk state to main about once a minute (GITHUB_TOKEN from actions/checkout)
 - after DESK_RUN_SECONDS (default 5h40m) stops everything, saves state, makes a final commit and exits 0;
-  the next queued scheduled run (same concurrency group) resumes from the committed state."""
+  the next queued scheduled run (same concurrency group) resumes from the committed state.
+- graceful handoff: commit desk/control/stop.json {"run_id": "<this run id>"} to main; the publisher's next
+  push merges it in, the runner sees its own run id, stops agents, saves state, makes the final commit and exits."""
 import os, sys, time, shutil, signal, subprocess
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from lib.common import P, log, now_iso, save
+from lib.common import P, log, now_iso, save, load
 
 RUN_S = int(os.environ.get("DESK_RUN_SECONDS", str(5 * 3600 + 40 * 60)))
 PERSIST = ["watchlist.json"]          # big, change every scan -> committed only at shutdown
@@ -31,6 +33,10 @@ def trim_logs():
             with open(fp, "wb") as f: f.write(tail[tail.find(b"\n") + 1:])
     except FileNotFoundError: pass
 
+def stop_requested(run_id):
+    req = load(P("control", "stop.json"), {}) or {}
+    return bool(run_id) and str(req.get("run_id")) == str(run_id)
+
 def main():
     t0 = time.time(); restore()
     save(P("state", "run.json"), {"run_id": os.environ.get("GITHUB_RUN_ID"), "started": now_iso(), "planned_s": RUN_S})
@@ -42,6 +48,8 @@ def main():
     n = 0
     while not stop["flag"] and time.time() - t0 < RUN_S:
         time.sleep(5); n += 1
+        if stop_requested(os.environ.get("GITHUB_RUN_ID")):
+            log("runner", "stop requested via control/stop.json"); break
         if wd.poll() is not None:
             log("runner", "watchdog died, restarting", code=wd.returncode)
             wd = subprocess.Popen([sys.executable, P("watchdog.py")], cwd=P(), stdout=open(P("logs", "watchdog.out"), "a"), stderr=subprocess.STDOUT)

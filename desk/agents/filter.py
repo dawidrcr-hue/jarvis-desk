@@ -5,6 +5,7 @@ import os, sys, time, json, glob
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from lib.common import P, load, save, log, heartbeat, cfg, now_iso
 from lib.strategy import filter_reasons, norm_symbol
+from lib import safety
 
 def decision_log_many(recs):
     if not recs:
@@ -33,7 +34,7 @@ def main():
                     cand = (load(f) or {}).get("cand") or {}
                     if cand.get("mint"): held.add(cand["mint"])
                     if cand.get("symbol"): held_symbols.add(norm_symbol(cand["symbol"]))
-                npass = 0; stats = {}; buf = []
+                npass = 0; nsafe = 0; stats = {}; buf = []
                 cands = snap.get("candidates", [])
                 for i, ft in enumerate(cands, 1):
                     if i % 80 == 0:
@@ -44,11 +45,29 @@ def main():
                     buf.append({"ts": now_iso(), "mint": ft["mint"], "symbol": ft["symbol"], "score": ft["score"],
                                 "mcap": round(ft["mcap"]), "liq": round(ft["liq"]), "chg_m5": ft["chg_m5"], "chg_h1": ft["chg_h1"],
                                 "decision": "PASS" if not rs else "REJECT", "reasons": rs})
+                    rec = buf[-1]
+                    if not rs:
+                        # Final gate: token safety (RugCheck). Fail-closed: unreachable -> no buy.
+                        rcc = safety.conf(c)
+                        if rcc["enabled"] and nsafe >= rcc.get("max_checks_per_snapshot", 6):
+                            rs = ["rugcheck_deferred (limit na rundę)"]
+                        else:
+                            nsafe += 1
+                            heartbeat("filter", status="rugcheck", n=i)
+                            sres = safety.check(ft["mint"], ft.get("pair"), c)
+                            rec["rugcheck"] = {"ok": sres["ok"], "cached": sres.get("cached"), **(sres.get("summary") or {})}
+                            log("filter", "rugcheck", symbol=ft["symbol"], mint=ft["mint"], ok=sres["ok"], cached=sres.get("cached"),
+                                reasons=sres["reasons"], summary=sres.get("summary"), err=sres.get("error"))
+                            rs = sres["reasons"]
+                        if rs:
+                            for r in rs: stats[r.split(" ")[0]] = stats.get(r.split(" ")[0], 0) + 1
+                            rec["decision"] = "REJECT"; rec["reasons"] = rs
                     if not rs:
                         npass += 1
                         held.add(ft["mint"])
                         if ft.get("symbol"): held_symbols.add(norm_symbol(ft["symbol"]))
-                        save(P("signals", "approved", f"{int(time.time()*1000)}_{ft['mint']}.json"), {"ts": time.time(), "cand": ft})
+                        save(P("signals", "approved", f"{int(time.time()*1000)}_{ft['mint']}.json"), {"ts": time.time(), "cand": ft,
+                             "safety": {"note_pl": sres["note_pl"], "summary": sres.get("summary")}})
                 decision_log_many(buf)
                 log("filter", "snapshot filtered", n=len(cands), passed=npass, reject_counts=stats)
                 heartbeat("filter", status="ok")
