@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-19T17:05:24+01:00",
+ "generated": "2026-11-19T17:12:05+01:00",
  "mode": "PAPER",
  "stats": {
-  "equity": 20.7345,
+  "equity": 20.6794,
   "start": 20.0,
   "cash": 2.9694,
   "realized": -2.1606,
-  "unrealized": 2.895,
+  "unrealized": 2.8399,
   "open": 4,
   "closed": 6,
   "wins": 1,
@@ -37,14 +37,14 @@
    "entry_iso": "2026-11-19T16:28:23+01:00",
    "cost_usd": 3.75,
    "entry_price": 45.2,
-   "last_price": 46.12,
-   "last_gain": 0.02035398230088492,
+   "last_price": 46.01,
+   "last_gain": 0.01792035398230074,
    "peak_gain": 0.031194690265486713,
    "stop_pct": -0.06,
    "entry_mcap": 533364.0,
    "entry_liq": 105803.58,
    "score": 60.9,
-   "last_quote_iso": "2026-11-19T17:05:22+01:00"
+   "last_quote_iso": "2026-11-19T17:05:43+01:00"
   },
   {
    "symbol": "UVXY",
@@ -60,7 +60,7 @@
    "entry_mcap": 401274.0,
    "entry_liq": 69012.0,
    "score": 63.2,
-   "last_quote_iso": "2026-11-19T17:05:22+01:00"
+   "last_quote_iso": "2026-11-19T17:05:43+01:00"
   },
   {
    "symbol": "TL",
@@ -69,14 +69,14 @@
    "entry_iso": "2026-11-19T16:37:15+01:00",
    "cost_usd": 3.73,
    "entry_price": 7.093e-05,
-   "last_price": 7.773e-05,
-   "last_gain": 0.09586916678415336,
+   "last_price": 7.344e-05,
+   "last_gain": 0.03538700126885663,
    "peak_gain": 0.1822924009586917,
    "stop_pct": 0.0,
    "entry_mcap": 68788.0,
    "entry_liq": 18168.0,
    "score": 69.4,
-   "last_quote_iso": "2026-11-19T17:05:22+01:00"
+   "last_quote_iso": "2026-11-19T17:05:43+01:00"
   },
   {
    "symbol": "DCTY",
@@ -85,14 +85,14 @@
    "entry_iso": "2026-11-19T16:58:29+01:00",
    "cost_usd": 3.65,
    "entry_price": 9.39e-05,
-   "last_price": 0.0001629,
-   "last_gain": 0.7348242811501597,
-   "peak_gain": 0.7348242811501597,
-   "stop_pct": 0.614824,
+   "last_price": 0.0001675,
+   "last_gain": 0.7838125665601703,
+   "peak_gain": 0.7838125665601703,
+   "stop_pct": 0.663813,
    "entry_mcap": 89361.0,
    "entry_liq": 21295.37,
    "score": 64.1,
-   "last_quote_iso": "2026-11-19T17:05:22+01:00"
+   "last_quote_iso": "2026-11-19T17:05:43+01:00"
   }
  ],
  "closed": [
@@ -319,6 +319,10 @@
   {
    "t": 1795104324,
    "e": 20.7345
+  },
+  {
+   "t": 1795104726,
+   "e": 20.6794
   }
  ],
  "filter": {
@@ -565,15 +569,15 @@
    "key": "scanner",
    "name": "Scanner + Analityk",
    "desc": "Zbiera coiny z DexScreenera, Jupitera, Raydiuma, GeckoTerminala i ocenia momentum (0–100)",
-   "age_s": 34,
-   "ok": true,
-   "restarts": 0
+   "age_s": 436,
+   "ok": false,
+   "restarts": 1
   },
   {
    "key": "filter",
    "name": "Filtr",
    "desc": "Odrzuca coiny spoza $40 tys.–$2 mln, bez trendu wzrostowego, z małą płynnością; loguje powody",
-   "age_s": 5,
+   "age_s": 0,
    "ok": true,
    "restarts": 2
   },
@@ -581,7 +585,7 @@
    "key": "trader",
    "name": "Trader (papier)",
    "desc": "Symuluje kupno/sprzedaż z poślizgiem i opłatami, pilnuje drabinki stopu co 20 s",
-   "age_s": 2,
+   "age_s": 0,
    "ok": true,
    "restarts": 2
   },
