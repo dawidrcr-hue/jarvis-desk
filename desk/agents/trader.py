@@ -8,7 +8,7 @@ import os, sys, time, json, glob, threading
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from lib.common import P, load, save, log, heartbeat, cfg, notify, now_iso, HTTP_TIMEOUT
 from lib.market import pair_prices, pairs_for_mints
-from lib.strategy import features, filter_reasons, sim_buy, sim_sell, position_size, ladder_update, dead_liquidity_reason, portfolio_equity, dead_exit, DEAD_REASON, norm_symbol
+from lib.strategy import features, filter_reasons, sim_buy, sim_sell, position_size, ladder_update, ladder_note_pl, dead_liquidity_reason, portfolio_equity, dead_exit, DEAD_REASON, norm_symbol
 
 LOCK = threading.Lock()
 
@@ -127,7 +127,7 @@ def _try_enter_two_phase(pf, c, sig):
     notify("paper_buy", f"PAPIER: kupno ${ft['symbol']} za {fmt(size)}",
            f"[PAPIER – bez prawdziwych pieniędzy] Kupno ${ft['symbol']} za {fmt(size)} ({pct}% equity {fmt(eq)}). "
            f"Kapitalizacja ~{fmt(ft['mcap'])}, płynność ~{fmt(ft['liq'])}, zmiana 5m {ft['chg_m5']:+.1f}%, 1h {ft['chg_h1']:+.1f}%, "
-           f"wynik analityka {cand.get('score')}. Poślizg {b['slip']*100:.1f}%. Stop -6%; po +12% → stop na wejściu; od +24% → trailing stop 12 pkt poniżej szczytu (np. szczyt +60% → stop +48%). "
+           f"wynik analityka {cand.get('score')}. Poślizg {b['slip']*100:.1f}%. {ladder_note_pl(c)}. "
            + (f"{pos['safety_note']}. " if pos.get("safety_note") else "") + f"{ft['url']}",
            {"mint": mint, "pos_id": pos["id"]})
     log("trader", "paper BUY", symbol=ft["symbol"], mint=mint, size=size, price=ft["price"], slip=b["slip"])

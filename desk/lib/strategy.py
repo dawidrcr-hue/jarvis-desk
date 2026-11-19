@@ -6,7 +6,7 @@ UPTREND definition (all must hold, thresholds in config.json -> filter):
   * m5 txns >= 10                                                      -> it is actually trading now
   * volume acceleration = (vol_m5*12) / vol_h1 >= 0.8                  -> last 5m pace not dying vs the hour
   * NOT overextended: m5 change <= 25%, h1 change <= 300%              -> avoid buying a vertical candle top
-Hygiene: $40k <= mcap (marketCap, else FDV) <= $300k (max cut 19.11 by user), liquidity >= $10k, vol h1 >= $5k, pair age >= 30 min,
+Hygiene: $40k <= mcap (marketCap, else FDV) <= $300k (max cut 19.11 by user), liquidity >= $30k, vol h1 >= $5k, pair age >= 30 min,
          not already held (same mint or same ticker, case-insensitive), not exited in the last reentry_cooldown_min minutes.
 """
 import time
@@ -112,11 +112,43 @@ def position_size(equity, cash, cfg):
     return size if size >= cfg["min_position_usd"] else 0.0
 
 # ---------------- trailing stop ladder ----------------
+def trail_tiers(cfg):
+    """[(peak threshold, gap), ...] ascending. Prefers config trail_tiers; else (trail_after, trail_gap)."""
+    raw = cfg.get("trail_tiers")
+    if raw:
+        return [(float(a), float(g)) for a, g in raw]
+    ta, tg = cfg.get("trail_after"), cfg.get("trail_gap")
+    if ta is not None and tg is not None:
+        return [(float(ta), float(tg))]
+    return []
+
+def trail_gap_for(peak, cfg):
+    """Trailing gap for this peak, or None below the first trail tier."""
+    gap = None
+    for after, g in trail_tiers(cfg):
+        if peak >= after - 1e-12:
+            gap = g
+    return gap
+
+def ladder_note_pl(cfg):
+    """Polish buy-note / site one-liner, driven by initial_stop, ladder and trail_tiers."""
+    parts = [f"Stop {cfg.get('initial_stop', -0.06)*100:.0f}%"]
+    for trig, new_stop in cfg.get("ladder") or []:
+        if abs(new_stop) < 1e-12:
+            parts.append(f"po +{trig*100:.0f}% → stop na wejściu")
+        else:
+            parts.append(f"po +{trig*100:.0f}% → stop {new_stop*100:+.0f}%")
+    trail = [f"od +{a*100:.0f}% trailing {g*100:.0f} pkt" for a, g in trail_tiers(cfg)]
+    if trail:
+        parts.append(", ".join(trail))
+    return "; ".join(parts)
+
 def ladder_update(pos, price, cfg):
     """Update a position with a new market price. Ladder is measured on MARKET price vs entry market price
     (gross move of the coin). Stop never moves down. Returns (exit: bool, reason: str|None).
-    User rules (17.11): stop -6%; peak >= +12% -> stop 0% (entry); peak >= +24% -> TRUE trailing stop
-    = peak - 12 percentage points (peak +24% -> +12%, peak +60% -> +48%). Stop never moves down."""
+    User rules (19.11): stop -6%; peak >= +12% -> stop 0% (entry); peak >= +24% -> trail 12 pp below peak;
+    peak >= +100% -> trail 20 pp; peak >= +200% -> trail 25 pp. When switching tiers,
+    stop = max(previous stop, peak - new gap). Stop never moves down."""
     entry = pos["entry_price"]
     gain = price / entry - 1
     pos["last_price"] = price
@@ -127,16 +159,17 @@ def ladder_update(pos, price, cfg):
         if pos["peak_gain"] >= trig and new_stop > stop:
             stop = new_stop
             pos.setdefault("ladder_log", []).append({"ts": time.time(), "trigger": trig, "stop": new_stop})
-    ta, tg = cfg.get("trail_after"), cfg.get("trail_gap")
-    if ta is not None and tg is not None and pos["peak_gain"] >= ta - 1e-12:
-        trail = round(pos["peak_gain"] - tg, 6)
+    gap = trail_gap_for(pos["peak_gain"], cfg)
+    if gap is not None:
+        trail = round(pos["peak_gain"] - gap, 6)
         if trail > stop:
             stop = trail
     pos["stop_pct"] = stop
     if gain <= stop + 1e-12:
         if stop < 0: return True, f"stop {stop*100:+.0f}%"
         if stop == 0: return True, "stop na wejściu (0%)"
-        return True, f"trailing stop {stop*100:+.1f}% (szczyt {pos['peak_gain']*100:+.1f}% − 12 pkt)"
+        used = pos["peak_gain"] - stop
+        return True, f"trailing stop {stop*100:+.1f}% (szczyt {pos['peak_gain']*100:+.1f}% − {used*100:.0f} pkt)"
     return False, None
 
 # ---------------- dead liquidity / rug ----------------
