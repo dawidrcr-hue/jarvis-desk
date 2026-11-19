@@ -1,18 +1,18 @@
 {
- "generated": "2026-11-19T17:47:54+01:00",
+ "generated": "2026-11-19T17:54:46+01:00",
  "mode": "PAPER",
  "stats": {
-  "equity": 24.1,
+  "equity": 22.0325,
   "start": 25.0,
-  "cash": 14.6787,
-  "realized": -0.5613,
-  "unrealized": -0.3387,
-  "open": 2,
-  "closed": 1,
+  "cash": 22.0325,
+  "realized": -2.9675,
+  "unrealized": 0,
+  "open": 0,
+  "closed": 3,
   "wins": 0,
   "win_rate": 0.0,
-  "avg_pnl_pct": -0.11225334801370793,
-  "costs_paid": 0.1343
+  "avg_pnl_pct": -0.20164943547754854,
+  "costs_paid": 0.3853
  },
  "rules": {
   "size_pct": 0.2,
@@ -29,41 +29,42 @@
   "min_mcap": 40000,
   "max_mcap": 300000
  },
- "positions": [
+ "positions": [],
+ "closed": [
   {
    "symbol": "TRK",
    "mint": "E8c9gvuE7gW4R8AVcaTCbbTG1zJGdUR9KGtS94eXBAGS",
    "url": "https://dexscreener.com/solana/9kwqddbnybnedf56dr2ackzeiz2ak6anrwtjhnzlhtlc",
    "entry_iso": "2026-11-19T17:45:50+01:00",
+   "exit_iso": "2026-11-19T17:54:13+01:00",
    "cost_usd": 4.89,
    "entry_price": 6.485e-05,
-   "last_price": 6.405e-05,
-   "last_gain": -0.012336160370084892,
+   "exit_price": 4.422e-05,
+   "gross_pct": -0.31811873554356207,
+   "pnl_pct": -0.3384449694620616,
+   "pnl_usd": -1.6549959006694812,
    "peak_gain": 0.004471858134155626,
-   "stop_pct": -0.06,
-   "entry_mcap": 64852.0,
-   "entry_liq": 20854.77,
-   "score": 83.1,
-   "last_quote_iso": "2026-11-19T17:46:49+01:00"
+   "reason": "stop -6%",
+   "hold_min": 8.383566331863403,
+   "entry_mcap": 64852.0
   },
   {
    "symbol": "Phone",
    "mint": "EywjBvp69aahb3MHrb4PBtKqVzcQNEtE3NaGk36S8hCd",
    "url": "https://dexscreener.com/solana/7xgl9vhxyn9wwyjcmvtl9tqso4g1rkfstczlhj4cczrp",
    "entry_iso": "2026-11-19T17:45:50+01:00",
+   "exit_iso": "2026-11-19T17:47:54+01:00",
    "cost_usd": 4.87,
    "entry_price": 5.541e-05,
-   "last_price": 5.376e-05,
-   "last_gain": -0.02977801840822958,
+   "exit_price": 4.824e-05,
+   "gross_pct": -0.12939902544667026,
+   "pnl_pct": -0.1542499889568761,
+   "pnl_usd": -0.7511974462199866,
    "peak_gain": 0.0,
-   "stop_pct": -0.06,
-   "entry_mcap": 51899.0,
-   "entry_liq": 19167.62,
-   "score": 78.6,
-   "last_quote_iso": "2026-11-19T17:46:49+01:00"
-  }
- ],
- "closed": [
+   "reason": "stop -6%",
+   "hold_min": 2.067553146680196,
+   "entry_mcap": 51899.0
+  },
   {
    "symbol": "BUN",
    "mint": "7aookZpPiQZVJedXViyVv9X7Yd6LSCHpkXqJcDktih2w",
@@ -126,12 +127,16 @@
   {
    "t": 1795106875,
    "e": 24.1
+  },
+  {
+   "t": 1795107286,
+   "e": 22.0325
   }
  ],
  "filter": {
-  "ts": "2026-11-19T17:45:50+01:00",
+  "ts": "2026-11-19T17:54:16+01:00",
   "n": 782,
-  "passed": 2,
+  "passed": 0,
   "reject_counts": {
    "mcap>300000": 199,
    "pair_too_new": 344,
@@ -140,6 +145,7 @@
    "vol_h1<5000": 510,
    "mcap<40000": 497,
    "liq<10000": 478,
+   "reentry_cooldown": 3,
    "low_activity_m5": 566,
    "volume_fading": 557,
    "sells>buys_h1": 308,
@@ -147,7 +153,6 @@
    "downtrend_h1": 477,
    "downtrend_h6": 421,
    "sells>buys_m5": 544,
-   "reentry_cooldown": 1,
    "no_price": 26
   }
  },
@@ -372,9 +377,9 @@
    "key": "scanner",
    "name": "Scanner + Analityk",
    "desc": "Zbiera coiny z DexScreenera, Jupitera, Raydiuma, GeckoTerminala i ocenia momentum (0–100)",
-   "age_s": 81,
+   "age_s": 30,
    "ok": true,
-   "restarts": 0
+   "restarts": 1
   },
   {
    "key": "filter",
@@ -382,7 +387,7 @@
    "desc": "Odrzuca coiny spoza $40 tys.–$2 mln, bez trendu wzrostowego, z małą płynnością; loguje powody",
    "age_s": 0,
    "ok": true,
-   "restarts": 0
+   "restarts": 1
   },
   {
    "key": "trader",
@@ -398,7 +403,7 @@
    "desc": "Aktualizuje tę stronę co minutę",
    "age_s": 0,
    "ok": true,
-   "restarts": 0
+   "restarts": 1
   }
  ]
 }
