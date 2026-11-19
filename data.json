@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-19T17:31:51+01:00",
+ "generated": "2026-11-19T17:32:25+01:00",
  "mode": "PAPER",
  "stats": {
-  "equity": 18.7992,
+  "equity": 18.8176,
   "start": 20.0,
   "cash": 11.2747,
   "realized": -1.1553,
-  "unrealized": -0.0455,
+  "unrealized": -0.0271,
   "open": 2,
   "closed": 10,
   "wins": 2,
@@ -37,14 +37,14 @@
    "entry_iso": "2026-11-19T17:27:09+01:00",
    "cost_usd": 3.79,
    "entry_price": 8.529e-07,
-   "last_price": 8.747e-07,
-   "last_gain": 0.02555985461367083,
-   "peak_gain": 0.02555985461367083,
+   "last_price": 8.793e-07,
+   "last_gain": 0.030953218431234664,
+   "peak_gain": 0.030953218431234664,
    "stop_pct": -0.06,
    "entry_mcap": 85299.0,
    "entry_liq": 120693.93,
    "score": 84.1,
-   "last_quote_iso": "2026-11-19T17:31:51+01:00"
+   "last_quote_iso": "2026-11-19T17:32:22+01:00"
   },
   {
    "symbol": "KFC",
@@ -53,14 +53,14 @@
    "entry_iso": "2026-11-19T17:27:09+01:00",
    "cost_usd": 3.78,
    "entry_price": 8.483e-05,
-   "last_price": 8.423e-05,
-   "last_gain": -0.007072969468348456,
+   "last_price": 8.419e-05,
+   "last_gain": -0.007544500766238249,
    "peak_gain": 0.008133914888600602,
    "stop_pct": -0.06,
    "entry_mcap": 84836.0,
    "entry_liq": 116793.27,
    "score": 76.3,
-   "last_quote_iso": "2026-11-19T17:31:51+01:00"
+   "last_quote_iso": "2026-11-19T17:32:22+01:00"
   }
  ],
  "closed": [
@@ -391,6 +391,10 @@
   {
    "t": 1795105884,
    "e": 18.572
+  },
+  {
+   "t": 1795105946,
+   "e": 18.8176
   }
  ],
  "filter": {
@@ -629,7 +633,7 @@
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone",
-   "age_s": 8,
+   "age_s": 2,
    "ok": true,
    "restarts": 0
   },
@@ -637,7 +641,7 @@
    "key": "scanner",
    "name": "Scanner + Analityk",
    "desc": "Zbiera coiny z DexScreenera, Jupitera, Raydiuma, GeckoTerminala i ocenia momentum (0–100)",
-   "age_s": 28,
+   "age_s": 62,
    "ok": true,
    "restarts": 0
   },
@@ -645,7 +649,7 @@
    "key": "filter",
    "name": "Filtr",
    "desc": "Odrzuca coiny spoza $40 tys.–$2 mln, bez trendu wzrostowego, z małą płynnością; loguje powody",
-   "age_s": 3,
+   "age_s": 2,
    "ok": true,
    "restarts": 0
   },
