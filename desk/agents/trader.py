@@ -120,14 +120,15 @@ def _try_enter_two_phase(pf, c, sig):
            "entry_ts": time.time(), "entry_iso": now_iso(), "entry_price": ft["price"], "entry_fill": b["fill"],
            "qty": b["qty"], "cost_usd": size, "entry_slip": b["slip"], "entry_mcap": ft["mcap"], "entry_liq": ft["liq"],
            "score": cand.get("score"), "stop_pct": c["initial_stop"], "peak_gain": 0.0, "last_price": ft["price"],
-           "equity_at_entry": eq}
+           "equity_at_entry": eq, "safety_note": (sig.get("safety") or {}).get("note_pl")}
     pf["cash"] -= size; pf["positions"].append(pos)
     trade_log({"ts": now_iso(), "side": "BUY", **{k: pos[k] for k in ("id", "mint", "symbol", "entry_price", "entry_fill", "qty", "cost_usd", "entry_slip", "entry_mcap", "entry_liq", "score")}})
     pct = int(round(c["position_pct_of_equity"] * 100))
     notify("paper_buy", f"PAPIER: kupno ${ft['symbol']} za {fmt(size)}",
            f"[PAPIER – bez prawdziwych pieniędzy] Kupno ${ft['symbol']} za {fmt(size)} ({pct}% equity {fmt(eq)}). "
            f"Kapitalizacja ~{fmt(ft['mcap'])}, płynność ~{fmt(ft['liq'])}, zmiana 5m {ft['chg_m5']:+.1f}%, 1h {ft['chg_h1']:+.1f}%, "
-           f"wynik analityka {cand.get('score')}. Poślizg {b['slip']*100:.1f}%. Stop -6%; po +12% → stop na wejściu; od +24% → trailing stop 12 pkt poniżej szczytu (np. szczyt +60% → stop +48%). {ft['url']}",
+           f"wynik analityka {cand.get('score')}. Poślizg {b['slip']*100:.1f}%. Stop -6%; po +12% → stop na wejściu; od +24% → trailing stop 12 pkt poniżej szczytu (np. szczyt +60% → stop +48%). "
+           + (f"{pos['safety_note']}. " if pos.get("safety_note") else "") + f"{ft['url']}",
            {"mint": mint, "pos_id": pos["id"]})
     log("trader", "paper BUY", symbol=ft["symbol"], mint=mint, size=size, price=ft["price"], slip=b["slip"])
     save(P("state", "portfolio.json"), pf)
