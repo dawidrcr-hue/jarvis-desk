@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-19T17:33:26+01:00",
+ "generated": "2026-11-19T17:34:27+01:00",
  "mode": "PAPER",
  "stats": {
-  "equity": 17.9901,
+  "equity": 17.9598,
   "start": 20.0,
   "cash": 14.3366,
   "realized": -1.8834,
-  "unrealized": -0.1266,
+  "unrealized": -0.1568,
   "open": 1,
   "closed": 12,
   "wins": 2,
@@ -37,14 +37,14 @@
    "entry_iso": "2026-11-19T17:27:09+01:00",
    "cost_usd": 3.78,
    "entry_price": 8.483e-05,
-   "last_price": 8.325e-05,
-   "last_gain": -0.018625486266650837,
+   "last_price": 8.256e-05,
+   "last_gain": -0.026759401155251772,
    "peak_gain": 0.008133914888600602,
    "stop_pct": -0.06,
    "entry_mcap": 84836.0,
    "entry_liq": 116793.27,
    "score": 76.3,
-   "last_quote_iso": "2026-11-19T17:33:24+01:00"
+   "last_quote_iso": "2026-11-19T17:34:25+01:00"
   }
  ],
  "closed": [
@@ -417,6 +417,10 @@
   {
    "t": 1795106007,
    "e": 17.9901
+  },
+  {
+   "t": 1795106068,
+   "e": 17.9598
   }
  ],
  "filter": {
@@ -611,7 +615,7 @@
    "ds_boosts_latest": 23,
    "ds_boosts_top": 24,
    "ds_cto": 10,
-   "ds_search_pump": 20,
+   "ds_search_pump": 21,
    "ds_search_SOL": 18,
    "ds_search_moon": 11,
    "ds_search_meme": 10,
@@ -619,7 +623,7 @@
    "ds_search_pumpfun": 30,
    "ds_search_raydium": 30,
    "ds_search_letsbonk": 2,
-   "jup_toptrending_1h": 50,
+   "jup_toptrending_1h": "ERR HTTP Error 429: Too Many Requests",
    "jup_toporganic_1h": "ERR HTTP Error 429: Too Many Requests",
    "jup_toptrending_6h": 50,
    "jup_toporganic_6h": "ERR HTTP Error 429: Too Many Requests",
@@ -630,10 +634,10 @@
    "pump_adv_graduated": "ERR blocked (Cloudflare 403) - skipped, no bypass",
    "ray_volume": 49,
    "ray_standard": 59,
-   "launchlab_lasttrade": 134,
+   "launchlab_lasttrade": 135,
    "launchlab_new": 104,
    "gt_trending": 40,
-   "gt_trend5m": 20,
+   "gt_trend5m": "ERR HTTP Error 429: Too Many Requests",
    "gt_trend1h": 20,
    "gt_trend6h": 20,
    "gt_top_tx": 15,
@@ -646,17 +650,17 @@
    "gt_launchlab": 20,
    "gt_letsbonk": 20
   },
-  "discovered": 591,
+  "discovered": 566,
   "watch": 1000,
-  "priced": 705,
-  "ts": 1795105952.3889213
+  "priced": 717,
+  "ts": 1795106064.853176
  },
  "agents": [
   {
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone",
-   "age_s": 3,
+   "age_s": 4,
    "ok": true,
    "restarts": 0
   },
@@ -664,7 +668,7 @@
    "key": "scanner",
    "name": "Scanner + Analityk",
    "desc": "Zbiera coiny z DexScreenera, Jupitera, Raydiuma, GeckoTerminala i ocenia momentum (0–100)",
-   "age_s": 9,
+   "age_s": 3,
    "ok": true,
    "restarts": 0
   },
@@ -672,7 +676,7 @@
    "key": "filter",
    "name": "Filtr",
    "desc": "Odrzuca coiny spoza $40 tys.–$2 mln, bez trendu wzrostowego, z małą płynnością; loguje powody",
-   "age_s": 3,
+   "age_s": 4,
    "ok": true,
    "restarts": 0
   },
