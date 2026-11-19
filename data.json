@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-19T18:08:39+01:00",
+ "generated": "2026-11-19T18:13:30+01:00",
  "mode": "PAPER",
  "stats": {
   "equity": 25.0,
@@ -51,10 +51,14 @@
   {
    "t": 1795108120,
    "e": 25.0
+  },
+  {
+   "t": 1795108410,
+   "e": 25.0
   }
  ],
  "filter": {
-  "ts": "2026-11-19T18:07:39+01:00",
+  "ts": "2026-11-19T18:13:30+01:00",
   "n": 380,
   "passed": 0,
   "reject_counts": {
@@ -196,36 +200,39 @@
    ]
   },
   {
-   "symbol": "DIGS",
-   "score": 28.4,
-   "mcap": 453410,
-   "liq": 67987,
-   "chg_m5": 1.46,
-   "chg_h1": 4.96,
+   "symbol": "JUMP COIN",
+   "score": 80.7,
+   "mcap": 60422,
+   "liq": 56624,
+   "chg_m5": 23.73,
+   "chg_h1": 309.0,
    "reasons": [
-    "mcap>300000 (453410)"
+    "pair_too_new",
+    "overextended_h1 (309.0%)"
    ]
   },
   {
-   "symbol": "ANT",
-   "score": 27.8,
-   "mcap": 2940885,
-   "liq": 150922,
-   "chg_m5": 0.41,
-   "chg_h1": 5.6,
+   "symbol": "HIGH",
+   "score": 70.3,
+   "mcap": 239410,
+   "liq": 36917,
+   "chg_m5": 17.53,
+   "chg_h1": 24.34,
    "reasons": [
-    "mcap>300000 (2940885)"
+    "vol_h1<5000",
+    "downtrend_h6 (-7.9%)"
    ]
   },
   {
-   "symbol": "BUCKME",
-   "score": 24.7,
-   "mcap": 216377,
-   "liq": 35807,
-   "chg_m5": 1.05,
-   "chg_h1": 6.87,
+   "symbol": "AVENGERS",
+   "score": 68.5,
+   "mcap": 70003,
+   "liq": 18497,
+   "chg_m5": 17.15,
+   "chg_h1": 26.81,
    "reasons": [
-    "sells>buys_m5 (0.79)"
+    "vol_h1<5000",
+    "low_activity_m5"
    ]
   }
  ],
@@ -281,7 +288,7 @@
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone",
-   "age_s": 3,
+   "age_s": 0,
    "ok": true,
    "restarts": 0
   },
@@ -289,17 +296,17 @@
    "key": "scanner",
    "name": "Scanner + Analityk",
    "desc": "Zbiera coiny z DexScreenera, Jupitera, Raydiuma, GeckoTerminala i ocenia momentum (0–100)",
-   "age_s": 1795108120,
+   "age_s": 1795108410,
    "ok": false,
-   "restarts": 0
+   "restarts": 1
   },
   {
    "key": "filter",
    "name": "Filtr",
    "desc": "Odrzuca coiny spoza $40 tys.–$2 mln, bez trendu wzrostowego, z małą płynnością; loguje powody",
-   "age_s": 3,
+   "age_s": 0,
    "ok": true,
-   "restarts": 0
+   "restarts": 1
   },
   {
    "key": "trader",
@@ -315,7 +322,7 @@
    "desc": "Aktualizuje tę stronę co minutę",
    "age_s": 0,
    "ok": true,
-   "restarts": 0
+   "restarts": 1
   }
  ]
 }
