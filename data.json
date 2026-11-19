@@ -1,18 +1,18 @@
 {
- "generated": "2026-11-19T17:12:05+01:00",
+ "generated": "2026-11-19T17:13:07+01:00",
  "mode": "PAPER",
  "stats": {
-  "equity": 20.6794,
+  "equity": 20.1711,
   "start": 20.0,
-  "cash": 2.9694,
-  "realized": -2.1606,
-  "unrealized": 2.8399,
-  "open": 4,
-  "closed": 6,
+  "cash": 6.5588,
+  "realized": -2.3012,
+  "unrealized": 2.4722,
+  "open": 3,
+  "closed": 7,
   "wins": 1,
-  "win_rate": 0.16666666666666666,
-  "avg_pnl_pct": -0.09232448683178918,
-  "costs_paid": 0.6894
+  "win_rate": 0.14285714285714285,
+  "avg_pnl_pct": -0.08452164361449098,
+  "costs_paid": 0.8026
  },
  "rules": {
   "size_pct": 0.2,
@@ -44,7 +44,7 @@
    "entry_mcap": 533364.0,
    "entry_liq": 105803.58,
    "score": 60.9,
-   "last_quote_iso": "2026-11-19T17:05:43+01:00"
+   "last_quote_iso": "2026-11-19T17:13:06+01:00"
   },
   {
    "symbol": "UVXY",
@@ -53,30 +53,14 @@
    "entry_iso": "2026-11-19T16:33:32+01:00",
    "cost_usd": 3.74,
    "entry_price": 22.18,
-   "last_price": 22.5,
-   "last_gain": 0.014427412082957725,
+   "last_price": 22.64,
+   "last_gain": 0.02073940486925152,
    "peak_gain": 0.03908926961226333,
    "stop_pct": -0.06,
    "entry_mcap": 401274.0,
    "entry_liq": 69012.0,
    "score": 63.2,
-   "last_quote_iso": "2026-11-19T17:05:43+01:00"
-  },
-  {
-   "symbol": "TL",
-   "mint": "Au6Lx5eEQUsANpPaMttLj1anZDXvVQj9fXyYwMpSpump",
-   "url": "https://dexscreener.com/solana/ctnxrno4xn3uz9lf4vyrwxtbrjup6qxscjnt5j1zxt6z",
-   "entry_iso": "2026-11-19T16:37:15+01:00",
-   "cost_usd": 3.73,
-   "entry_price": 7.093e-05,
-   "last_price": 7.344e-05,
-   "last_gain": 0.03538700126885663,
-   "peak_gain": 0.1822924009586917,
-   "stop_pct": 0.0,
-   "entry_mcap": 68788.0,
-   "entry_liq": 18168.0,
-   "score": 69.4,
-   "last_quote_iso": "2026-11-19T17:05:43+01:00"
+   "last_quote_iso": "2026-11-19T17:13:06+01:00"
   },
   {
    "symbol": "DCTY",
@@ -85,17 +69,34 @@
    "entry_iso": "2026-11-19T16:58:29+01:00",
    "cost_usd": 3.65,
    "entry_price": 9.39e-05,
-   "last_price": 0.0001675,
-   "last_gain": 0.7838125665601703,
+   "last_price": 0.0001592,
+   "last_gain": 0.6954206602768902,
    "peak_gain": 0.7838125665601703,
    "stop_pct": 0.663813,
    "entry_mcap": 89361.0,
    "entry_liq": 21295.37,
    "score": 64.1,
-   "last_quote_iso": "2026-11-19T17:05:43+01:00"
+   "last_quote_iso": "2026-11-19T17:13:06+01:00"
   }
  ],
  "closed": [
+  {
+   "symbol": "TL",
+   "mint": "Au6Lx5eEQUsANpPaMttLj1anZDXvVQj9fXyYwMpSpump",
+   "url": "https://dexscreener.com/solana/ctnxrno4xn3uz9lf4vyrwxtbrjup6qxscjnt5j1zxt6z",
+   "entry_iso": "2026-11-19T16:37:15+01:00",
+   "exit_iso": "2026-11-19T17:13:06+01:00",
+   "cost_usd": 3.73,
+   "entry_price": 7.093e-05,
+   "exit_price": 7.04e-05,
+   "gross_pct": -0.007472155646411904,
+   "pnl_pct": -0.03770458431070177,
+   "pnl_usd": -0.1406380994789176,
+   "peak_gain": 0.1822924009586917,
+   "reason": "stop na wejściu (0%)",
+   "hold_min": 35.860683751106265,
+   "entry_mcap": 68788.0
+  },
   {
    "symbol": "ACRUX",
    "mint": "7Evw4uxTxLGGEFEvXLUNYyc1J7PnFk9EYwTUFagARUX",
@@ -323,6 +324,10 @@
   {
    "t": 1795104726,
    "e": 20.6794
+  },
+  {
+   "t": 1795104787,
+   "e": 20.1711
   }
  ],
  "filter": {
@@ -561,7 +566,7 @@
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone",
-   "age_s": 0,
+   "age_s": 1,
    "ok": true,
    "restarts": 0
   },
@@ -569,15 +574,15 @@
    "key": "scanner",
    "name": "Scanner + Analityk",
    "desc": "Zbiera coiny z DexScreenera, Jupitera, Raydiuma, GeckoTerminala i ocenia momentum (0–100)",
-   "age_s": 436,
-   "ok": false,
+   "age_s": 61,
+   "ok": true,
    "restarts": 1
   },
   {
    "key": "filter",
    "name": "Filtr",
    "desc": "Odrzuca coiny spoza $40 tys.–$2 mln, bez trendu wzrostowego, z małą płynnością; loguje powody",
-   "age_s": 0,
+   "age_s": 1,
    "ok": true,
    "restarts": 2
   },
