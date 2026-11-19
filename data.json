@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-19T21:32:04+01:00",
+ "generated": "2026-11-19T21:33:06+01:00",
  "mode": "PAPER",
  "stats": {
   "equity": 24.9117,
@@ -595,35 +595,66 @@
   {
    "t": 1795120325,
    "e": 24.9117
+  },
+  {
+   "t": 1795120386,
+   "e": 24.9117
   }
  ],
  "filter": {
-  "ts": "2026-11-19T21:31:46+01:00",
-  "n": 448,
+  "ts": "2026-11-19T21:32:36+01:00",
+  "n": 431,
   "passed": 0,
   "reject_counts": {
-   "pair_too_new": 59,
-   "mcap<40000": 159,
-   "liq<20000": 184,
-   "vol_h1<5000": 287,
-   "overextended_m5": 17,
-   "mcap>200000": 178,
-   "downtrend_h6": 238,
-   "overextended_h1": 5,
-   "low_activity_m5": 284,
-   "volume_fading": 275,
+   "pair_too_new": 41,
+   "mcap<40000": 142,
+   "liq<20000": 167,
+   "overextended_m5": 10,
+   "vol_h1<5000": 270,
+   "low_activity_m5": 277,
+   "mcap>200000": 177,
+   "downtrend_h6": 230,
+   "volume_fading": 268,
+   "overextended_h1": 3,
    "rug_lp_unlocked": 1,
    "rug_score": 1,
    "rug_danger": 1,
-   "sells>buys_m5": 286,
-   "downtrend_m5": 329,
-   "downtrend_h1": 309,
-   "sells>buys_h1": 214,
+   "downtrend_m5": 314,
+   "downtrend_h1": 303,
+   "sells>buys_h1": 208,
+   "sells>buys_m5": 280,
    "reentry_cooldown": 4,
-   "no_price": 13
+   "no_price": 9
   }
  },
  "rugcheck_recent": [
+  {
+   "ts": "2026-11-19T21:32:36+01:00",
+   "symbol": "BUTTHOLE",
+   "mint": "127LiYjurDtt5y7Gry5zzVskhc9wHmDg5WDcGBjRCJev",
+   "ok": false,
+   "cached": true,
+   "reasons": [
+    "rug_lp_unlocked (LP 0% < 80%, pump_fun_amm)",
+    "rug_score (52 > 30)",
+    "rug_danger (Large Amount of LP Unlocked)"
+   ],
+   "summary": {
+    "score_norm": 52,
+    "top10_pct": 15.43,
+    "top1_pct": 3.43,
+    "creator_pct": 0.12,
+    "lp_locked_pct": 0.0,
+    "market": "pump_fun_amm",
+    "dangers": [
+     "Large Amount of LP Unlocked"
+    ],
+    "rugged": false,
+    "launchpad": null,
+    "insiders": 0
+   },
+   "err": null
+  },
   {
    "ts": "2026-11-19T21:31:46+01:00",
    "symbol": "BUTTHOLE",
@@ -903,33 +934,6 @@
     "insiders": 0
    },
    "err": null
-  },
-  {
-   "ts": "2026-11-19T21:20:54+01:00",
-   "symbol": "AI",
-   "mint": "6Pz9QBD23VJ5DUt3wMBqELwTEEHUPqRQBy25Ls6BoPX2",
-   "ok": false,
-   "cached": false,
-   "reasons": [
-    "rug_lp_unlocked (LP 0% < 80%, pump_fun_amm)",
-    "rug_score (52 > 30)",
-    "rug_danger (Large Amount of LP Unlocked)"
-   ],
-   "summary": {
-    "score_norm": 52,
-    "top10_pct": 24.39,
-    "top1_pct": 7.29,
-    "creator_pct": 0.0,
-    "lp_locked_pct": 0.0,
-    "market": "pump_fun_amm",
-    "dangers": [
-     "Large Amount of LP Unlocked"
-    ],
-    "rugged": false,
-    "launchpad": null,
-    "insiders": 0
-   },
-   "err": null
   }
  ],
  "reason_pl": {
@@ -971,140 +975,136 @@
  "near": [
   {
    "symbol": "LOOSY",
-   "score": 96.0,
-   "mcap": 72241,
-   "liq": 117751,
-   "chg_m5": 9.66,
-   "chg_h1": 48.82,
+   "score": 96.7,
+   "mcap": 74567,
+   "liq": 119767,
+   "chg_m5": 9.75,
+   "chg_h1": 53.61,
    "reasons": [
     "pair_too_new"
    ]
   },
   {
    "symbol": "LOOSY",
-   "score": 90.1,
-   "mcap": 61212,
-   "liq": 93167,
-   "chg_m5": 6.97,
-   "chg_h1": 72.07,
+   "score": 94.5,
+   "mcap": 63478,
+   "liq": 95024,
+   "chg_m5": 9.07,
+   "chg_h1": 78.44,
    "reasons": [
     "pair_too_new"
    ]
   },
   {
    "symbol": "AI",
-   "score": 59.9,
-   "mcap": 66161,
-   "liq": 68531,
-   "chg_m5": 2.16,
-   "chg_h1": 115.0,
+   "score": 63.2,
+   "mcap": 67236,
+   "liq": 69292,
+   "chg_m5": 3.85,
+   "chg_h1": 114.0,
    "reasons": [
-    "volume_fading (0.68)"
+    "volume_fading (0.66)"
+   ]
+  },
+  {
+   "symbol": "GOAT",
+   "score": 59.0,
+   "mcap": 139372,
+   "liq": 26194,
+   "chg_m5": 24.14,
+   "chg_h1": 15.5,
+   "reasons": [
+    "vol_h1<5000"
    ]
   },
   {
    "symbol": "DOOM",
-   "score": 53.6,
-   "mcap": 679019,
-   "liq": 66743,
-   "chg_m5": 1.26,
-   "chg_h1": 1.01,
+   "score": 59.0,
+   "mcap": 685709,
+   "liq": 67071,
+   "chg_m5": 3.54,
+   "chg_h1": 3.25,
    "reasons": [
-    "mcap>200000 (679019)"
+    "mcap>200000 (685709)"
+   ]
+  },
+  {
+   "symbol": "UVXY",
+   "score": 53.5,
+   "mcap": 452798,
+   "liq": 71970,
+   "chg_m5": 0.62,
+   "chg_h1": 2.96,
+   "reasons": [
+    "mcap>200000 (452798)"
    ]
   },
   {
    "symbol": "USDG",
-   "score": 47.0,
-   "mcap": 10815350,
-   "liq": 3528841,
-   "chg_m5": 0.59,
-   "chg_h1": 0.32,
+   "score": 51.5,
+   "mcap": 10796297,
+   "liq": 3526515,
+   "chg_m5": 0.38,
+   "chg_h1": 0.23,
    "reasons": [
-    "mcap>200000 (10815350)"
+    "mcap>200000 (10796297)"
+   ]
+  },
+  {
+   "symbol": "pippin",
+   "score": 48.1,
+   "mcap": 18079483,
+   "liq": 3374718,
+   "chg_m5": 0.62,
+   "chg_h1": 0.28,
+   "reasons": [
+    "mcap>200000 (18079483)"
+   ]
+  },
+  {
+   "symbol": "bro",
+   "score": 45.5,
+   "mcap": 114661,
+   "liq": 26726,
+   "chg_m5": 12.73,
+   "chg_h1": 11.21,
+   "reasons": [
+    "sells>buys_m5 (0.37)"
    ]
   },
   {
    "symbol": "Huss",
-   "score": 38.0,
-   "mcap": 179237,
-   "liq": 31532,
-   "chg_m5": 7.55,
-   "chg_h1": 6.73,
+   "score": 32.1,
+   "mcap": 177067,
+   "liq": 31322,
+   "chg_m5": 5.01,
+   "chg_h1": 6.41,
    "reasons": [
     "sells>buys_m5 (0.35)"
    ]
   },
   {
-   "symbol": "Mandy",
-   "score": 70.7,
-   "mcap": 225532,
-   "liq": 46147,
-   "chg_m5": 13.31,
-   "chg_h1": 119.0,
+   "symbol": "Leonida",
+   "score": 82.4,
+   "mcap": 1923579,
+   "liq": 107823,
+   "chg_m5": 21.51,
+   "chg_h1": 6.56,
    "reasons": [
-    "mcap>200000 (225532)",
-    "downtrend_h6 (-12.61%)"
+    "mcap>200000 (1923579)",
+    "downtrend_h6 (-33.35%)"
    ]
   },
   {
-   "symbol": "GOAT",
-   "score": 64.9,
-   "mcap": 141375,
-   "liq": 26391,
-   "chg_m5": 25.75,
-   "chg_h1": 19.82,
+   "symbol": "PIPI",
+   "score": 71.5,
+   "mcap": 360098,
+   "liq": 61482,
+   "chg_m5": 9.37,
+   "chg_h1": 61.55,
    "reasons": [
-    "vol_h1<5000",
-    "overextended_m5 (25.75%)"
-   ]
-  },
-  {
-   "symbol": "PumpMas",
-   "score": 56.0,
-   "mcap": 112360,
-   "liq": 24596,
-   "chg_m5": 2.84,
-   "chg_h1": 4.15,
-   "reasons": [
-    "vol_h1<5000",
-    "downtrend_h6 (-3.19%)"
-   ]
-  },
-  {
-   "symbol": "CYBERLEEK",
-   "score": 54.0,
-   "mcap": 2470297,
-   "liq": 437048,
-   "chg_m5": -3.35,
-   "chg_h1": 35.82,
-   "reasons": [
-    "mcap>200000 (2470297)",
-    "downtrend_m5 (-3.35%)"
-   ]
-  },
-  {
-   "symbol": "UVXY",
-   "score": 52.0,
-   "mcap": 452451,
-   "liq": 71958,
-   "chg_m5": 0.54,
-   "chg_h1": 2.79,
-   "reasons": [
-    "mcap>200000 (452451)",
-    "low_activity_m5"
-   ]
-  },
-  {
-   "symbol": "LOOSY",
-   "score": 50.1,
-   "mcap": 83741,
-   "liq": 25653,
-   "chg_m5": -15.22,
-   "chg_h1": 91.98,
-   "reasons": [
-    "pair_too_new",
-    "downtrend_m5 (-15.22%)"
+    "mcap>200000 (360098)",
+    "downtrend_h6 (-44.57%)"
    ]
   }
  ],
@@ -1112,15 +1112,15 @@
   "counts": {
    "pump_graduated_p0": "ERR blocked (Cloudflare 403) - skipped, no bypass",
    "ds_profiles_latest": 27,
-   "gt_trending": 40,
    "jup_toptrending_1h": 50,
+   "gt_trending": 40,
    "ray_volume": 49,
    "pump_graduated_p1": "ERR blocked (Cloudflare 403) - skipped, no bypass",
    "ray_standard": 56,
    "pump_complete_mcap": "ERR blocked (Cloudflare 403) - skipped, no bypass",
    "ds_profiles_recent": 25,
    "pump_adv_graduated": "ERR blocked (Cloudflare 403) - skipped, no bypass",
-   "launchlab_lasttrade": 169,
+   "launchlab_lasttrade": 171,
    "launchlab_new": 143,
    "ds_boosts_latest": 23,
    "jup_toporganic_1h": 47,
@@ -1129,38 +1129,38 @@
    "ds_cto": 9,
    "ds_search_pump": 19,
    "jup_toptrending_6h": 50,
-   "ds_search_SOL": 16,
    "gt_trend1h": "ERR HTTP Error 429: Too Many Requests",
+   "ds_search_SOL": 17,
    "ds_search_moon": 12,
    "gt_trend6h": "ERR HTTP Error 429: Too Many Requests",
    "ds_search_meme": 10,
    "jup_toporganic_6h": 47,
    "ds_search_pumpswap": 30,
    "ds_search_pumpfun": 30,
-   "gt_top_tx": 16,
+   "gt_top_tx": "ERR HTTP Error 429: Too Many Requests",
    "jup_recent": 30,
    "ds_search_raydium": 30,
    "gt_new": "ERR HTTP Error 429: Too Many Requests",
    "ds_search_letsbonk": 2,
-   "gt_pumpswap_trend": "ERR HTTP Error 429: Too Many Requests",
+   "gt_pumpswap_trend": 20,
    "gt_pumpfun": "ERR HTTP Error 429: Too Many Requests",
    "gt_pumpswap": "ERR HTTP Error 429: Too Many Requests",
    "gt_raydium": "ERR HTTP Error 429: Too Many Requests",
    "gt_raydium_clmm": "ERR HTTP Error 429: Too Many Requests",
-   "gt_launchlab": 20,
+   "gt_launchlab": "ERR HTTP Error 429: Too Many Requests",
    "gt_letsbonk": "ERR HTTP Error 429: Too Many Requests"
   },
-  "discovered": 565,
-  "watch": 296,
-  "priced": 448,
-  "ts": 1795120305.961767
+  "discovered": 545,
+  "watch": 292,
+  "priced": 431,
+  "ts": 1795120355.8821716
  },
  "agents": [
   {
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone",
-   "age_s": 3,
+   "age_s": 5,
    "ok": true,
    "restarts": 0
   },
@@ -1176,7 +1176,7 @@
    "key": "filter",
    "name": "Filtr",
    "desc": "Odrzuca coiny spoza zakresu kapitalizacji (config), bez trendu wzrostowego, z małą płynnością; loguje powody",
-   "age_s": 3,
+   "age_s": 5,
    "ok": true,
    "restarts": 0
   },
