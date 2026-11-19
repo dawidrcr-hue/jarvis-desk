@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-19T17:28:01+01:00",
+ "generated": "2026-11-19T17:29:02+01:00",
  "mode": "PAPER",
  "stats": {
-  "equity": 18.7968,
+  "equity": 18.8406,
   "start": 20.0,
   "cash": 3.8645,
   "realized": -1.0755,
-  "unrealized": -0.1277,
+  "unrealized": -0.0839,
   "open": 4,
   "closed": 8,
   "wins": 2,
@@ -44,7 +44,7 @@
    "entry_mcap": 533364.0,
    "entry_liq": 105803.58,
    "score": 60.9,
-   "last_quote_iso": "2026-11-19T17:27:58+01:00"
+   "last_quote_iso": "2026-11-19T17:29:00+01:00"
   },
   {
    "symbol": "UVXY",
@@ -60,7 +60,7 @@
    "entry_mcap": 401274.0,
    "entry_liq": 69012.0,
    "score": 63.2,
-   "last_quote_iso": "2026-11-19T17:27:58+01:00"
+   "last_quote_iso": "2026-11-19T17:29:00+01:00"
   },
   {
    "symbol": "KFC",
@@ -69,14 +69,14 @@
    "entry_iso": "2026-11-19T17:27:09+01:00",
    "cost_usd": 3.79,
    "entry_price": 8.529e-07,
-   "last_price": 8.462e-07,
-   "last_gain": -0.00785555164732088,
+   "last_price": 8.496e-07,
+   "last_gain": -0.0038691523039043885,
    "peak_gain": 0.0,
    "stop_pct": -0.06,
    "entry_mcap": 85299.0,
    "entry_liq": 120693.93,
    "score": 84.1,
-   "last_quote_iso": "2026-11-19T17:27:58+01:00"
+   "last_quote_iso": "2026-11-19T17:29:00+01:00"
   },
   {
    "symbol": "KFC",
@@ -85,14 +85,14 @@
    "entry_iso": "2026-11-19T17:27:09+01:00",
    "cost_usd": 3.78,
    "entry_price": 8.483e-05,
-   "last_price": 8.439e-05,
-   "last_gain": -0.005186844276788949,
-   "peak_gain": 0.0037722503831192356,
+   "last_price": 8.505e-05,
+   "last_gain": 0.002593422138394308,
+   "peak_gain": 0.008133914888600602,
    "stop_pct": -0.06,
    "entry_mcap": 84836.0,
    "entry_liq": 116793.27,
    "score": 76.3,
-   "last_quote_iso": "2026-11-19T17:27:58+01:00"
+   "last_quote_iso": "2026-11-19T17:29:00+01:00"
   }
  ],
  "closed": [
@@ -377,6 +377,10 @@
   {
    "t": 1795105682,
    "e": 18.7968
+  },
+  {
+   "t": 1795105743,
+   "e": 18.8406
   }
  ],
  "filter": {
@@ -576,11 +580,11 @@
    "ds_search_pumpfun": 30,
    "ds_search_raydium": 30,
    "ds_search_letsbonk": 2,
-   "jup_toptrending_1h": "ERR HTTP Error 429: Too Many Requests",
+   "jup_toptrending_1h": 50,
    "jup_toporganic_1h": 47,
-   "jup_toptrending_6h": "ERR HTTP Error 429: Too Many Requests",
+   "jup_toptrending_6h": 50,
    "jup_toporganic_6h": 47,
-   "jup_recent": "ERR HTTP Error 429: Too Many Requests",
+   "jup_recent": 30,
    "pump_graduated_p0": "ERR blocked (Cloudflare 403) - skipped, no bypass",
    "pump_graduated_p1": "ERR blocked (Cloudflare 403) - skipped, no bypass",
    "pump_complete_mcap": "ERR blocked (Cloudflare 403) - skipped, no bypass",
@@ -589,31 +593,31 @@
    "ray_standard": 59,
    "launchlab_lasttrade": 132,
    "launchlab_new": 105,
-   "gt_trending": "ERR can only concatenate str (not \"int\") to str",
+   "gt_trending": 40,
    "gt_trend5m": 20,
-   "gt_trend1h": 20,
-   "gt_trend6h": "ERR HTTP Error 429: Too Many Requests",
+   "gt_trend1h": "ERR HTTP Error 429: Too Many Requests",
+   "gt_trend6h": 20,
    "gt_top_tx": 15,
    "gt_new": 20,
    "gt_pumpswap_trend": 20,
    "gt_pumpfun": 20,
    "gt_pumpswap": 20,
    "gt_raydium": 18,
-   "gt_raydium_clmm": "ERR HTTP Error 429: Too Many Requests",
+   "gt_raydium_clmm": 14,
    "gt_launchlab": 20,
    "gt_letsbonk": 20
   },
-  "discovered": 529,
+  "discovered": 602,
   "watch": 1000,
-  "priced": 686,
-  "ts": 1795105626.700488
+  "priced": 694,
+  "ts": 1795105739.6199393
  },
  "agents": [
   {
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone",
-   "age_s": 3,
+   "age_s": 4,
    "ok": true,
    "restarts": 0
   },
@@ -621,7 +625,7 @@
    "key": "scanner",
    "name": "Scanner + Analityk",
    "desc": "Zbiera coiny z DexScreenera, Jupitera, Raydiuma, GeckoTerminala i ocenia momentum (0–100)",
-   "age_s": 10,
+   "age_s": 3,
    "ok": true,
    "restarts": 2
   },
@@ -629,7 +633,7 @@
    "key": "filter",
    "name": "Filtr",
    "desc": "Odrzuca coiny spoza $40 tys.–$2 mln, bez trendu wzrostowego, z małą płynnością; loguje powody",
-   "age_s": 2,
+   "age_s": 4,
    "ok": true,
    "restarts": 3
   },
