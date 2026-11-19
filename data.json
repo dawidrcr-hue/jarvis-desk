@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-19T20:28:32+01:00",
+ "generated": "2026-11-19T20:28:34+01:00",
  "mode": "PAPER",
  "stats": {
   "equity": 24.4969,
@@ -42,9 +42,9 @@
   ],
   "ladder_note_pl": "Stop -6%; po +12% → stop na wejściu; od +24% trailing 12 pkt, od +100% trailing 20 pkt, od +200% trailing 25 pkt",
   "min_mcap": 40000,
-  "max_mcap": 300000,
+  "max_mcap": 200000,
   "filter": {
-   "min_liquidity_usd": 30000,
+   "min_liquidity_usd": 20000,
    "min_vol_h1_usd": 5000,
    "min_pair_age_min": 30,
    "min_m5_txns": 10,
@@ -388,7 +388,7 @@
  "reason_pl": {
   "mcap<40000": "kapitalizacja < $40 tys.",
   "mcap>2000000": "kapitalizacja > $2 mln",
-  "liq<30000": "płynność < $30 tys.",
+  "liq<20000": "płynność < $20 tys.",
   "vol_h1<5000": "wolumen 1h < $5 tys.",
   "pair_too_new": "para młodsza niż 30 min",
   "downtrend_m5": "spadek 5m",
@@ -419,7 +419,7 @@
   "rugcheck_unavailable": "RugCheck niedostępny (kupno pominięte)",
   "rugcheck_deferred": "RugCheck: limit sprawdzeń w rundzie",
   "score<65": "ocena analityka < 65",
-  "mcap>300000": "kapitalizacja > $300 tys."
+  "mcap>200000": "kapitalizacja > $200 tys."
  },
  "near": [
   {
@@ -613,7 +613,7 @@
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone",
-   "age_s": 1,
+   "age_s": 2,
    "ok": true,
    "restarts": 0
   },
@@ -621,7 +621,7 @@
    "key": "scanner",
    "name": "Scanner + Analityk",
    "desc": "Zbiera coiny z DexScreenera, Jupitera, Raydiuma, GeckoTerminala i ocenia momentum (0–100)",
-   "age_s": 0,
+   "age_s": 1,
    "ok": true,
    "restarts": 0
   },
@@ -629,7 +629,7 @@
    "key": "filter",
    "name": "Filtr",
    "desc": "Odrzuca coiny spoza zakresu kapitalizacji (config), bez trendu wzrostowego, z małą płynnością; loguje powody",
-   "age_s": 3,
+   "age_s": 5,
    "ok": true,
    "restarts": 0
   },
