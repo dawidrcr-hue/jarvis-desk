@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-19T16:45:25+01:00",
+ "generated": "2026-11-19T16:46:26+01:00",
  "mode": "PAPER",
  "stats": {
-  "equity": 19.0105,
+  "equity": 19.0659,
   "start": 20.0,
   "cash": 3.586,
   "realized": -1.354,
-  "unrealized": 0.3646,
+  "unrealized": 0.42,
   "open": 4,
   "closed": 5,
   "wins": 1,
@@ -44,7 +44,7 @@
    "entry_mcap": 533364.0,
    "entry_liq": 105803.58,
    "score": 60.9,
-   "last_quote_iso": "2026-11-19T16:45:24+01:00"
+   "last_quote_iso": "2026-11-19T16:46:26+01:00"
   },
   {
    "symbol": "UVXY",
@@ -60,7 +60,7 @@
    "entry_mcap": 401274.0,
    "entry_liq": 69012.0,
    "score": 63.2,
-   "last_quote_iso": "2026-11-19T16:45:24+01:00"
+   "last_quote_iso": "2026-11-19T16:46:26+01:00"
   },
   {
    "symbol": "TL",
@@ -69,14 +69,14 @@
    "entry_iso": "2026-11-19T16:37:15+01:00",
    "cost_usd": 3.73,
    "entry_price": 7.093e-05,
-   "last_price": 7.892e-05,
-   "last_gain": 0.11264627097138025,
+   "last_price": 7.999e-05,
+   "last_gain": 0.1277315663330043,
    "peak_gain": 0.1822924009586917,
    "stop_pct": 0.0,
    "entry_mcap": 68788.0,
    "entry_liq": 18168.0,
    "score": 69.4,
-   "last_quote_iso": "2026-11-19T16:45:24+01:00"
+   "last_quote_iso": "2026-11-19T16:46:26+01:00"
   },
   {
    "symbol": "ACRUX",
@@ -92,7 +92,7 @@
    "entry_mcap": 189880.0,
    "entry_liq": 28751.78,
    "score": 68.2,
-   "last_quote_iso": "2026-11-19T16:45:24+01:00"
+   "last_quote_iso": "2026-11-19T16:46:26+01:00"
   }
  ],
  "closed": [
@@ -250,13 +250,18 @@
   {
    "t": 1795103124,
    "e": 19.023
+  },
+  {
+   "t": 1795103187,
+   "e": 19.0659
   }
  ],
  "filter": {
-  "ts": "2026-11-19T16:45:24+01:00",
+  "ts": "2026-11-19T16:45:25+01:00",
   "n": 731,
   "passed": 0,
   "reject_counts": {
+   "mcap>300000": 204,
    "pair_too_new": 277,
    "overextended_m5": 29,
    "mcap<40000": 442,
@@ -268,7 +273,6 @@
    "volume_fading": 451,
    "downtrend_h1": 519,
    "already_held": 4,
-   "mcap>2000000": 139,
    "downtrend_m5": 593,
    "sells>buys_m5": 485,
    "sells>buys_h1": 327,
@@ -298,28 +302,6 @@
   "no_price": "brak ceny"
  },
  "near": [
-  {
-   "symbol": "DCTY",
-   "score": 80.9,
-   "mcap": 77329,
-   "liq": 116907,
-   "chg_m5": 2.86,
-   "chg_h1": 75.24,
-   "reasons": [
-    "pair_too_new"
-   ]
-  },
-  {
-   "symbol": "PIPI",
-   "score": 75.0,
-   "mcap": 112142,
-   "liq": 31928,
-   "chg_m5": 15.45,
-   "chg_h1": 101.0,
-   "reasons": [
-    "volume_fading (0.38)"
-   ]
-  },
   {
    "symbol": "JETSKI",
    "score": 60.0,
@@ -387,30 +369,6 @@
    ]
   },
   {
-   "symbol": "MEOWL",
-   "score": 84.9,
-   "mcap": 67185,
-   "liq": 19444,
-   "chg_m5": 15.0,
-   "chg_h1": 58.23,
-   "reasons": [
-    "vol_h1<5000",
-    "low_activity_m5"
-   ]
-  },
-  {
-   "symbol": "DacityCoin",
-   "score": 82.0,
-   "mcap": 507860,
-   "liq": 114953,
-   "chg_m5": 9.14,
-   "chg_h1": 40.96,
-   "reasons": [
-    "mcap>300000 (507860)",
-    "downtrend_h6 (-58.05%)"
-   ]
-  },
-  {
    "symbol": "jellyjelly",
    "score": 60.1,
    "mcap": 37952132,
@@ -432,6 +390,54 @@
    "reasons": [
     "reentry_cooldown",
     "downtrend_h1 (-3.17%)"
+   ]
+  },
+  {
+   "symbol": "Buncoin",
+   "score": 52.0,
+   "mcap": 152067,
+   "liq": 36543,
+   "chg_m5": -5.63,
+   "chg_h1": 41.98,
+   "reasons": [
+    "reentry_cooldown",
+    "downtrend_m5 (-5.63%)"
+   ]
+  },
+  {
+   "symbol": "250",
+   "score": 49.4,
+   "mcap": 109638,
+   "liq": 24146,
+   "chg_m5": -7.16,
+   "chg_h1": 17.9,
+   "reasons": [
+    "downtrend_m5 (-7.16%)",
+    "downtrend_h6 (-15.54%)"
+   ]
+  },
+  {
+   "symbol": "greg",
+   "score": 48.5,
+   "mcap": 115096,
+   "liq": 26803,
+   "chg_m5": 4.74,
+   "chg_h1": 62.1,
+   "reasons": [
+    "sells>buys_m5 (0.89)",
+    "sells>buys_h1 (0.88)"
+   ]
+  },
+  {
+   "symbol": "STANK",
+   "score": 45.3,
+   "mcap": 200918,
+   "liq": 26060,
+   "chg_m5": -4.36,
+   "chg_h1": 26.96,
+   "reasons": [
+    "downtrend_m5 (-4.36%)",
+    "downtrend_h6 (-44.21%)"
    ]
   }
  ],
@@ -487,7 +493,7 @@
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone",
-   "age_s": 0,
+   "age_s": 1,
    "ok": true,
    "restarts": 0
   },
@@ -495,7 +501,7 @@
    "key": "scanner",
    "name": "Scanner + Analityk",
    "desc": "Zbiera coiny z DexScreenera, Jupitera, Raydiuma, GeckoTerminala i ocenia momentum (0–100)",
-   "age_s": 198,
+   "age_s": 61,
    "ok": true,
    "restarts": 0
   },
@@ -503,7 +509,7 @@
    "key": "filter",
    "name": "Filtr",
    "desc": "Odrzuca coiny spoza $40 tys.–$2 mln, bez trendu wzrostowego, z małą płynnością; loguje powody",
-   "age_s": 0,
+   "age_s": 1,
    "ok": true,
    "restarts": 0
   },
