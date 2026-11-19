@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-19T16:40:21+01:00",
+ "generated": "2026-11-19T16:41:23+01:00",
  "mode": "PAPER",
  "stats": {
-  "equity": 19.3225,
+  "equity": 19.2644,
   "start": 20.0,
   "cash": 3.586,
   "realized": -1.354,
-  "unrealized": 0.6766,
+  "unrealized": 0.6184,
   "open": 4,
   "closed": 5,
   "wins": 1,
@@ -44,7 +44,7 @@
    "entry_mcap": 533364.0,
    "entry_liq": 105803.58,
    "score": 60.9,
-   "last_quote_iso": "2026-11-19T16:40:21+01:00"
+   "last_quote_iso": "2026-11-19T16:41:22+01:00"
   },
   {
    "symbol": "UVXY",
@@ -60,7 +60,7 @@
    "entry_mcap": 401274.0,
    "entry_liq": 69012.0,
    "score": 63.2,
-   "last_quote_iso": "2026-11-19T16:40:21+01:00"
+   "last_quote_iso": "2026-11-19T16:41:22+01:00"
   },
   {
    "symbol": "TL",
@@ -69,14 +69,14 @@
    "entry_iso": "2026-11-19T16:37:15+01:00",
    "cost_usd": 3.73,
    "entry_price": 7.093e-05,
-   "last_price": 8.374e-05,
-   "last_gain": 0.18060059213308888,
-   "peak_gain": 0.18060059213308888,
+   "last_price": 8.33e-05,
+   "last_gain": 0.17439729310587904,
+   "peak_gain": 0.1822924009586917,
    "stop_pct": 0.0,
    "entry_mcap": 68788.0,
    "entry_liq": 18168.0,
    "score": 69.4,
-   "last_quote_iso": "2026-11-19T16:40:21+01:00"
+   "last_quote_iso": "2026-11-19T16:41:22+01:00"
   },
   {
    "symbol": "ACRUX",
@@ -85,14 +85,14 @@
    "entry_iso": "2026-11-19T16:39:12+01:00",
    "cost_usd": 3.84,
    "entry_price": 0.0001924,
-   "last_price": 0.0001915,
-   "last_gain": -0.004677754677754664,
+   "last_price": 0.0001897,
+   "last_gain": -0.014033264033263992,
    "peak_gain": 0.0,
    "stop_pct": -0.06,
    "entry_mcap": 189880.0,
    "entry_liq": 28751.78,
    "score": 68.2,
-   "last_quote_iso": "2026-11-19T16:40:21+01:00"
+   "last_quote_iso": "2026-11-19T16:41:22+01:00"
   }
  ],
  "closed": [
@@ -238,6 +238,10 @@
   {
    "t": 1795102822,
    "e": 19.3225
+  },
+  {
+   "t": 1795102883,
+   "e": 19.2644
   }
  ],
  "filter": {
@@ -438,9 +442,9 @@
    "ds_search_pumpfun": 30,
    "ds_search_raydium": 30,
    "ds_search_letsbonk": 2,
-   "jup_toptrending_1h": 50,
+   "jup_toptrending_1h": "ERR HTTP Error 429: Too Many Requests",
    "jup_toporganic_1h": 47,
-   "jup_toptrending_6h": "ERR HTTP Error 429: Too Many Requests",
+   "jup_toptrending_6h": 50,
    "jup_toporganic_6h": 47,
    "jup_recent": 30,
    "pump_graduated_p0": "ERR blocked (Cloudflare 403) - skipped, no bypass",
@@ -449,13 +453,13 @@
    "pump_adv_graduated": "ERR blocked (Cloudflare 403) - skipped, no bypass",
    "ray_volume": 48,
    "ray_standard": 60,
-   "launchlab_lasttrade": 163,
+   "launchlab_lasttrade": 162,
    "launchlab_new": 129,
-   "gt_trending": 40,
-   "gt_trend5m": 20,
+   "gt_trending": "ERR HTTP Error 429: Too Many Requests",
+   "gt_trend5m": "ERR HTTP Error 429: Too Many Requests",
    "gt_trend1h": 20,
    "gt_trend6h": 20,
-   "gt_top_tx": 15,
+   "gt_top_tx": "ERR HTTP Error 429: Too Many Requests",
    "gt_new": 20,
    "gt_pumpswap_trend": 20,
    "gt_pumpfun": 20,
@@ -466,16 +470,16 @@
    "gt_letsbonk": 20
   },
   "discovered": 622,
-  "watch": 983,
-  "priced": 714,
-  "ts": 1795102744.8712356
+  "watch": 1000,
+  "priced": 731,
+  "ts": 1795102882.3965123
  },
  "agents": [
   {
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone",
-   "age_s": 7,
+   "age_s": 8,
    "ok": true,
    "restarts": 0
   },
@@ -483,7 +487,7 @@
    "key": "scanner",
    "name": "Scanner + Analityk",
    "desc": "Zbiera coiny z DexScreenera, Jupitera, Raydiuma, GeckoTerminala i ocenia momentum (0–100)",
-   "age_s": 7,
+   "age_s": 1,
    "ok": true,
    "restarts": 0
   },
@@ -491,7 +495,7 @@
    "key": "filter",
    "name": "Filtr",
    "desc": "Odrzuca coiny spoza $40 tys.–$2 mln, bez trendu wzrostowego, z małą płynnością; loguje powody",
-   "age_s": 2,
+   "age_s": 3,
    "ok": true,
    "restarts": 0
   },
