@@ -1,6 +1,6 @@
 import os, sys, time, unittest
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from lib.strategy import ladder_update, sim_buy, sim_sell, slippage, position_size, filter_reasons, features, dead_liquidity_reason, position_mark, portfolio_equity, dead_exit, DEAD_REASON, missed_quote_limit, norm_symbol, trail_gap_for, ladder_note_pl
+from lib.strategy import ladder_update, sim_buy, sim_sell, slippage, position_size, filter_reasons, features, dead_liquidity_reason, position_mark, portfolio_equity, dead_exit, DEAD_REASON, missed_quote_limit, norm_symbol, trail_gap_for, ladder_note_pl, entries_allowed, stop_at_ts
 import json
 CFG = json.load(open(os.path.join(os.path.dirname(__file__), "..", "config.json")))
 
@@ -13,10 +13,10 @@ def run(path):
 
 class T(unittest.TestCase):
     def test_initial_stop(self):
-        pos, px, why = run([1.02, 0.97, 0.94])
-        self.assertEqual(px, 0.94); self.assertIn("-6", why)
+        pos, px, why = run([1.02, 0.97, 0.93, 0.92])
+        self.assertEqual(px, 0.92); self.assertIn("-8", why)
     def test_no_exit_above_stop(self):
-        pos, px, _ = run([1.05, 0.95, 1.08]); self.assertIsNone(px); self.assertEqual(pos["stop_pct"], -0.06)
+        pos, px, _ = run([1.05, 0.95, 1.08]); self.assertIsNone(px); self.assertAlmostEqual(pos["stop_pct"], CFG["initial_stop"])
     def test_breakeven(self):
         pos, px, why = run([1.05, 1.12, 1.06, 1.0]); self.assertEqual(px, 1.0); self.assertEqual(pos["stop_pct"], 0.0)
         self.assertAlmostEqual(px / 1.0 - 1, 0.0)
@@ -65,7 +65,7 @@ class T(unittest.TestCase):
 class TCap(unittest.TestCase):
     def test_max_mcap(self):
         base = {"baseToken": {"address": "M", "symbol": "X"}, "priceUsd": "1", "liquidity": {"usd": 50000},
-                "priceChange": {"m5": 3, "h1": 20, "h6": 5}, "txns": {"m5": {"buys": 30, "sells": 10}, "h1": {"buys": 300, "sells": 100}},
+                "priceChange": {"m5": 5, "h1": 20, "h6": 5}, "txns": {"m5": {"buys": 30, "sells": 10}, "h1": {"buys": 300, "sells": 100}},
                 "volume": {"m5": 2000, "h1": 10000}, "pairCreatedAt": 1000}
         for mc, ok in ((39999, False), (40000, True), (200000, True), (200001, False), (300000, False), (300001, False), (2000000, False), (145e6, False)):
             rs = filter_reasons(features(dict(base, marketCap=mc)), CFG["filter"])
@@ -73,20 +73,34 @@ class TCap(unittest.TestCase):
 
     def test_min_liquidity(self):
         base = {"baseToken": {"address": "M", "symbol": "X"}, "priceUsd": "1", "marketCap": 80000,
-                "priceChange": {"m5": 3, "h1": 20, "h6": 5}, "txns": {"m5": {"buys": 30, "sells": 10}, "h1": {"buys": 300, "sells": 100}},
+                "priceChange": {"m5": 5, "h1": 20, "h6": 5}, "txns": {"m5": {"buys": 30, "sells": 10}, "h1": {"buys": 300, "sells": 100}},
                 "volume": {"m5": 2000, "h1": 10000}, "pairCreatedAt": 1000}
         want = CFG["filter"]["min_liquidity_usd"]
-        self.assertEqual(want, 20000)
+        self.assertEqual(want, 30000)
         rs_lo = filter_reasons(features(dict(base, liquidity={"usd": want - 1})), CFG["filter"])
         rs_ok = filter_reasons(features(dict(base, liquidity={"usd": want})), CFG["filter"])
         self.assertTrue(any(r.startswith("liq<") for r in rs_lo), rs_lo)
         self.assertFalse(any(r.startswith("liq<") for r in rs_ok), rs_ok)
 
+    def test_min_score(self):
+        want = CFG["filter"]["min_score"]
+        self.assertEqual(want, 69)
+        base = {"baseToken": {"address": "M", "symbol": "X"}, "priceUsd": "1", "marketCap": 80000,
+                "liquidity": {"usd": 50000},
+                "priceChange": {"m5": 5, "h1": 20, "h6": 5}, "txns": {"m5": {"buys": 30, "sells": 10}, "h1": {"buys": 300, "sells": 100}},
+                "volume": {"m5": 2000, "h1": 10000}, "pairCreatedAt": 1000}
+        # m5=5 -> score 70.5; m5=4 -> score 68.5
+        rs_ok = filter_reasons(features(base), CFG["filter"])
+        self.assertFalse(any(r.startswith("score<") for r in rs_ok), rs_ok)
+        low = dict(base, priceChange={"m5": 4, "h1": 20, "h6": 5})
+        rs_lo = filter_reasons(features(low), CFG["filter"])
+        self.assertTrue(any(r.startswith("score<") for r in rs_lo), rs_lo)
+
 
 def _healthy(**over):
     p = {"baseToken": {"address": "MINTA", "symbol": "KFC"}, "priceUsd": "1", "marketCap": 80000,
          "liquidity": {"usd": 50000},
-         "priceChange": {"m5": 3, "h1": 20, "h6": 5},
+         "priceChange": {"m5": 5, "h1": 20, "h6": 5},
          "txns": {"m5": {"buys": 30, "sells": 10}, "h1": {"buys": 300, "sells": 100}},
          "volume": {"m5": 2000, "h1": 10000}, "pairCreatedAt": 1000}
     p.update(over)
@@ -105,9 +119,12 @@ class TTrailTiers(unittest.TestCase):
         self.assertAlmostEqual(trail_gap_for(1.99, CFG), 0.20)
         self.assertAlmostEqual(trail_gap_for(2.0, CFG), 0.25)
         note = ladder_note_pl(CFG)
+        self.assertIn("Stop -8%", note)
         self.assertIn("od +24% trailing 12 pkt", note)
         self.assertIn("od +100% trailing 20 pkt", note)
         self.assertIn("od +200% trailing 25 pkt", note)
+        self.assertEqual(CFG["initial_stop"], -0.08)
+        self.assertEqual(CFG["stop_at"], "2026-11-20T06:00:00+01:00")
 
     def test_peak_150_stop_130(self):
         pos, px, _ = run([2.5])
@@ -143,6 +160,32 @@ class TTrailTiers(unittest.TestCase):
         self.assertAlmostEqual(pos["stop_pct"], 1.30)
         self.assertIn("+130", why)
         self.assertIn("20 pkt", why)
+
+
+class TStopAt(unittest.TestCase):
+    """No new entries at or after stop_at; open-position management is unchanged."""
+
+    def test_missing_keeps_entries_open(self):
+        after = 1795200000  # well after 20.11 06:00 Warsaw
+        self.assertTrue(entries_allowed({}, now=after))
+        self.assertTrue(entries_allowed({"stop_at": ""}, now=after))
+        self.assertIsNone(stop_at_ts({}))
+
+    def test_before_at_after_warsaw_6am(self):
+        c = {"stop_at": "2026-11-20T06:00:00+01:00"}
+        ts = stop_at_ts(c)
+        self.assertEqual(ts, 1795150800)  # 2026-11-20 05:00:00 UTC
+        self.assertTrue(entries_allowed(c, now=ts - 1))
+        self.assertFalse(entries_allowed(c, now=ts))
+        self.assertFalse(entries_allowed(c, now=ts + 1))
+
+    def test_naive_iso_is_warsaw(self):
+        c = {"stop_at": "2026-11-20T06:00:00"}
+        self.assertEqual(stop_at_ts(c), stop_at_ts({"stop_at": "2026-11-20T06:00:00+01:00"}))
+
+    def test_unparsable_fails_closed(self):
+        self.assertFalse(entries_allowed({"stop_at": "not-a-time"}, now=1))
+
 
 class TAlreadyHeld(unittest.TestCase):
     """One open position per mint, and also per ticker (copycat KFC mints)."""

@@ -8,7 +8,7 @@ import os, sys, time, json, glob, threading
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from lib.common import P, load, save, log, heartbeat, cfg, notify, now_iso, HTTP_TIMEOUT
 from lib.market import pair_prices, pairs_for_mints
-from lib.strategy import features, filter_reasons, sim_buy, sim_sell, position_size, ladder_update, ladder_note_pl, dead_liquidity_reason, portfolio_equity, dead_exit, DEAD_REASON, norm_symbol
+from lib.strategy import features, filter_reasons, sim_buy, sim_sell, position_size, ladder_update, ladder_note_pl, dead_liquidity_reason, portfolio_equity, dead_exit, DEAD_REASON, norm_symbol, entries_allowed
 
 LOCK = threading.Lock()
 
@@ -80,6 +80,7 @@ def _enter_locked(pf, c, sig):
 def _try_enter_two_phase(pf, c, sig):
     """LOCK held on entry and exit. HTTP runs with LOCK released."""
     cand = sig["cand"]; mint = cand["mint"]
+    if not entries_allowed(c): return "entries_closed"
     if time.time() - sig["ts"] > 300: return "stale_signal"
     if any(p["mint"] == mint for p in pf["positions"]): return "already_held"
     sym = norm_symbol(cand.get("symbol"))
@@ -98,6 +99,7 @@ def _try_enter_two_phase(pf, c, sig):
         return "no_requote"
     if not q: return "no_requote"
     # Re-check after the wait — a stop may have closed something, or another entry filled.
+    if not entries_allowed(c): return "entries_closed"
     if any(p["mint"] == mint for p in pf["positions"]): return "already_held"
     if sym and any(norm_symbol(p.get("symbol")) == sym for p in pf["positions"]):
         return "already_held"

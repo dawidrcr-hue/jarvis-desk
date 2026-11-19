@@ -6,7 +6,7 @@ Processes (watchdog.py supervises, restarts on crash / stale heartbeat):
 - agents/filter.py   – hard rules, every decision with reasons -> logs/decisions.jsonl; passes -> signals/approved/
 - agents/trader.py   – re-quotes + re-checks, sizes 5% of current paper equity, simulated fills with costs, polls open positions every 20s, trailing ladder; state/portfolio.json, logs/trades.jsonl, Polish notes notify/pending (tagged PAPIER)
 Commands: ./start.sh | ./stop.sh | python3 status.py [--json] | python3 tests/test_ladder.py
-Uptrend definition + cost model: see docstrings in lib/strategy.py. Ladder: stop -6%; peak>=+12% -> stop 0%; peak>=+24% -> TRUE trailing stop = peak - 12 pp (never moves down; user decision 17.11).
+Uptrend definition + cost model: see docstrings in lib/strategy.py. Ladder: stop -8%; peak>=+12% -> stop 0%; peak>=+24% trail 12 pp; peak>=+100% trail 20 pp; peak>=+200% trail 25 pp (never moves down). After config stop_at, no new entries (open positions still managed).
 Ladder measured on market price vs entry market price; exit fills at the observed price (gaps below the stop are realistic losses), costs then applied.
 Reset paper account: ./stop.sh && rm state/portfolio.json && ./start.sh
 - agents/publisher.py – builds public-safe data.json (no wallet/keys) + site/ template, copies into /workspace/jarvis-desk/site (git repo) and pushes to GitHub Pages every ~60 s when data changes (forced refresh ≥ 5 min). URL: https://dawikoro-tech.github.io/jarvis-desk/  Manual: python3 agents/publisher.py once

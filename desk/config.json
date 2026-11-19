@@ -12,7 +12,7 @@
    0.0
   ]
  ],
- "initial_stop": -0.06,
+ "initial_stop": -0.08,
  "costs": {
   "min_slippage_pct": 0.01,
   "impact_mult": 2.0,
@@ -20,9 +20,11 @@
  },
  "scan_interval_s": 15,
  "price_poll_s": 3,
+ "stop_at": "2026-11-20T06:00:00+01:00",
+ "_stop_at_note": "After 06:00 Europe/Warsaw on 2026-11-20, no new paper buys. Open positions are still managed and closed; the site keeps publishing. Workflow stays enabled so Actions runs can chain until then. User decision 19.11.",
  "filter": {
   "min_mcap_usd": 40000,
-  "min_liquidity_usd": 20000,
+  "min_liquidity_usd": 30000,
   "min_vol_h1_usd": 5000,
   "min_pair_age_min": 30,
   "require_m5_up": true,
@@ -34,7 +36,7 @@
   "min_vol_accel": 0.8,
   "max_m5_change_pct": 25,
   "max_h1_change_pct": 300,
-  "min_score": 65,
+  "min_score": 69,
   "max_mcap_usd": 200000
  },
  "trail_after": 0.24,
@@ -53,7 +55,7 @@
    0.25
   ]
  ],
- "_ladder_note": "stop -6%; peak>=+12% -> stop 0% (entry); peak>=+24% trail 12 pp below peak; peak>=+100% trail 20 pp; peak>=+200% trail 25 pp. Stop = max(previous, peak-gap), never moves down. User decision 19.11.",
+ "_ladder_note": "stop -8%; peak>=+12% -> stop 0% (entry); peak>=+24% trail 12 pp below peak; peak>=+100% trail 20 pp; peak>=+200% trail 25 pp. Stop = max(previous, peak-gap), never moves down. User decision 19.11.",
  "dead_liq_usd": 1000,
  "no_quote_timeout_s": 600,
  "_size_note": "20% equity per trade (start $25 -> $5). $0.02 fee would eat ~1%/side at smaller sizes. Max 4 open. User decision 19.11.",
