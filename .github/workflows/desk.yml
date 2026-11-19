@@ -1,0 +1,53 @@
+name: paper-desk
+# PAPER momentum desk (simulation only: no wallet, no keys, no secrets).
+# Each run trades on paper for ~5h40m, committing data.json + desk state to main every minute,
+# then saves and exits. The cron keeps one run queued in the concurrency group, so the next run
+# starts as soon as the current one finishes and resumes from the committed state.
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+    inputs:
+      run_seconds:
+        description: "How long this run trades (seconds)"
+        required: false
+        default: "20400"
+permissions:
+  contents: write
+concurrency:
+  group: paper-desk
+  cancel-in-progress: false
+jobs:
+  desk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    env:
+      TZ: Europe/Warsaw
+      PYTHONUNBUFFERED: "1"
+      DESK_RUN_SECONDS: ${{ github.event.inputs.run_seconds || '20400' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main          # latest tip, not the SHA from when this run was queued
+          fetch-depth: 0
+      - name: git identity
+        run: |
+          git config user.name "jarvis-paper-desk[bot]"
+          git config user.email "jarvis-paper-desk@users.noreply.github.com"
+          git pull -q --ff-only origin main || true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: tests
+        working-directory: desk
+        run: python -m unittest discover -s tests -q
+      - name: run paper desk
+        working-directory: desk
+        env:
+          DESK_SITE: ${{ github.workspace }}
+        run: python run_actions.py
+      - name: desk logs (tail)
+        if: always()
+        working-directory: desk
+        run: |
+          tail -n 40 logs/watchdog.log logs/trader.log logs/publisher.log logs/scanner.log 2>/dev/null || true

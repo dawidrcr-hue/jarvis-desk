@@ -1,0 +1,22 @@
+# Jarvis PAPER desk (no real money)
+Paper-trading Solana momentum desk. No wallet, no Phantom, no signing. Public data only (DexScreener + GeckoTerminal).
+
+Processes (watchdog.py supervises, restarts on crash / stale heartbeat):
+- agents/scanner.py  – discovery (DS boosts/profiles/CTO, GT trending 5m/1h/6h, top tx, new pools) + rolling 6h watchlist, analyst score -> state/candidates.json (every scan_interval_s=75s)
+- agents/filter.py   – hard rules, every decision with reasons -> logs/decisions.jsonl; passes -> signals/approved/
+- agents/trader.py   – re-quotes + re-checks, sizes 5% of current paper equity, simulated fills with costs, polls open positions every 20s, trailing ladder; state/portfolio.json, logs/trades.jsonl, Polish notes notify/pending (tagged PAPIER)
+Commands: ./start.sh | ./stop.sh | python3 status.py [--json] | python3 tests/test_ladder.py
+Uptrend definition + cost model: see docstrings in lib/strategy.py. Ladder: stop -6%; peak>=+12% -> stop 0%; peak>=+24% -> TRUE trailing stop = peak - 12 pp (never moves down; user decision 17.11).
+Ladder measured on market price vs entry market price; exit fills at the observed price (gaps below the stop are realistic losses), costs then applied.
+Reset paper account: ./stop.sh && rm state/portfolio.json && ./start.sh
+- agents/publisher.py – builds public-safe data.json (no wallet/keys) + site/ template, copies into /workspace/jarvis-desk/site (git repo) and pushes to GitHub Pages every ~60 s when data changes (forced refresh ≥ 5 min). URL: https://dawikoro-tech.github.io/jarvis-desk/  Manual: python3 agents/publisher.py once
+  NOTE: jarvis-live's publisher pushes to the same repo – do not run both publishers at once.
+
+## GitHub Actions (since 19.11.2026)
+The desk runs in this repo via `.github/workflows/desk.yml` (workflow "paper-desk"): cron every 30 min + manual dispatch,
+concurrency group `paper-desk` (one run at a time, the next one waits queued). Each run trades ~5h40m (`desk/run_actions.py`),
+then saves state and exits; the queued run resumes from the committed state.
+- Committed every minute (publisher): `data.json` (site), `desk/state/portfolio.json`, `desk/state/equity_history.json`,
+  `desk/logs/trades.jsonl`, `desk/notify/notes.jsonl`. Watchlist: `desk/persist/watchlist.json` (hourly + at shutdown).
+- Polish trade notes: append-only `desk/notify/notes.jsonl` (last 300), one JSON per line: id, ts, type, title, message.
+PAPER ONLY: no wallet, no keys, no secrets; uses the workflow's own GITHUB_TOKEN to commit.

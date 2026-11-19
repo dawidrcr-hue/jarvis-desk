@@ -1,1 +1,16 @@
 .publish
+__pycache__/
+*.pyc
+*.tmp*
+# PAPER desk runtime (only small state files are committed)
+desk/logs/*
+!desk/logs/trades.jsonl
+desk/state/*
+!desk/state/portfolio.json
+!desk/state/equity_history.json
+!desk/state/publisher.json
+!desk/state/run.json
+desk/notify/pending/
+desk/notify/sent/
+desk/signals/
+desk/tmp/
