@@ -6,14 +6,40 @@ UPTREND definition (all must hold, thresholds in config.json -> filter):
   * m5 txns >= 10                                                      -> it is actually trading now
   * volume acceleration = (vol_m5*12) / vol_h1 >= 0.8                  -> last 5m pace not dying vs the hour
   * NOT overextended: m5 change <= 25%, h1 change <= 300%              -> avoid buying a vertical candle top
-Hygiene: $40k <= mcap (marketCap, else FDV) <= $200k (max cut 19.11 by user), liquidity >= $20k, vol h1 >= $5k, pair age >= 30 min,
-         not already held (same mint or same ticker, case-insensitive), not exited in the last reentry_cooldown_min minutes.
+Hygiene: $40k <= mcap (marketCap, else FDV) <= $200k (max cut 19.11 by user), liquidity >= $30k, vol h1 >= $5k, pair age >= 30 min,
+         analyst score >= 69, not already held (same mint or same ticker, case-insensitive), not exited in the last reentry_cooldown_min minutes.
+         After cfg stop_at, no new entries (open positions still managed).
 """
 import time
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 def _f(x, d=0.0):
     try: return float(x)
     except Exception: return d
+
+
+def stop_at_ts(cfg):
+    """Unix timestamp of cfg['stop_at'] (ISO-8601), or None if unset/empty."""
+    raw = (cfg or {}).get("stop_at")
+    if not raw:
+        return None
+    try:
+        t = datetime.fromisoformat(str(raw).replace("Z", "+00:00"))
+    except (ValueError, TypeError):
+        return 0.0  # fail closed: unparsable stop_at blocks new entries
+    if t.tzinfo is None:
+        t = t.replace(tzinfo=ZoneInfo("Europe/Warsaw"))
+    return t.timestamp()
+
+def entries_allowed(cfg, now=None):
+    """True until stop_at. At or after that instant, no new paper buys. Missing stop_at keeps entries open."""
+    t = stop_at_ts(cfg)
+    if t is None:
+        return True
+    if now is None:
+        now = time.time()
+    return now < t
 
 def features(pair, now=None):
     now = now or time.time()
@@ -146,7 +172,7 @@ def ladder_note_pl(cfg):
 def ladder_update(pos, price, cfg):
     """Update a position with a new market price. Ladder is measured on MARKET price vs entry market price
     (gross move of the coin). Stop never moves down. Returns (exit: bool, reason: str|None).
-    User rules (19.11): stop -6%; peak >= +12% -> stop 0% (entry); peak >= +24% -> trail 12 pp below peak;
+    User rules (19.11): stop -8% (was -6%); peak >= +12% -> stop 0% (entry); peak >= +24% -> trail 12 pp below peak;
     peak >= +100% -> trail 20 pp; peak >= +200% -> trail 25 pp. When switching tiers,
     stop = max(previous stop, peak - new gap). Stop never moves down."""
     entry = pos["entry_price"]

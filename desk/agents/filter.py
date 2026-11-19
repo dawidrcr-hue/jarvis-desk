@@ -4,7 +4,7 @@
 import os, sys, time, json, glob
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from lib.common import P, load, save, log, heartbeat, cfg, now_iso
-from lib.strategy import filter_reasons, norm_symbol
+from lib.strategy import filter_reasons, norm_symbol, entries_allowed
 from lib import safety
 
 def decision_log_many(recs):
@@ -55,6 +55,8 @@ def main():
                         heartbeat("filter", status="filtering", n=i)
                         decision_log_many(buf); buf = []
                     rs = filter_reasons(ft, c["filter"], held, cooldown, held_symbols, cooldown_symbols)
+                    if not rs and not entries_allowed(c):
+                        rs = ["entries_closed"]
                     for r in rs: stats[r.split(" ")[0]] = stats.get(r.split(" ")[0], 0) + 1
                     buf.append({"ts": now_iso(), "mint": ft["mint"], "symbol": ft["symbol"], "score": ft["score"],
                                 "mcap": round(ft["mcap"]), "liq": round(ft["liq"]), "chg_m5": ft["chg_m5"], "chg_h1": ft["chg_h1"],
