@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-19T17:31:23+01:00",
+ "generated": "2026-11-19T17:31:51+01:00",
  "mode": "PAPER",
  "stats": {
-  "equity": 18.572,
+  "equity": 18.7992,
   "start": 20.0,
   "cash": 11.2747,
   "realized": -1.1553,
-  "unrealized": -0.2727,
+  "unrealized": -0.0455,
   "open": 2,
   "closed": 10,
   "wins": 2,
@@ -37,14 +37,14 @@
    "entry_iso": "2026-11-19T17:27:09+01:00",
    "cost_usd": 3.79,
    "entry_price": 8.529e-07,
-   "last_price": 8.298e-07,
-   "last_gain": -0.027084066127330386,
-   "peak_gain": 0.0,
+   "last_price": 8.747e-07,
+   "last_gain": 0.02555985461367083,
+   "peak_gain": 0.02555985461367083,
    "stop_pct": -0.06,
    "entry_mcap": 85299.0,
    "entry_liq": 120693.93,
    "score": 84.1,
-   "last_quote_iso": "2026-11-19T17:30:10+01:00"
+   "last_quote_iso": "2026-11-19T17:31:51+01:00"
   },
   {
    "symbol": "KFC",
@@ -53,14 +53,14 @@
    "entry_iso": "2026-11-19T17:27:09+01:00",
    "cost_usd": 3.78,
    "entry_price": 8.483e-05,
-   "last_price": 8.353e-05,
-   "last_gain": -0.015324767181421728,
+   "last_price": 8.423e-05,
+   "last_gain": -0.007072969468348456,
    "peak_gain": 0.008133914888600602,
    "stop_pct": -0.06,
    "entry_mcap": 84836.0,
    "entry_liq": 116793.27,
    "score": 76.3,
-   "last_quote_iso": "2026-11-19T17:30:10+01:00"
+   "last_quote_iso": "2026-11-19T17:31:51+01:00"
   }
  ],
  "closed": [
@@ -394,9 +394,9 @@
   }
  ],
  "filter": {
-  "ts": "2026-11-19T17:29:04+01:00",
+  "ts": "2026-11-19T17:31:23+01:00",
   "n": 694,
-  "passed": 2,
+  "passed": 1,
   "reject_counts": {
    "mcap>300000": 200,
    "pair_too_new": 143,
@@ -406,14 +406,14 @@
    "liq<10000": 387,
    "vol_h1<5000": 424,
    "low_activity_m5": 520,
+   "already_held": 5,
    "volume_fading": 541,
-   "already_held": 4,
+   "reentry_cooldown": 20,
    "sells>buys_m5": 490,
    "sells>buys_h1": 286,
    "downtrend_h6": 369,
    "downtrend_m5": 557,
    "downtrend_h1": 483,
-   "reentry_cooldown": 5,
    "no_price": 24
   }
  },
@@ -629,7 +629,7 @@
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone",
-   "age_s": 0,
+   "age_s": 8,
    "ok": true,
    "restarts": 0
   },
@@ -637,7 +637,7 @@
    "key": "scanner",
    "name": "Scanner + Analityk",
    "desc": "Zbiera coiny z DexScreenera, Jupitera, Raydiuma, GeckoTerminala i ocenia momentum (0–100)",
-   "age_s": 0,
+   "age_s": 28,
    "ok": true,
    "restarts": 0
   },
@@ -645,7 +645,7 @@
    "key": "filter",
    "name": "Filtr",
    "desc": "Odrzuca coiny spoza $40 tys.–$2 mln, bez trendu wzrostowego, z małą płynnością; loguje powody",
-   "age_s": 0,
+   "age_s": 3,
    "ok": true,
    "restarts": 0
   },
