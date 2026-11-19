@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-19T16:37:17+01:00",
+ "generated": "2026-11-19T16:38:19+01:00",
  "mode": "PAPER",
  "stats": {
-  "equity": 18.77,
+  "equity": 19.2335,
   "start": 20.0,
   "cash": 7.426,
   "realized": -1.354,
-  "unrealized": 0.124,
+  "unrealized": 0.5876,
   "open": 3,
   "closed": 5,
   "wins": 1,
@@ -37,14 +37,14 @@
    "entry_iso": "2026-11-19T16:28:23+01:00",
    "cost_usd": 3.75,
    "entry_price": 45.2,
-   "last_price": 46.046,
-   "last_gain": 0.01871681415929194,
-   "peak_gain": 0.01871681415929194,
+   "last_price": 46.17,
+   "last_gain": 0.021460176991150437,
+   "peak_gain": 0.021460176991150437,
    "stop_pct": -0.06,
    "entry_mcap": 533364.0,
    "entry_liq": 105803.58,
    "score": 60.9,
-   "last_quote_iso": "2026-11-19T16:37:15+01:00"
+   "last_quote_iso": "2026-11-19T16:38:16+01:00"
   },
   {
    "symbol": "UVXY",
@@ -53,14 +53,14 @@
    "entry_iso": "2026-11-19T16:33:32+01:00",
    "cost_usd": 3.74,
    "entry_price": 22.18,
-   "last_price": 22.53,
-   "last_gain": 0.015779981965734935,
-   "peak_gain": 0.015779981965734935,
+   "last_price": 22.7,
+   "last_gain": 0.023444544634806164,
+   "peak_gain": 0.023444544634806164,
    "stop_pct": -0.06,
    "entry_mcap": 401274.0,
    "entry_liq": 69012.0,
    "score": 63.2,
-   "last_quote_iso": "2026-11-19T16:37:15+01:00"
+   "last_quote_iso": "2026-11-19T16:38:16+01:00"
   },
   {
    "symbol": "TL",
@@ -69,14 +69,14 @@
    "entry_iso": "2026-11-19T16:37:15+01:00",
    "cost_usd": 3.73,
    "entry_price": 7.093e-05,
-   "last_price": 7.416e-05,
-   "last_gain": 0.045537854222472696,
-   "peak_gain": 0.045537854222472696,
-   "stop_pct": -0.06,
+   "last_price": 8.237e-05,
+   "last_gain": 0.16128577470745808,
+   "peak_gain": 0.16128577470745808,
+   "stop_pct": 0.0,
    "entry_mcap": 68788.0,
    "entry_liq": 18168.0,
    "score": 69.4,
-   "last_quote_iso": "2026-11-19T16:37:15+01:00"
+   "last_quote_iso": "2026-11-19T16:38:16+01:00"
   }
  ],
  "closed": [
@@ -210,6 +210,10 @@
   {
    "t": 1795102638,
    "e": 18.77
+  },
+  {
+   "t": 1795102699,
+   "e": 19.2335
   }
  ],
  "filter": {
@@ -443,7 +447,7 @@
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone",
-   "age_s": 4,
+   "age_s": 6,
    "ok": true,
    "restarts": 0
   },
@@ -451,7 +455,7 @@
    "key": "scanner",
    "name": "Scanner + Analityk",
    "desc": "Zbiera coiny z DexScreenera, Jupitera, Raydiuma, GeckoTerminala i ocenia momentum (0–100)",
-   "age_s": 5,
+   "age_s": 22,
    "ok": true,
    "restarts": 0
   },
@@ -459,7 +463,7 @@
    "key": "filter",
    "name": "Filtr",
    "desc": "Odrzuca coiny spoza $40 tys.–$2 mln, bez trendu wzrostowego, z małą płynnością; loguje powody",
-   "age_s": 4,
+   "age_s": 0,
    "ok": true,
    "restarts": 0
   },
@@ -467,7 +471,7 @@
    "key": "trader",
    "name": "Trader (papier)",
    "desc": "Symuluje kupno/sprzedaż z poślizgiem i opłatami, pilnuje drabinki stopu co 20 s",
-   "age_s": 3,
+   "age_s": 2,
    "ok": true,
    "restarts": 0
   },
