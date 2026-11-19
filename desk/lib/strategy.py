@@ -6,7 +6,7 @@ UPTREND definition (all must hold, thresholds in config.json -> filter):
   * m5 txns >= 10                                                      -> it is actually trading now
   * volume acceleration = (vol_m5*12) / vol_h1 >= 0.8                  -> last 5m pace not dying vs the hour
   * NOT overextended: m5 change <= 25%, h1 change <= 300%              -> avoid buying a vertical candle top
-Hygiene: $40k <= mcap (marketCap, else FDV) <= $300k (max cut 19.11 by user), liquidity >= $30k, vol h1 >= $5k, pair age >= 30 min,
+Hygiene: $40k <= mcap (marketCap, else FDV) <= $200k (max cut 19.11 by user), liquidity >= $20k, vol h1 >= $5k, pair age >= 30 min,
          not already held (same mint or same ticker, case-insensitive), not exited in the last reentry_cooldown_min minutes.
 """
 import time

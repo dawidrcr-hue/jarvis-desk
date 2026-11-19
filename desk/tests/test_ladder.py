@@ -67,7 +67,7 @@ class TCap(unittest.TestCase):
         base = {"baseToken": {"address": "M", "symbol": "X"}, "priceUsd": "1", "liquidity": {"usd": 50000},
                 "priceChange": {"m5": 3, "h1": 20, "h6": 5}, "txns": {"m5": {"buys": 30, "sells": 10}, "h1": {"buys": 300, "sells": 100}},
                 "volume": {"m5": 2000, "h1": 10000}, "pairCreatedAt": 1000}
-        for mc, ok in ((39999, False), (40000, True), (300000, True), (300001, False), (2000000, False), (145e6, False)):
+        for mc, ok in ((39999, False), (40000, True), (200000, True), (200001, False), (300000, False), (300001, False), (2000000, False), (145e6, False)):
             rs = filter_reasons(features(dict(base, marketCap=mc)), CFG["filter"])
             self.assertEqual(not rs, ok, (mc, rs))
 
@@ -76,7 +76,7 @@ class TCap(unittest.TestCase):
                 "priceChange": {"m5": 3, "h1": 20, "h6": 5}, "txns": {"m5": {"buys": 30, "sells": 10}, "h1": {"buys": 300, "sells": 100}},
                 "volume": {"m5": 2000, "h1": 10000}, "pairCreatedAt": 1000}
         want = CFG["filter"]["min_liquidity_usd"]
-        self.assertEqual(want, 30000)
+        self.assertEqual(want, 20000)
         rs_lo = filter_reasons(features(dict(base, liquidity={"usd": want - 1})), CFG["filter"])
         rs_ok = filter_reasons(features(dict(base, liquidity={"usd": want})), CFG["filter"])
         self.assertTrue(any(r.startswith("liq<") for r in rs_lo), rs_lo)

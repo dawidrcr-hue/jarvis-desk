@@ -4,7 +4,7 @@ from lib.common import http_json, HTTP_TIMEOUT
 from lib.market import select_mints_to_price, annotate_and_trim, _add_stat
 
 CFG = {
-    "filter": {"min_mcap_usd": 40000, "max_mcap_usd": 300000},
+    "filter": {"min_mcap_usd": 40000, "max_mcap_usd": 200000},
     "dead_liq_usd": 1000,
 }
 
