@@ -1,18 +1,18 @@
 {
- "generated": "2026-11-19T16:52:24+01:00",
+ "generated": "2026-11-19T16:53:25+01:00",
  "mode": "PAPER",
  "stats": {
-  "equity": 18.7383,
+  "equity": 18.1832,
   "start": 20.0,
-  "cash": 3.586,
-  "realized": -1.354,
-  "unrealized": 0.0924,
-  "open": 4,
-  "closed": 5,
+  "cash": 6.6194,
+  "realized": -2.1606,
+  "unrealized": 0.3438,
+  "open": 3,
+  "closed": 6,
   "wins": 1,
-  "win_rate": 0.2,
-  "avg_pnl_pct": -0.06878312682214954,
-  "costs_paid": 0.5808
+  "win_rate": 0.16666666666666666,
+  "avg_pnl_pct": -0.09232448683178918,
+  "costs_paid": 0.6894
  },
  "rules": {
   "size_pct": 0.2,
@@ -44,7 +44,7 @@
    "entry_mcap": 533364.0,
    "entry_liq": 105803.58,
    "score": 60.9,
-   "last_quote_iso": "2026-11-19T16:52:24+01:00"
+   "last_quote_iso": "2026-11-19T16:53:25+01:00"
   },
   {
    "symbol": "UVXY",
@@ -60,7 +60,7 @@
    "entry_mcap": 401274.0,
    "entry_liq": 69012.0,
    "score": 63.2,
-   "last_quote_iso": "2026-11-19T16:52:24+01:00"
+   "last_quote_iso": "2026-11-19T16:53:25+01:00"
   },
   {
    "symbol": "TL",
@@ -69,33 +69,34 @@
    "entry_iso": "2026-11-19T16:37:15+01:00",
    "cost_usd": 3.73,
    "entry_price": 7.093e-05,
-   "last_price": 7.45e-05,
-   "last_gain": 0.05033131256168044,
+   "last_price": 7.634e-05,
+   "last_gain": 0.07627238122092206,
    "peak_gain": 0.1822924009586917,
    "stop_pct": 0.0,
    "entry_mcap": 68788.0,
    "entry_liq": 18168.0,
    "score": 69.4,
-   "last_quote_iso": "2026-11-19T16:52:24+01:00"
-  },
+   "last_quote_iso": "2026-11-19T16:53:25+01:00"
+  }
+ ],
+ "closed": [
   {
    "symbol": "ACRUX",
    "mint": "7Evw4uxTxLGGEFEvXLUNYyc1J7PnFk9EYwTUFagARUX",
    "url": "https://dexscreener.com/solana/58fqsxfmtqhj1dury9e7rgkcuzshtw1sp87udqrcr1dg",
    "entry_iso": "2026-11-19T16:39:12+01:00",
+   "exit_iso": "2026-11-19T16:53:25+01:00",
    "cost_usd": 3.84,
    "entry_price": 0.0001924,
-   "last_price": 0.0001874,
-   "last_gain": -0.02598752598752596,
+   "exit_price": 0.0001569,
+   "gross_pct": -0.18451143451143448,
+   "pnl_pct": -0.21003128687998734,
+   "pnl_usd": -0.8065201416191514,
    "peak_gain": 0.0,
-   "stop_pct": -0.06,
-   "entry_mcap": 189880.0,
-   "entry_liq": 28751.78,
-   "score": 68.2,
-   "last_quote_iso": "2026-11-19T16:52:24+01:00"
-  }
- ],
- "closed": [
+   "reason": "stop -6%",
+   "hold_min": 14.21887259085973,
+   "entry_mcap": 189880.0
+  },
   {
    "symbol": "Snapmatic",
    "mint": "GerDDv6LzFb3hNprAsRi6Tv81vVTV5hUWu56yVCpump",
@@ -266,6 +267,10 @@
   {
    "t": 1795103544,
    "e": 18.7383
+  },
+  {
+   "t": 1795103605,
+   "e": 18.1832
   }
  ],
  "filter": {
@@ -503,7 +508,7 @@
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone",
-   "age_s": 1,
+   "age_s": 2,
    "ok": true,
    "restarts": 0
   },
@@ -511,7 +516,7 @@
    "key": "scanner",
    "name": "Scanner + Analityk",
    "desc": "Zbiera coiny z DexScreenera, Jupitera, Raydiuma, GeckoTerminala i ocenia momentum (0–100)",
-   "age_s": 19,
+   "age_s": 35,
    "ok": true,
    "restarts": 0
   },
@@ -519,7 +524,7 @@
    "key": "filter",
    "name": "Filtr",
    "desc": "Odrzuca coiny spoza $40 tys.–$2 mln, bez trendu wzrostowego, z małą płynnością; loguje powody",
-   "age_s": 1,
+   "age_s": 2,
    "ok": true,
    "restarts": 1
   },
