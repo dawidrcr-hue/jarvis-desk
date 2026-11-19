@@ -1,12 +1,12 @@
 {
- "generated": "2026-11-19T09:49:31+01:00",
+ "generated": "2026-11-19T16:18:46+01:00",
  "mode": "PAPER",
  "stats": {
-  "equity": 107.6967,
+  "equity": 107.9121,
   "start": 100.0,
   "cash": 74.7205,
   "realized": -0.1895,
-  "unrealized": 7.8862,
+  "unrealized": 8.1016,
   "open": 5,
   "closed": 2,
   "wins": 1,
@@ -37,14 +37,14 @@
    "entry_iso": "2026-11-17T18:07:11+01:00",
    "cost_usd": 5.0,
    "entry_price": 0.1628,
-   "last_price": 0.1591,
-   "last_gain": -0.022727272727272818,
+   "last_price": 0.1682,
+   "last_gain": 0.033169533169533194,
    "peak_gain": 0.033169533169533194,
    "stop_pct": -0.06,
    "entry_mcap": 145060662.0,
    "entry_liq": 3085590.74,
    "score": 60.2,
-   "last_quote_iso": "2026-11-19T09:49:08+01:00"
+   "last_quote_iso": "2026-11-19T16:18:44+01:00"
   },
   {
    "symbol": "STONK",
@@ -53,14 +53,14 @@
    "entry_iso": "2026-11-17T18:10:16+01:00",
    "cost_usd": 4.99,
    "entry_price": 0.04333,
-   "last_price": 0.04141,
-   "last_gain": -0.04431110085391177,
+   "last_price": 0.04088,
+   "last_gain": -0.056542810985460434,
    "peak_gain": 0.051927071313178086,
    "stop_pct": -0.06,
    "entry_mcap": 43338143.0,
    "entry_liq": 1982418.05,
    "score": 62.3,
-   "last_quote_iso": "2026-11-19T09:49:08+01:00"
+   "last_quote_iso": "2026-11-19T16:18:44+01:00"
   },
   {
    "symbol": "ANSEM",
@@ -327,6 +327,10 @@
   {
    "t": 1795078171,
    "e": 107.6967
+  },
+  {
+   "t": 1795101526,
+   "e": 107.9121
   }
  ],
  "filter": {
@@ -573,15 +577,15 @@
    "key": "scanner",
    "name": "Scanner + Analityk",
    "desc": "Zbiera coiny z DexScreenera, Jupitera, Raydiuma, GeckoTerminala i ocenia momentum (0–100)",
-   "age_s": 14,
+   "age_s": 0,
    "ok": true,
-   "restarts": 4
+   "restarts": 5
   },
   {
    "key": "filter",
    "name": "Filtr",
    "desc": "Odrzuca coiny spoza $40 tys.–$2 mln, bez trendu wzrostowego, z małą płynnością; loguje powody",
-   "age_s": 0,
+   "age_s": 2,
    "ok": true,
    "restarts": 1
   },
@@ -589,7 +593,7 @@
    "key": "trader",
    "name": "Trader (papier)",
    "desc": "Symuluje kupno/sprzedaż z poślizgiem i opłatami, pilnuje drabinki stopu co 20 s",
-   "age_s": 0,
+   "age_s": 1,
    "ok": true,
    "restarts": 0
   },
@@ -599,7 +603,7 @@
    "desc": "Aktualizuje tę stronę co minutę",
    "age_s": 0,
    "ok": true,
-   "restarts": 4
+   "restarts": 5
   }
  ]
 }
