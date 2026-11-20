@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-20T06:02:08+01:00",
+ "generated": "2026-11-20T06:03:09+01:00",
  "mode": "PAPER",
  "stats": {
   "equity": 25.0,
@@ -93,15 +93,47 @@
   {
    "t": 1795150896,
    "e": 25.0
+  },
+  {
+   "t": 1795150990,
+   "e": 25.0
   }
  ],
  "filter": {
-  "ts": null,
-  "n": null,
-  "passed": null,
-  "reject_counts": {}
+  "ts": "2026-11-20T06:02:44+01:00",
+  "n": 476,
+  "passed": 0,
+  "reject_counts": {
+   "pair_too_new": 58,
+   "overextended_m5": 15,
+   "mcap>200000": 180,
+   "mcap<40000": 155,
+   "liq<30000": 233,
+   "vol_h1<5000": 326,
+   "volume_fading": 335,
+   "overextended_h1": 4,
+   "score<69": 2,
+   "downtrend_m5": 357,
+   "downtrend_h1": 342,
+   "downtrend_h6": 246,
+   "low_activity_m5": 332,
+   "sells>buys_m5": 327,
+   "sells>buys_h1": 246,
+   "no_price": 10
+  }
  },
- "rugcheck_recent": [],
+ "rugcheck_recent": [
+  {
+   "ts": "2026-11-20T06:02:09+01:00",
+   "symbol": "PROBE",
+   "mint": "So11111111111111111111111111111111111111112",
+   "ok": true,
+   "cached": false,
+   "reasons": [],
+   "summary": null,
+   "err": null
+  }
+ ],
  "reason_pl": {
   "mcap<40000": "kapitalizacja < $40 tys.",
   "mcap>2000000": "kapitalizacja > $2 mln",
@@ -139,20 +171,198 @@
   "score<69": "ocena analityka < 69",
   "mcap>200000": "kapitalizacja > $200 tys."
  },
- "near": [],
+ "near": [
+  {
+   "symbol": "ARTIFICIAL",
+   "score": 86.2,
+   "mcap": 78047,
+   "liq": 117151,
+   "chg_m5": 6.15,
+   "chg_h1": 82.8,
+   "reasons": [
+    "pair_too_new"
+   ]
+  },
+  {
+   "symbol": "DCTY",
+   "score": 86.2,
+   "mcap": 48712,
+   "liq": 87250,
+   "chg_m5": 11.09,
+   "chg_h1": 20.32,
+   "reasons": [
+    "pair_too_new"
+   ]
+  },
+  {
+   "symbol": "Huss",
+   "score": 85.7,
+   "mcap": 291816,
+   "liq": 40634,
+   "chg_m5": 20.27,
+   "chg_h1": 47.39,
+   "reasons": [
+    "mcap>200000 (291816)"
+   ]
+  },
+  {
+   "symbol": "OMNI",
+   "score": 64.4,
+   "mcap": 100374,
+   "liq": 180745,
+   "chg_m5": 1.56,
+   "chg_h1": 36.31,
+   "reasons": [
+    "score<69 (64.4)"
+   ]
+  },
+  {
+   "symbol": "duh",
+   "score": 59.0,
+   "mcap": 176834,
+   "liq": 33882,
+   "chg_m5": 8.72,
+   "chg_h1": -6.73,
+   "reasons": [
+    "downtrend_h1 (-6.73%)"
+   ]
+  },
+  {
+   "symbol": "CATMARIO",
+   "score": 53.4,
+   "mcap": 152978,
+   "liq": 39468,
+   "chg_m5": 11.91,
+   "chg_h1": 25.62,
+   "reasons": [
+    "score<69 (53.4)"
+   ]
+  },
+  {
+   "symbol": "RAMBO",
+   "score": 48.9,
+   "mcap": 12035605,
+   "liq": 295118,
+   "chg_m5": 0.74,
+   "chg_h1": 9.66,
+   "reasons": [
+    "mcap>200000 (12035605)"
+   ]
+  },
+  {
+   "symbol": "apocry",
+   "score": 98.7,
+   "mcap": 78479,
+   "liq": 121901,
+   "chg_m5": 62.03,
+   "chg_h1": 62.03,
+   "reasons": [
+    "pair_too_new",
+    "overextended_m5 (62.03%)"
+   ]
+  },
+  {
+   "symbol": "iAgent",
+   "score": 55.1,
+   "mcap": 1947086,
+   "liq": 106599,
+   "chg_m5": -8.18,
+   "chg_h1": 20.36,
+   "reasons": [
+    "mcap>200000 (1947086)",
+    "downtrend_m5 (-8.18%)"
+   ]
+  },
+  {
+   "symbol": "CBUCKS",
+   "score": 48.3,
+   "mcap": 4519136,
+   "liq": 244198,
+   "chg_m5": 4.17,
+   "chg_h1": 25.23,
+   "reasons": [
+    "mcap>200000 (4519136)",
+    "sells>buys_m5 (0.82)"
+   ]
+  },
+  {
+   "symbol": "BUCKME",
+   "score": 35.4,
+   "mcap": 189607,
+   "liq": 33786,
+   "chg_m5": 5.1,
+   "chg_h1": -19.47,
+   "reasons": [
+    "downtrend_h1 (-19.47%)",
+    "volume_fading (0.50)"
+   ]
+  },
+  {
+   "symbol": "Marvin",
+   "score": 31.5,
+   "mcap": 125635,
+   "liq": 35597,
+   "chg_m5": 2.15,
+   "chg_h1": 11.75,
+   "reasons": [
+    "downtrend_h6 (-34.89%)",
+    "sells>buys_h1 (0.76)"
+   ]
+  }
+ ],
  "sources": {
-  "counts": null,
-  "discovered": null,
-  "watch": null,
-  "priced": 0,
-  "ts": 0
+  "counts": {
+   "pump_graduated_p0": "ERR blocked (Cloudflare 403) - skipped, no bypass",
+   "ds_profiles_latest": 26,
+   "gt_trending": 40,
+   "ray_volume": 48,
+   "jup_toptrending_1h": 50,
+   "pump_graduated_p1": "ERR blocked (Cloudflare 403) - skipped, no bypass",
+   "ray_standard": 54,
+   "pump_complete_mcap": "ERR blocked (Cloudflare 403) - skipped, no bypass",
+   "ds_profiles_recent": 28,
+   "launchlab_lasttrade": 160,
+   "pump_adv_graduated": "ERR blocked (Cloudflare 403) - skipped, no bypass",
+   "launchlab_new": 111,
+   "ds_boosts_latest": 28,
+   "jup_toporganic_1h": 47,
+   "ds_boosts_top": 29,
+   "gt_trend5m": 20,
+   "ds_cto": 10,
+   "ds_search_pump": 19,
+   "jup_toptrending_6h": 50,
+   "ds_search_SOL": 19,
+   "gt_trend1h": 20,
+   "ds_search_moon": 12,
+   "ds_search_meme": 10,
+   "gt_trend6h": 20,
+   "jup_toporganic_6h": 47,
+   "ds_search_pumpswap": 30,
+   "gt_top_tx": "ERR HTTP Error 429: Too Many Requests",
+   "ds_search_pumpfun": 30,
+   "jup_recent": 30,
+   "ds_search_raydium": 30,
+   "ds_search_letsbonk": 2,
+   "gt_new": "ERR HTTP Error 429: Too Many Requests",
+   "gt_pumpswap_trend": "ERR HTTP Error 429: Too Many Requests",
+   "gt_pumpfun": "ERR HTTP Error 429: Too Many Requests",
+   "gt_pumpswap": "ERR HTTP Error 429: Too Many Requests",
+   "gt_raydium": "ERR HTTP Error 429: Too Many Requests",
+   "gt_raydium_clmm": "ERR HTTP Error 429: Too Many Requests",
+   "gt_launchlab": "ERR HTTP Error 429: Too Many Requests",
+   "gt_letsbonk": "ERR HTTP Error 429: Too Many Requests"
+  },
+  "discovered": 574,
+  "watch": 316,
+  "priced": 476,
+  "ts": 1795150963.962497
  },
  "agents": [
   {
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone",
-   "age_s": 0,
+   "age_s": 1,
    "ok": true,
    "restarts": 0
   },
@@ -160,15 +370,15 @@
    "key": "scanner",
    "name": "Scanner + Analityk",
    "desc": "Zbiera coiny z DexScreenera, Jupitera, Raydiuma, GeckoTerminala i ocenia momentum (0–100)",
-   "age_s": 1795150929,
-   "ok": false,
+   "age_s": 1,
+   "ok": true,
    "restarts": 0
   },
   {
    "key": "filter",
    "name": "Filtr",
    "desc": "Odrzuca coiny spoza zakresu kapitalizacji (config), bez trendu wzrostowego, z małą płynnością; loguje powody",
-   "age_s": 0,
+   "age_s": 1,
    "ok": true,
    "restarts": 0
   },
@@ -176,8 +386,8 @@
    "key": "trader",
    "name": "Trader (papier)",
    "desc": "Symuluje kupno/sprzedaż z poślizgiem i opłatami, pilnuje drabinki stopu co 3 s",
-   "age_s": 1795150929,
-   "ok": false,
+   "age_s": 0,
+   "ok": true,
    "restarts": 0
   },
   {
