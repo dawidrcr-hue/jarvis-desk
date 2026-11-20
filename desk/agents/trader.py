@@ -37,6 +37,13 @@ def _add_setup_locked(pf, c, sig):
 def step_setups_locked(c, quotes, now):
     """Feed live quotes to pullback setups. A triggered setup is queued as a fresh approved signal
     (the signal thread does the requote + buy, so the stop loop never waits on HTTP). LOCK held."""
+    if not entries_allowed(c, now=now):
+        if SETUPS:
+            for mint, st in list(SETUPS.items()):
+                SETUPS.pop(mint, None)
+                log("trader", "pullback cancelled", symbol=st.get("symbol"), reason="entries_closed")
+            save_setups()
+        return
     changed = False
     for mint, st in list(SETUPS.items()):
         q = quotes.get(st.get("pair"))

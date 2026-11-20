@@ -111,5 +111,20 @@ class TTrader(unittest.TestCase):
         pf["positions"] = []
         self.assertEqual(tr._add_setup_locked(pf, dict(PB, stop_at="2000-01-01T00:00:00+01:00"), sig), "entries_closed")
 
+    def test_open_setup_cancelled_after_stop_at_no_buy(self):
+        tr = self.tr
+        c_open = dict(PB, stop_at=None)
+        c_closed = dict(PB, stop_at="2026-11-20T12:25:00+01:00")
+        pf = {"positions": [], "closed": [], "cash": 25.0}
+        sig = {"ts": time.time(), "cand": {"mint": "M", "symbol": "X", "pair": "P", "price": 1.0}}
+        self.assertIsNone(tr._add_setup_locked(pf, c_open, sig))
+        self.assertIn("M", tr.SETUPS)
+        after = 1795173900
+        tr.step_setups_locked(c_closed, {"P": {"priceUsd": "1.04"}}, after)
+        tr.step_setups_locked(c_closed, {"P": {"priceUsd": "1.08"}}, after + 3)
+        self.assertEqual(tr.SETUPS, {})
+        files = glob.glob(os.path.join(self.d.name, "signals", "approved", "*_pb_M.json"))
+        self.assertEqual(files, [])
+
 if __name__ == "__main__":
     unittest.main()
