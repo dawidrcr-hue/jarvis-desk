@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-20T05:58:32+01:00",
+ "generated": "2026-11-20T05:59:33+01:00",
  "mode": "PAPER",
  "stats": {
   "equity": 25.0,
@@ -81,15 +81,47 @@
   {
    "t": 1795150682,
    "e": 25.0
+  },
+  {
+   "t": 1795150773,
+   "e": 25.0
   }
  ],
  "filter": {
-  "ts": null,
-  "n": null,
-  "passed": null,
-  "reject_counts": {}
+  "ts": "2026-11-20T05:59:07+01:00",
+  "n": 491,
+  "passed": 0,
+  "reject_counts": {
+   "pair_too_new": 69,
+   "mcap<40000": 170,
+   "liq<30000": 242,
+   "overextended_m5": 18,
+   "vol_h1<5000": 328,
+   "volume_fading": 343,
+   "overextended_h1": 5,
+   "downtrend_h6": 258,
+   "score<69": 2,
+   "mcap>200000": 184,
+   "sells>buys_m5": 319,
+   "low_activity_m5": 346,
+   "downtrend_m5": 373,
+   "downtrend_h1": 341,
+   "sells>buys_h1": 232,
+   "no_price": 7
+  }
  },
- "rugcheck_recent": [],
+ "rugcheck_recent": [
+  {
+   "ts": "2026-11-20T05:58:32+01:00",
+   "symbol": "PROBE",
+   "mint": "So11111111111111111111111111111111111111112",
+   "ok": true,
+   "cached": false,
+   "reasons": [],
+   "summary": null,
+   "err": null
+  }
+ ],
  "reason_pl": {
   "mcap<40000": "kapitalizacja < $40 tys.",
   "mcap>2000000": "kapitalizacja > $2 mln",
@@ -127,20 +159,195 @@
   "score<69": "ocena analityka < 69",
   "mcap>200000": "kapitalizacja > $200 tys."
  },
- "near": [],
+ "near": [
+  {
+   "symbol": "DOWBEAR",
+   "score": 96.1,
+   "mcap": 74291,
+   "liq": 100287,
+   "chg_m5": 22.64,
+   "chg_h1": 40.13,
+   "reasons": [
+    "pair_too_new"
+   ]
+  },
+  {
+   "symbol": "ARTIFICIAL",
+   "score": 84.7,
+   "mcap": 71727,
+   "liq": 111495,
+   "chg_m5": 4.29,
+   "chg_h1": 68.0,
+   "reasons": [
+    "pair_too_new"
+   ]
+  },
+  {
+   "symbol": "DCTY",
+   "score": 83.7,
+   "mcap": 46484,
+   "liq": 84990,
+   "chg_m5": 14.82,
+   "chg_h1": 14.82,
+   "reasons": [
+    "pair_too_new"
+   ]
+  },
+  {
+   "symbol": "AI",
+   "score": 73.5,
+   "mcap": 124991,
+   "liq": 34574,
+   "chg_m5": 22.02,
+   "chg_h1": 31.94,
+   "reasons": [
+    "downtrend_h6 (-36.22%)"
+   ]
+  },
+  {
+   "symbol": "GRINCH",
+   "score": 70.6,
+   "mcap": 52361,
+   "liq": 40505,
+   "chg_m5": 6.62,
+   "chg_h1": 15.69,
+   "reasons": [
+    "vol_h1<5000"
+   ]
+  },
+  {
+   "symbol": "OMNI",
+   "score": 65.8,
+   "mcap": 99340,
+   "liq": 178730,
+   "chg_m5": 1.3,
+   "chg_h1": 34.9,
+   "reasons": [
+    "score<69 (65.8)"
+   ]
+  },
+  {
+   "symbol": "Huss",
+   "score": 64.9,
+   "mcap": 256014,
+   "liq": 38083,
+   "chg_m5": 8.57,
+   "chg_h1": 25.4,
+   "reasons": [
+    "mcap>200000 (256014)"
+   ]
+  },
+  {
+   "symbol": "CATMARIO",
+   "score": 59.4,
+   "mcap": 150336,
+   "liq": 39135,
+   "chg_m5": 19.54,
+   "chg_h1": 21.67,
+   "reasons": [
+    "downtrend_h6 (-1.07%)"
+   ]
+  },
+  {
+   "symbol": "duh",
+   "score": 56.6,
+   "mcap": 190005,
+   "liq": 35170,
+   "chg_m5": 12.52,
+   "chg_h1": 0.22,
+   "reasons": [
+    "score<69 (56.6)"
+   ]
+  },
+  {
+   "symbol": "tSpaceX",
+   "score": 52.7,
+   "mcap": 649954,
+   "liq": 534915,
+   "chg_m5": 0.07,
+   "chg_h1": 0.17,
+   "reasons": [
+    "mcap>200000 (649954)"
+   ]
+  },
+  {
+   "symbol": "apocry",
+   "score": 76.2,
+   "mcap": 51757,
+   "liq": 98384,
+   "chg_m5": 6.86,
+   "chg_h1": 6.86,
+   "reasons": [
+    "vol_h1<5000",
+    "pair_too_new"
+   ]
+  },
+  {
+   "symbol": "CBUCKS",
+   "score": 58.5,
+   "mcap": 4412589,
+   "liq": 241281,
+   "chg_m5": 1.01,
+   "chg_h1": 23.79,
+   "reasons": [
+    "mcap>200000 (4412589)",
+    "volume_fading (0.40)"
+   ]
+  }
+ ],
  "sources": {
-  "counts": null,
-  "discovered": null,
-  "watch": null,
-  "priced": 0,
-  "ts": 0
+  "counts": {
+   "pump_graduated_p0": "ERR blocked (Cloudflare 403) - skipped, no bypass",
+   "ds_profiles_latest": 26,
+   "gt_trending": 40,
+   "ray_volume": 48,
+   "jup_toptrending_1h": 50,
+   "pump_graduated_p1": "ERR blocked (Cloudflare 403) - skipped, no bypass",
+   "pump_complete_mcap": "ERR blocked (Cloudflare 403) - skipped, no bypass",
+   "ray_standard": 54,
+   "ds_profiles_recent": 28,
+   "pump_adv_graduated": "ERR blocked (Cloudflare 403) - skipped, no bypass",
+   "launchlab_lasttrade": 161,
+   "launchlab_new": 111,
+   "ds_boosts_latest": 28,
+   "jup_toporganic_1h": 47,
+   "ds_boosts_top": 29,
+   "ds_cto": 10,
+   "gt_trend5m": 20,
+   "ds_search_pump": 20,
+   "jup_toptrending_6h": 50,
+   "ds_search_SOL": 17,
+   "gt_trend1h": 20,
+   "ds_search_moon": 12,
+   "ds_search_meme": 10,
+   "gt_trend6h": 20,
+   "jup_toporganic_6h": 47,
+   "ds_search_pumpswap": 30,
+   "gt_top_tx": "ERR HTTP Error 429: Too Many Requests",
+   "ds_search_pumpfun": 30,
+   "ds_search_raydium": 30,
+   "jup_recent": 30,
+   "gt_new": "ERR HTTP Error 429: Too Many Requests",
+   "ds_search_letsbonk": 2,
+   "gt_pumpswap_trend": "ERR HTTP Error 429: Too Many Requests",
+   "gt_pumpfun": "ERR HTTP Error 429: Too Many Requests",
+   "gt_pumpswap": "ERR HTTP Error 429: Too Many Requests",
+   "gt_raydium": "ERR HTTP Error 429: Too Many Requests",
+   "gt_raydium_clmm": "ERR HTTP Error 429: Too Many Requests",
+   "gt_launchlab": "ERR HTTP Error 429: Too Many Requests",
+   "gt_letsbonk": 20
+  },
+  "discovered": 599,
+  "watch": 330,
+  "priced": 491,
+  "ts": 1795150747.7571926
  },
  "agents": [
   {
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone",
-   "age_s": 0,
+   "age_s": 1,
    "ok": true,
    "restarts": 0
   },
@@ -148,15 +355,15 @@
    "key": "scanner",
    "name": "Scanner + Analityk",
    "desc": "Zbiera coiny z DexScreenera, Jupitera, Raydiuma, GeckoTerminala i ocenia momentum (0–100)",
-   "age_s": 1795150712,
-   "ok": false,
+   "age_s": 1,
+   "ok": true,
    "restarts": 0
   },
   {
    "key": "filter",
    "name": "Filtr",
    "desc": "Odrzuca coiny spoza zakresu kapitalizacji (config), bez trendu wzrostowego, z małą płynnością; loguje powody",
-   "age_s": 0,
+   "age_s": 1,
    "ok": true,
    "restarts": 0
   },
@@ -164,8 +371,8 @@
    "key": "trader",
    "name": "Trader (papier)",
    "desc": "Symuluje kupno/sprzedaż z poślizgiem i opłatami, pilnuje drabinki stopu co 3 s",
-   "age_s": 1795150712,
-   "ok": false,
+   "age_s": 0,
+   "ok": true,
    "restarts": 0
   },
   {
