@@ -20,3 +20,15 @@ then saves state and exits; the queued run resumes from the committed state.
   `desk/logs/trades.jsonl`, `desk/notify/notes.jsonl`. Watchlist: `desk/persist/watchlist.json` (hourly + at shutdown).
 - Polish trade notes: append-only `desk/notify/notes.jsonl` (last 300), one JSON per line: id, ts, type, title, message.
 PAPER ONLY: no wallet, no keys, no secrets; uses the workflow's own GITHUB_TOKEN to commit.
+
+## Variant S (since 20.11.2026 ~13:05, paper book reset to $25; run7 archived)
+Strict filter: pair age >= 6 h, 1h change 0..+100%, 6h change >= +10%, plus the existing rules (mcap $40k-200k, liquidity >= $30k,
+score >= 69, buy/sell ratios, m5 <= +25%, RugCheck, EOD ban after a loss). Entry: buy now (pullback off). Exits: stop -6%;
+peak >= +10% -> stop +3%; at +15% sell 50% (config `take_profit`) and stop +3%; trailing 12/20/25 pp from +24/+100/+200%.
+Max 2 open, 20% of equity each. No entry cutoff (`stop_at` null). Backtest scripts + results: `backtest/` (real GeckoTerminal
+1-minute candles; no robust edge found, see results files).
+
+## Paper copy book @unipcs (agents/copybook.py, state/copybook.json)
+Separate $25 paper book mirroring public wallet 2heJbC32Tpfcb3nbUb5ER61K11FGZVfVGtVnDm6LDogF via public Solana RPC (no keys):
+new buys paid >= 0.005 SOL or >= $1 USDC/USDT (add-ons/airdrops skipped), sells mirrored proportionally (>= 90% = full exit),
+20% of copy equity per copy, max 4, desk cost model. Notes prefix "[PAPIER – kopia @unipcs]" in notify/notes.jsonl. Never touches a wallet.

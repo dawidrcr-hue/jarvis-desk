@@ -1,0 +1,97 @@
+{
+ "mode": "paper",
+ "_note": "PAPER ONLY. No wallet, no Phantom, no signing. Data: DexScreener + GeckoTerminal public APIs.",
+ "start_balance_usd": 25.0,
+ "position_pct_of_equity": 0.2,
+ "min_position_usd": 1.0,
+ "max_open_positions": 4,
+ "reentry_cooldown_min": 60,
+ "reentry_ban_after_loss": "end_of_day",
+ "_reentry_note": "After a profitable exit, same mint/ticker is blocked for reentry_cooldown_min minutes. After a losing exit (stop or net loss), mint and ticker are banned until midnight Europe/Warsaw. User decision 20.11.",
+ "ladder": [
+  [
+   0.12,
+   0.0
+  ]
+ ],
+ "initial_stop": -0.08,
+ "costs": {
+  "min_slippage_pct": 0.01,
+  "impact_mult": 2.0,
+  "network_fee_usd": 0.02
+ },
+ "scan_interval_s": 15,
+ "price_poll_s": 3,
+ "stop_at": "2026-11-20T12:25:00+01:00",
+ "_stop_at_note": "After 12:25 Europe/Warsaw on 2026-11-20, no new paper buys and no new pullback setups. Open positions are still managed and closed; the site keeps publishing. Workflow stays enabled so Actions runs can chain until then. User decision 20.11.",
+ "filter": {
+  "min_mcap_usd": 40000,
+  "min_liquidity_usd": 30000,
+  "min_vol_h1_usd": 5000,
+  "min_pair_age_min": 20,
+  "require_m5_up": true,
+  "require_h1_up": true,
+  "min_h6_change": 0.0,
+  "min_buy_sell_ratio_m5": 1.0,
+  "min_buy_sell_ratio_h1": 1.0,
+  "min_m5_txns": 10,
+  "min_vol_accel": 0.8,
+  "max_m5_change_pct": 25,
+  "max_h1_change_pct": 300,
+  "min_score": 69,
+  "max_mcap_usd": 200000
+ },
+ "trail_after": 0.24,
+ "trail_gap": 0.12,
+ "trail_tiers": [
+  [
+   0.24,
+   0.12
+  ],
+  [
+   1.0,
+   0.2
+  ],
+  [
+   2.0,
+   0.25
+  ]
+ ],
+ "_ladder_note": "stop -8%; peak>=+12% -> stop 0% (entry); peak>=+24% trail 12 pp below peak; peak>=+100% trail 20 pp; peak>=+200% trail 25 pp. Stop = max(previous, peak-gap), never moves down. User decision 19.11.",
+ "dead_liq_usd": 1000,
+ "no_quote_timeout_s": 600,
+ "_size_note": "20% equity per trade (start $25 -> $5). $0.02 fee would eat ~1%/side at smaller sizes. Max 4 open. User decision 19.11.",
+ "_dead_liq_note": "If pair liquidity < $1000 or no DexScreener quote for 10+ min, close as total loss (-100%), reason rug/brak płynności. MTM marks such positions at $0.",
+ "scan_budget_s": 70,
+ "http_timeout_s": 8,
+ "rugcheck": {
+  "enabled": true,
+  "timeout_s": 8,
+  "cache_s": 600,
+  "fail_cache_s": 60,
+  "max_top10_pct": 35.0,
+  "max_single_holder_pct": 15.0,
+  "max_creator_pct": 10.0,
+  "min_lp_locked_pct": 80.0,
+  "max_score_normalised": 30,
+  "reject_danger_risks": true,
+  "ignore_danger_risks": [],
+  "reject_mint_authority": true,
+  "reject_freeze_authority": true,
+  "reject_token_extensions": true,
+  "reject_transfer_fee": true,
+  "max_checks_per_snapshot": 6
+ },
+ "_rugcheck_note": "Final gate before every paper buy (user decision 19.11): RugCheck /v1/tokens/<mint>/report. Reject: mint/freeze authority, LP locked <80% on traded pair (graduated pump.fun pools report 100% burned), top10 holders excl. pool/locker >35%, single holder >15%, creator >10%, rugged flag, score_normalised >30, any danger-level risk, permanent delegate/transfer hook/transfer fee. Unreachable -> skip buy (fail-closed). Cache 10 min.",
+ "entry": {
+  "mode": "pullback",
+  "pullback": {
+   "dip_pct": 0.05,
+   "bounce_pct": 0.03,
+   "window_min": 15,
+   "cancel_pct": 0.15,
+   "max_setups": 8
+  }
+ },
+ "_entry_note": "entry.mode 'pullback' (enabled 20.11, variant P2): a filter+RugCheck pass opens a setup; buy after a >=5% dip from the local high and a >=3% bounce from the low; cancel at -15% from the high or after 15 min. 'now' would buy immediately after the gates."
+}

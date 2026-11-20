@@ -7,6 +7,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from lib.common import P, load, save, cfg, log, heartbeat, now_iso
 from lib.strategy import portfolio_equity, position_mark, trail_tiers, ladder_note_pl, entries_allowed, entry_mode, pullback_params, entry_note_pl, reentry_note_pl
 from lib import safety
+from lib.copylogic import conf as copy_conf, book_equity
 
 C = "publisher"
 # DESK_SITE = repo root (GitHub Actions checkout). Falls back to the old box clone.
@@ -19,6 +20,7 @@ AG = [("watchdog", "Watchdog", "Pilnuje procesów, restartuje zawieszone", 120),
       ("scanner", "Scanner + Analityk", "Zbiera coiny z DexScreenera, Jupitera, Raydiuma, GeckoTerminala i ocenia momentum (0–100)", 120),
       ("filter", "Filtr", "Odrzuca coiny spoza zakresu kapitalizacji (config), bez trendu wzrostowego, z małą płynnością; loguje powody", 120),
       ("trader", "Trader (papier)", "Symuluje kupno/sprzedaż z poślizgiem i opłatami, pilnuje drabinki stopu co 3 s", 45),
+      ("copybook", "Kopia @unipcs (papier)", "Śledzi publiczne transakcje portfela i kopiuje je na osobnym papierowym koncie", 120),
       ("publisher", "Publisher", "Aktualizuje tę stronę co minutę (GitHub Actions)", 120)]
 REASON_PL = {"mcap<40000": "kapitalizacja < $40 tys.", "mcap>2000000": "kapitalizacja > $2 mln", "liq<30000": "płynność < $30 tys.",
              "vol_h1<5000": "wolumen 1h < $5 tys.", "pair_too_new": "para młodsza niż 20 min", "downtrend_m5": "spadek 5m",
@@ -45,7 +47,11 @@ def reason_pl(c):
         rp[f"liq<{liq:.0f}"] = f"płynność < ${liq/1e3:.0f} tys."
     age = fc.get("min_pair_age_min")
     if age is not None:
-        rp["pair_too_new"] = f"para młodsza niż {int(age)} min"
+        rp["pair_too_new"] = f"para młodsza niż {age/60:g} h" if age >= 120 else f"para młodsza niż {int(age)} min"
+    if fc.get("max_h1_change_pct") is not None:
+        rp["overextended_h1"] = f"przegrzany 1h (> +{fc['max_h1_change_pct']:g}%)"
+    if fc.get("min_h6_change"):
+        rp["downtrend_h6"] = f"6h poniżej +{fc['min_h6_change']:g}%"
     cool = c.get("reentry_cooldown_min", 60)
     rp["reentry_cooldown"] = f"niedawno sprzedany ({int(cool)} min)"
     return rp
@@ -61,7 +67,8 @@ def build():
     now = time.time()
     eq = portfolio_equity(pf, now=now, cfg=c)
     wins = sum(1 for t in closed if t["pnl_usd"] > 0)
-    costs = sum(t["cost_usd"] - t["qty"] * t["entry_price"] + t["qty"] * t["exit_price"] - t["proceeds"] for t in closed)
+    costs = sum(t["cost_usd"] - (t["qty"] + t.get("partial_qty", 0.0)) * t["entry_price"] + t["qty"] * t["exit_price"] + t.get("partial_gross", 0.0)
+                - t["proceeds"] - t.get("partial_proceeds", 0.0) for t in closed)
     hist = load(P("state", "equity_history.json"), []) or []
     if not hist or now - hist[-1]["t"] >= 60:
         hist.append({"t": round(now), "e": round(eq, 4)}); hist = hist[-3000:]; save(P("state", "equity_history.json"), hist)
@@ -92,6 +99,7 @@ def build():
                        "restarts": (wd.get("restarts") or {}).get(key, 0)})
     agents[-1].update(age_s=0, ok=True)
     return {
+        "copybook": copybook_view(c),
         "generated": now_iso(), "mode": "PAPER",
         "stats": {"equity": round(eq, 4), "start": pf.get("start_balance", 100), "cash": round(pf.get("cash", 0), 4),
                   "realized": round(sum(t["pnl_usd"] for t in closed), 4),
@@ -102,7 +110,7 @@ def build():
                   "ladder": c["ladder"], "trail_after": c.get("trail_after"), "trail_gap": c.get("trail_gap"), "trail_tiers": trail_tiers(c), "ladder_note_pl": ladder_note_pl(c), "min_mcap": c["filter"]["min_mcap_usd"], "max_mcap": c["filter"].get("max_mcap_usd"),
                   "stop_at": c.get("stop_at"), "entries_open": entries_allowed(c), "entry_mode": entry_mode(c), "entry": {"mode": entry_mode(c), "pullback": pullback_params(c)}, "entry_note_pl": entry_note_pl(c),
                   "reentry_cooldown_min": c.get("reentry_cooldown_min", 60), "reentry_ban_after_loss": c.get("reentry_ban_after_loss"), "reentry_note_pl": reentry_note_pl(c),
-                  "filter": {k: c["filter"].get(k) for k in ("min_liquidity_usd", "min_vol_h1_usd", "min_pair_age_min", "min_m5_txns", "max_m5_change_pct", "max_h1_change_pct", "min_score")},
+                  "filter": {k: c["filter"].get(k) for k in ("min_liquidity_usd", "min_vol_h1_usd", "min_pair_age_min", "min_m5_txns", "max_m5_change_pct", "max_h1_change_pct", "min_h6_change", "min_score")}, "take_profit": c.get("take_profit"),
                   "rugcheck": {k: rcc.get(k) for k in ("enabled", "max_top10_pct", "max_single_holder_pct", "max_creator_pct", "min_lp_locked_pct", "max_score_normalised")}},
         "positions": [{k: p.get(k) for k in keep_p} for p in pos],
         "closed": [{k: t.get(k) for k in keep_c} for t in closed[-60:][::-1]],
@@ -115,6 +123,22 @@ def build():
                     "priced": len(cand.get("candidates", [])), "ts": snap_ts},
         "agents": agents,
     }
+
+def copybook_view(c):
+    """Public-safe view of the PAPER copy book (target wallet is public; no keys, no our-wallet data)."""
+    cc = copy_conf(c); b = load(P("state", "copybook.json"), {}) or {}
+    closed = b.get("closed") or []; pos = b.get("positions") or []
+    wins = sum(1 for t in closed if (t.get("pnl_usd") or 0) > 0)
+    kp = ("symbol", "mint", "url", "entry_iso", "cost_usd", "cost_left", "entry_price", "last_price", "last_gain", "realized", "entry_mcap", "entry_liq")
+    kc = ("symbol", "mint", "url", "entry_iso", "exit_iso", "cost_usd", "gross_pct", "pnl_pct", "pnl_usd", "reason", "hold_min")
+    return {"enabled": cc["enabled"], "label": cc["label"], "target": cc["target"], "start": b.get("start_balance", cc["start_balance_usd"]),
+            "equity": round(book_equity(b), 4) if b else cc["start_balance_usd"], "cash": round(b.get("cash", 0) or 0, 4),
+            "open": len(pos), "closed_n": len(closed), "wins": wins, "win_rate": wins / len(closed) if closed else None,
+            "realized": round(sum(t.get("pnl_usd") or 0 for t in closed), 4),
+            "rules": {"size_pct": cc["position_pct_of_equity"], "max_open": cc["max_open_positions"], "min_spend_sol": cc["min_spend_sol"],
+                      "min_spend_stable": cc["min_spend_stable"], "full_exit_fraction": cc["full_exit_fraction"], "min_sell_fraction": cc["min_sell_fraction"]},
+            "positions": [{k: p.get(k) for k in kp} for p in pos], "closed": [{k: t.get(k) for k in kc} for t in closed[-40:][::-1]],
+            "events": (b.get("events") or [])[-12:][::-1], "last_poll": b.get("last_poll"), "last_error": b.get("last_error"), "created": b.get("created")}
 
 def git(*a, t=60):
     return subprocess.run(["git", "-C", SITE, *a], timeout=t, capture_output=True, text=True)

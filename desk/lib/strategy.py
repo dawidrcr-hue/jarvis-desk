@@ -229,14 +229,53 @@ def trail_gap_for(peak, cfg):
             gap = g
     return gap
 
+def take_profit(cfg):
+    """Partial take-profit from cfg['take_profit'] = {"at": 0.15, "fraction": 0.5, "stop_after": 0.03}, or None (off)."""
+    tp = (cfg or {}).get("take_profit") or None
+    if not tp: return None
+    try:
+        at, fr = float(tp["at"]), float(tp["fraction"])
+    except (KeyError, TypeError, ValueError):
+        return None
+    if at <= 0 or not (0 < fr < 1): return None
+    sa = tp.get("stop_after")
+    return {"at": at, "fraction": fr, "stop_after": float(sa) if sa is not None else None}
+
+def take_profit_due(pos, price, cfg):
+    """True once per position: market gain >= take_profit.at and the partial has not been taken yet."""
+    tp = take_profit(cfg)
+    if not tp or pos.get("tp_done"): return False
+    return price / pos["entry_price"] - 1 >= tp["at"] - 1e-12
+
+def apply_take_profit(pos, price, liq, cfg):
+    """Sell tp.fraction of the remaining qty at `price` (simulated fill). Mutates pos; returns the sim_sell dict
+    plus 'qty_sold'. After it the stop is raised to stop_after (never lowered)."""
+    tp = take_profit(cfg)
+    q = pos["qty"] * tp["fraction"]
+    s = sim_sell(q, price, liq, cfg["costs"])
+    s["proceeds"] = max(0.0, s["proceeds"])
+    pos["qty"] -= q
+    pos["tp_done"] = True
+    pos["partial_proceeds"] = pos.get("partial_proceeds", 0.0) + s["proceeds"]
+    pos["partial_gross"] = pos.get("partial_gross", 0.0) + q * price
+    pos["partial_qty"] = pos.get("partial_qty", 0.0) + q
+    if tp["stop_after"] is not None:
+        pos["stop_pct"] = max(pos.get("stop_pct", cfg["initial_stop"]), tp["stop_after"])
+    s["qty_sold"] = q
+    return s
+
 def ladder_note_pl(cfg):
-    """Polish buy-note / site one-liner, driven by initial_stop, ladder and trail_tiers."""
+    """Polish buy-note / site one-liner, driven by initial_stop, ladder, take_profit and trail_tiers."""
     parts = [f"Stop {cfg.get('initial_stop', -0.06)*100:.0f}%"]
     for trig, new_stop in cfg.get("ladder") or []:
         if abs(new_stop) < 1e-12:
             parts.append(f"po +{trig*100:.0f}% → stop na wejściu")
         else:
             parts.append(f"po +{trig*100:.0f}% → stop {new_stop*100:+.0f}%")
+    tp = take_profit(cfg)
+    if tp:
+        parts.append(f"przy +{tp['at']*100:.0f}% sprzedaż {tp['fraction']*100:.0f}% pozycji"
+                     + (f" i stop {tp['stop_after']*100:+.0f}%" if tp.get("stop_after") is not None else ""))
     trail = [f"od +{a*100:.0f}% trailing {g*100:.0f} pkt" for a, g in trail_tiers(cfg)]
     if trail:
         parts.append(", ".join(trail))

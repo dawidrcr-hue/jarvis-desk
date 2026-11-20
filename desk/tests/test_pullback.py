@@ -1,7 +1,7 @@
 import os, sys, json, time, glob, unittest, tempfile
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from lib.strategy import entry_mode, pullback_params, pullback_new, pullback_step, pullback_entry_reasons, filter_reasons, PULLBACK_DEFAULTS, entry_note_pl
-CFG = json.load(open(os.path.join(os.path.dirname(__file__), "..", "config.json")))
+CFG = json.load(open(os.path.join(os.path.dirname(__file__), "fixtures", "config_ref_20261120.json")))  # frozen 20.11 06:55 rules (mechanics tests); live config: test_variant_s.py
 PB = dict(CFG, entry={"mode": "pullback", "pullback": {"dip_pct": 0.05, "bounce_pct": 0.02, "window_min": 15, "cancel_pct": 0.15, "max_setups": 8}})
 
 def feed(path, cfg=PB, t0=1000.0, dt=3.0):

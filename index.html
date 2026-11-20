@@ -143,8 +143,9 @@ footer{text-align:center;color:var(--mu2);font-size:12px;margin-top:30px}
   <div class="strat">
    <div class="lab">Drabinka stopu</div>
    <div class="steps">
-    <div class="step"><div class="t">start</div><div class="x" id="step-stop">stop -8%</div></div>
-    <div class="step"><div class="t">po +12%</div><div class="x">stop 0%</div></div>
+    <div class="step"><div class="t">start</div><div class="x" id="step-stop">stop -6%</div></div>
+    <div class="step"><div class="t">po +10%</div><div class="x">stop +3%</div></div>
+    <div class="step"><div class="t">przy +15%</div><div class="x">sprzedaj 50%</div></div>
     <div class="step"><div class="t">od +24%</div><div class="x">szczyt −12</div></div>
     <div class="step"><div class="t">od +100%</div><div class="x">szczyt −20</div></div>
     <div class="step"><div class="t">od +200%</div><div class="x">szczyt −25</div></div>
@@ -158,6 +159,15 @@ footer{text-align:center;color:var(--mu2);font-size:12px;margin-top:30px}
 
 <section class="p sec"><div class="h"><h2>Zamknięte transakcje</h2><span class="c" id="ncl"></span></div>
  <div class="tw"><table><thead><tr><th>Wyjście</th><th>Coin</th><th>Kwota</th><th>Brutto</th><th>Netto</th><th>PnL netto</th><th>Szczyt</th><th>Powód</th><th>Czas</th></tr></thead><tbody id="cl"></tbody></table></div></section>
+
+
+<section class="p sec" id="copysec"><div class="h"><h2>Kopia portfela <span id="cplabel">@unipcs</span> · PAPIER</h2><span class="c" id="cpupd"></span></div>
+ <div class="g stats" id="cpstats"></div>
+ <div class="rules" id="cprules"></div>
+ <div class="cards" id="cppos" style="margin-top:12px"></div>
+ <div class="tw" style="margin-top:12px"><table><thead><tr><th>Wyjście</th><th>Coin</th><th>Kwota</th><th>Brutto</th><th>Netto</th><th>PnL netto</th><th>Powód</th><th>Czas</th></tr></thead><tbody id="cpcl"></tbody></table></div>
+ <div class="tw" style="margin-top:12px"><table><thead><tr><th>Czas</th><th>Token</th><th>Ruch portfela</th><th>SOL</th><th>Decyzja kopii</th></tr></thead><tbody id="cpev"></tbody></table></div>
+</section>
 
 <div class="g cols sec">
  <section class="p"><div class="h"><h2>Filtr · ostatnia runda</h2><span class="c" id="ft"></span></div>
@@ -206,7 +216,7 @@ function track(p,ist=-0.08){
  const a=x(Math.min(0,g)),b=x(Math.max(0,g));
  return `<div class="trk"><div class="rail"></div><div class="fill" style="left:${x(0)<a?x(0):a}%;width:${Math.abs(x(g)-x(0))}%"></div>
  <div class="pk" style="left:${x(pk)}%"></div><div class="stop" style="left:${x(s)}%" title="stop"></div><div class="now" style="left:${x(g)}%"></div>
- ${[ist,0,0.12,0.24].map(t=>`<span class="tk" style="left:${x(t)}%">${t>0?'+':''}${Math.round(t*100)}%</span>`).join('')}</div>`;
+ ${[ist,0,0.10,0.15,0.24].map(t=>`<span class="tk" style="left:${x(t)}%">${t>0?'+':''}${Math.round(t*100)}%</span>`).join('')}</div>`;
 }
 async function load(){
  let d;try{d=await (await fetch('data.json?t='+Date.now(),{cache:'no-store'})).json()}catch(e){$('livet').textContent='brak danych';return}
@@ -232,7 +242,7 @@ async function load(){
  const reentryNote=d.rules.reentry_note_pl||'';
  $('rules').textContent=`${d.rules.ladder_note_pl||'Stop -8%; po +12% → stop na wejściu; od +24% trailing 12 pkt, od +100% 20 pkt, od +200% 25 pkt'}. Ruch liczony od ceny wejścia (brutto). Stop nigdy nie schodzi w dół. Wynik netto uwzględnia poślizg (min. 1% na stronę) i opłatę sieci. Kapitalizacja przy wejściu: ${big(d.rules.min_mcap)}–${big(d.rules.max_mcap||0)}.${stopNote}${entryNote?' '+entryNote+'.':''}${reentryNote?' '+reentryNote:''}`;
  {const f=d.rules.filter||{},r=d.rules.rugcheck||{};
-  $('frules').innerHTML=esc(`Wejście tylko gdy: kapitalizacja ${big(d.rules.min_mcap)}–${big(d.rules.max_mcap||0)} · płynność ≥ ${big(f.min_liquidity_usd??30000)} · wolumen 1h ≥ ${big(f.min_vol_h1_usd??5000)} · para ≥ ${f.min_pair_age_min??30} min · cena rośnie 5m i 1h (6h ≥ 0) · kupujący ≥ sprzedający (5m, 1h) · ≥ ${f.min_m5_txns??10} transakcji / 5m · wolumen nie słabnie · bez pionowej świecy (5m ≤ +${f.max_m5_change_pct??25}%, 1h ≤ +${f.max_h1_change_pct??300}%) · ocena analityka ≥ ${f.min_score??'–'}.`)+
+  $('frules').innerHTML=esc(`Wejście tylko gdy: kapitalizacja ${big(d.rules.min_mcap)}–${big(d.rules.max_mcap||0)} · płynność ≥ ${big(f.min_liquidity_usd??30000)} · wolumen 1h ≥ ${big(f.min_vol_h1_usd??5000)} · para ≥ ${(f.min_pair_age_min??30)>=120?((f.min_pair_age_min/60).toLocaleString('pl-PL')+' h'):((f.min_pair_age_min??30)+' min')} · cena rośnie 5m i 1h (6h ≥ +${f.min_h6_change??0}%) · kupujący ≥ sprzedający (5m, 1h) · ≥ ${f.min_m5_txns??10} transakcji / 5m · wolumen nie słabnie · bez pionowej świecy (5m ≤ +${f.max_m5_change_pct??25}%, 1h ≤ +${f.max_h1_change_pct??300}%) · ocena analityka ≥ ${f.min_score??'–'}.`)+
    (entryNote?esc(' '+entryNote+'.'):'')+
    (reentryNote?esc(' '+reentryNote):'')+
    (r.enabled?`<br><b>🛡 Filtr RugCheck: WŁĄCZONY</b> — przed każdym kupnem: mint i freeze odebrane · LP zablokowane/spalone ≥ ${r.min_lp_locked_pct}% · top 10 holderów (bez puli) ≤ ${r.max_top10_pct}% · jeden holder ≤ ${r.max_single_holder_pct}% · twórca ≤ ${r.max_creator_pct}% · wynik ryzyka ≤ ${r.max_score_normalised}/100 · brak ryzyk „danger”. RugCheck niedostępny = brak kupna.`:`<br>Filtr RugCheck: wyłączony`);};
@@ -242,6 +252,18 @@ async function load(){
  $('ncl').textContent=`${s.closed} łącznie`;
  $('cl').innerHTML=d.closed.length?d.closed.map(t=>`<tr><td>${tm(t.exit_iso)}</td><td><a href="${esc(t.url)}" target="_blank" rel="noopener">$${esc(t.symbol)}</a></td><td class="m">${usd(t.cost_usd)}</td>
   <td class="m ${c(t.gross_pct)}">${pct(t.gross_pct)}</td><td class="m ${c(t.pnl_pct)}"><b>${pct(t.pnl_pct)}</b></td><td class="m ${c(t.pnl_usd)}">${sgn(t.pnl_usd)}</td><td class="m">${pct(t.peak_gain)}</td><td><span class="pill">${esc(t.reason)}</span></td><td class="m">${Math.round(t.hold_min)} min</td></tr>`).join(''):'<tr><td colspan="9"><div class="none">Jeszcze nic nie zamknięto</div></td></tr>';
+ {const b=d.copybook;if(!b){$('copysec').style.display='none'}else{
+  $('cplabel').textContent=b.label;$('cpupd').textContent=(b.enabled?'działa':'wyłączona')+' · ostatnie sprawdzenie '+tm(b.last_poll)+(b.last_error?' · błąd: '+b.last_error.slice(0,60):'');
+  const ch=b.equity-b.start;
+  $('cpstats').innerHTML=[['Saldo kopii',usd(b.equity),`start $${b.start} · <span class="${c(ch)}">${sgn(ch)}</span>`],['Transakcje',b.closed_n,`otwarte: ${b.open} / ${b.rules.max_open}`],
+   ['Win rate',b.win_rate==null?'–':Math.round(b.win_rate*100)+'%',`${b.wins} zysk · ${b.closed_n-b.wins} strata`],['Zrealizowane',`<span class="${c(b.realized)}">${sgn(b.realized)}</span>`,'netto po kosztach']]
+   .map(k=>`<div class="st"><div class="l">${k[0]}</div><div class="v">${k[1]}</div><div class="s">${k[2]}</div></div>`).join('');
+  $('cprules').innerHTML=esc(`Osobne konto papierowe (bez prawdziwych pieniędzy). Kopiuje tylko NOWE pozycje portfela ${b.label} (${b.target.slice(0,4)}…${b.target.slice(-4)}), opłacone ≥ ${b.rules.min_spend_sol} SOL lub ≥ $${b.rules.min_spend_stable} w USDC/USDT; dokupienia i airdropy pomija. Pozycja = ${Math.round(b.rules.size_pct*100)}% salda kopii, max ${b.rules.max_open} naraz. Sprzedaż lustrzana proporcjonalnie (od ${Math.round(b.rules.min_sell_fraction*100)}%), ≥ ${Math.round(b.rules.full_exit_fraction*100)}% = wyjście z całości. Poślizg min. 1% na stronę + opłata sieci. Dane: publiczne RPC Solany + DexScreener.`);
+  $('cppos').innerHTML=b.positions.length?b.positions.map(p=>`<div class="pc"><div class="t"><div><div class="sym"><a href="${esc(p.url)}" target="_blank" rel="noopener">$${esc(p.symbol)}</a></div><div class="sub">od ${tm(p.entry_iso)} · ${usd(p.cost_usd)} · kap. ${big(p.entry_mcap)}</div></div><div class="mv ${c(p.last_gain)}">${pct(p.last_gain)}</div></div></div>`).join(''):`<div class="none">Brak otwartych kopii — czekam, aż ${esc(b.label)} kupi nowy token</div>`;
+  $('cpcl').innerHTML=b.closed.length?b.closed.map(t=>`<tr><td>${tm(t.exit_iso)}</td><td><a href="${esc(t.url)}" target="_blank" rel="noopener">$${esc(t.symbol)}</a></td><td class="m">${usd(t.cost_usd)}</td><td class="m ${c(t.gross_pct)}">${pct(t.gross_pct)}</td><td class="m ${c(t.pnl_pct)}"><b>${pct(t.pnl_pct)}</b></td><td class="m ${c(t.pnl_usd)}">${sgn(t.pnl_usd)}</td><td><span class="pill">${esc(t.reason)}</span></td><td class="m">${Math.round(t.hold_min)} min</td></tr>`).join(''):'<tr><td colspan="8"><div class="none">Jeszcze nic nie zamknięto</div></td></tr>';
+  const kn={new:'nowa pozycja',addon:'dokupienie',airdrop:'airdrop/transfer',sell:'sprzedaż'};
+  $('cpev').innerHTML=(b.events||[]).length?b.events.map(e=>`<tr><td>${e.ts?tm(new Date(e.ts*1000).toISOString()):'–'}</td><td><a href="https://dexscreener.com/solana/${esc(e.mint)}" target="_blank" rel="noopener">${esc((e.mint||'').slice(0,6))}…</a></td><td>${esc(kn[e.kind]||e.kind)}</td><td class="m">${e.sol==null?'–':nf(e.sol,3)}</td><td>${esc(e.decision||'–')}</td></tr>`).join(''):`<tr><td colspan="5"><div class="none">Od startu kopii brak transakcji z tokenami</div></td></tr>`;
+ }}
  const f=d.filter||{},rc=Object.entries(f.reject_counts||{}).sort((a,b)=>b[1]-a[1]),mx=rc.length?rc[0][1]:1;
  $('ft').textContent=tm(f.ts);
  $('f3').innerHTML=`<div><span>sprawdzone</span><b>${f.n??'–'}</b></div><div><span>przeszło</span><b class="up">${f.passed??'–'}</b></div><div><span>odrzucone</span><b class="dn">${f.n!=null?f.n-f.passed:'–'}</b></div>`;

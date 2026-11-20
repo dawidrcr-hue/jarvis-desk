@@ -4,7 +4,7 @@ import os, sys, time, subprocess, signal
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from lib.common import P, load, save, log, heartbeat, notify, now_iso
 
-AGENTS = {"scanner": 120, "filter": 120, "trader": 45, "publisher": 120}  # heartbeat timeout (s); trader is tighter so stops cannot stall long
+AGENTS = {"scanner": 120, "filter": 120, "trader": 45, "publisher": 120, "copybook": 120}  # heartbeat timeout (s); trader is tighter so stops cannot stall long
 procs, started, restarts = {}, {}, {}
 
 def start(name):

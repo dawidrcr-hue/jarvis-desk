@@ -4,7 +4,7 @@ from zoneinfo import ZoneInfo
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from lib.strategy import ladder_update, sim_buy, sim_sell, slippage, position_size, filter_reasons, features, dead_liquidity_reason, position_mark, portfolio_equity, dead_exit, DEAD_REASON, missed_quote_limit, norm_symbol, trail_gap_for, ladder_note_pl, entries_allowed, stop_at_ts, is_loss_exit, reentry_blocks, reentry_note_pl, warsaw_date, pullback_entry_reasons
 import json
-CFG = json.load(open(os.path.join(os.path.dirname(__file__), "..", "config.json")))
+CFG = json.load(open(os.path.join(os.path.dirname(__file__), "fixtures", "config_ref_20261120.json")))  # frozen 20.11 06:55 rules (mechanics tests); live config: test_variant_s.py
 
 def run(path):
     pos = {"entry_price": 1.0, "stop_pct": CFG["initial_stop"], "peak_gain": 0.0}

@@ -8,7 +8,7 @@ import os, sys, time, json, glob, threading
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from lib.common import P, load, save, log, heartbeat, cfg, notify, now_iso, HTTP_TIMEOUT
 from lib.market import pair_prices, pairs_for_mints
-from lib.strategy import features, filter_reasons, sim_buy, sim_sell, position_size, ladder_update, ladder_note_pl, dead_liquidity_reason, portfolio_equity, dead_exit, DEAD_REASON, norm_symbol, entries_allowed, entry_mode, pullback_params, pullback_new, pullback_step, pullback_entry_reasons, reentry_blocks
+from lib.strategy import features, filter_reasons, sim_buy, sim_sell, position_size, ladder_update, ladder_note_pl, dead_liquidity_reason, portfolio_equity, dead_exit, DEAD_REASON, norm_symbol, entries_allowed, entry_mode, pullback_params, pullback_new, pullback_step, pullback_entry_reasons, reentry_blocks, take_profit_due, apply_take_profit
 
 LOCK = threading.Lock()
 SETUPS = {}   # mint -> pullback setup (entry.mode == "pullback" only; in-memory, saved to state/setups.json for the site/debug)
@@ -82,11 +82,13 @@ def close(pf, c, pos, price, liq, reason):
     if reason == DEAD_REASON:
         d = dead_exit(pos)
         s = {"proceeds": d["proceeds"], "fill": d["fill"], "slip": d["slip"]}
-        pnl, gross, price = d["pnl_usd"], d["gross_pct"], 0.0
+        pnl, gross, price = d["pnl_usd"] + pos.get("partial_proceeds", 0.0), d["gross_pct"], 0.0
     else:
         s = sim_sell(pos["qty"], price, liq or pos["entry_liq"], c["costs"])
-        pnl = s["proceeds"] - pos["cost_usd"]
-        gross = price / pos["entry_price"] - 1
+        # partial take-profit proceeds (already in cash) count toward this trade's result
+        pnl = s["proceeds"] + pos.get("partial_proceeds", 0.0) - pos["cost_usd"]
+        q_all = pos["qty"] + pos.get("partial_qty", 0.0)
+        gross = ((pos["qty"] * price + pos.get("partial_gross", 0.0)) / (q_all * pos["entry_price"]) - 1) if q_all > 0 else price / pos["entry_price"] - 1
     rec = {**pos, "exit_ts": time.time(), "exit_iso": now_iso(), "exit_price": price, "exit_fill": s["fill"], "exit_slip": s["slip"],
            "proceeds": s["proceeds"], "pnl_usd": pnl, "pnl_pct": pnl / pos["cost_usd"], "gross_pct": gross,
            "reason": reason, "hold_min": (time.time() - pos["entry_ts"]) / 60}
@@ -106,6 +108,21 @@ def close(pf, c, pos, price, liq, reason):
         SETUPS.pop(m, None)
     if dropped:
         save_setups()
+
+def take_partial(pf, c, pos, price, liq):
+    """Partial take-profit (config take_profit): sell a fraction at market, raise the stop. LOCK held."""
+    s = apply_take_profit(pos, price, liq or pos["entry_liq"], c)
+    pf["cash"] += s["proceeds"]
+    gain = price / pos["entry_price"] - 1
+    frac = int(round(float(c["take_profit"]["fraction"]) * 100))
+    trade_log({"ts": now_iso(), "side": "SELL_PARTIAL", "id": pos["id"], "mint": pos["mint"], "symbol": pos["symbol"], "price": price,
+               "fill": s["fill"], "slip": s["slip"], "qty": s["qty_sold"], "proceeds": s["proceeds"], "gain": gain})
+    notify("paper_sell", f"PAPIER: częściowa sprzedaż ${pos['symbol']} {frac}% przy {gain*100:+.1f}%",
+           f"[PAPIER – bez prawdziwych pieniędzy] Częściowa sprzedaż ${pos['symbol']}: {frac}% pozycji przy {gain*100:+.1f}% "
+           f"(take-profit), wpływ {fmt(s['proceeds'])}, poślizg {s['slip']*100:.1f}%. Reszta zostaje, stop podniesiony na "
+           f"{pos['stop_pct']*100:+.0f}%. Equity papierowe: {fmt(equity(pf, c))}.",
+           {"mint": pos["mint"], "pos_id": pos["id"], "partial": True})
+    log("trader", "paper SELL partial", symbol=pos["symbol"], gain=round(gain, 4), proceeds=round(s["proceeds"], 4))
 
 def signal_loop(pf):
     """Background: consume approved signals. A hung requote must not block stop polling on the main thread."""
@@ -244,7 +261,10 @@ def poll_positions(pf, last_poll):
                 close(pf, c, pos, 0.0, liq, reason)
                 continue
             ex, reason = ladder_update(pos, price, c)
-            if ex: close(pf, c, pos, price, liq, reason)
+            if ex:
+                close(pf, c, pos, price, liq, reason)
+            elif take_profit_due(pos, price, c):
+                take_partial(pf, c, pos, price, liq)
         if SETUPS:
             step_setups_locked(c, quotes, now)
         pf["equity"] = equity(pf, c); pf["updated"] = now_iso()

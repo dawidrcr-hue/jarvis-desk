@@ -4,17 +4,17 @@
  "start_balance_usd": 25.0,
  "position_pct_of_equity": 0.2,
  "min_position_usd": 1.0,
- "max_open_positions": 4,
+ "max_open_positions": 2,
  "reentry_cooldown_min": 60,
  "reentry_ban_after_loss": "end_of_day",
  "_reentry_note": "After a profitable exit, same mint/ticker is blocked for reentry_cooldown_min minutes. After a losing exit (stop or net loss), mint and ticker are banned until midnight Europe/Warsaw. User decision 20.11.",
  "ladder": [
   [
-   0.12,
-   0.0
+   0.1,
+   0.03
   ]
  ],
- "initial_stop": -0.08,
+ "initial_stop": -0.06,
  "costs": {
   "min_slippage_pct": 0.01,
   "impact_mult": 2.0,
@@ -22,22 +22,22 @@
  },
  "scan_interval_s": 15,
  "price_poll_s": 3,
- "stop_at": "2026-11-20T12:25:00+01:00",
- "_stop_at_note": "After 12:25 Europe/Warsaw on 2026-11-20, no new paper buys and no new pullback setups. Open positions are still managed and closed; the site keeps publishing. Workflow stays enabled so Actions runs can chain until then. User decision 20.11.",
+ "stop_at": null,
+ "_stop_at_note": "No entry cutoff since 20.11 12:26 (user: desk keeps trading continuously on paper). Set an ISO time here to stop new entries.",
  "filter": {
   "min_mcap_usd": 40000,
   "min_liquidity_usd": 30000,
   "min_vol_h1_usd": 5000,
-  "min_pair_age_min": 20,
+  "min_pair_age_min": 360,
   "require_m5_up": true,
   "require_h1_up": true,
-  "min_h6_change": 0.0,
+  "min_h6_change": 10.0,
   "min_buy_sell_ratio_m5": 1.0,
   "min_buy_sell_ratio_h1": 1.0,
   "min_m5_txns": 10,
   "min_vol_accel": 0.8,
   "max_m5_change_pct": 25,
-  "max_h1_change_pct": 300,
+  "max_h1_change_pct": 100,
   "min_score": 69,
   "max_mcap_usd": 200000
  },
@@ -57,7 +57,7 @@
    0.25
   ]
  ],
- "_ladder_note": "stop -8%; peak>=+12% -> stop 0% (entry); peak>=+24% trail 12 pp below peak; peak>=+100% trail 20 pp; peak>=+200% trail 25 pp. Stop = max(previous, peak-gap), never moves down. User decision 19.11.",
+ "_ladder_note": "Variant S (20.11 13:xx, backtest on real GeckoTerminal 1-min candles): stop -6%; peak>=+10% -> stop +3% (covers ~3 pp round-trip costs); at +15% sell 50% and stop +3%; trailing 12 pp from +24%, 20 pp from +100%, 25 pp from +200%. Stop never moves down. Previous (19.11): stop -8%, +12% -> 0%.",
  "dead_liq_usd": 1000,
  "no_quote_timeout_s": 600,
  "_size_note": "20% equity per trade (start $25 -> $5). $0.02 fee would eat ~1%/side at smaller sizes. Max 4 open. User decision 19.11.",
@@ -84,7 +84,7 @@
  },
  "_rugcheck_note": "Final gate before every paper buy (user decision 19.11): RugCheck /v1/tokens/<mint>/report. Reject: mint/freeze authority, LP locked <80% on traded pair (graduated pump.fun pools report 100% burned), top10 holders excl. pool/locker >35%, single holder >15%, creator >10%, rugged flag, score_normalised >30, any danger-level risk, permanent delegate/transfer hook/transfer fee. Unreachable -> skip buy (fail-closed). Cache 10 min.",
  "entry": {
-  "mode": "pullback",
+  "mode": "now",
   "pullback": {
    "dip_pct": 0.05,
    "bounce_pct": 0.03,
@@ -93,5 +93,34 @@
    "max_setups": 8
   }
  },
- "_entry_note": "entry.mode 'pullback' (enabled 20.11, variant P2): a filter+RugCheck pass opens a setup; buy after a >=5% dip from the local high and a >=3% bounce from the low; cancel at -15% from the high or after 15 min. 'now' would buy immediately after the gates."
+ "_entry_note": "entry.mode 'now' since 20.11 variant S (pullback P2 lost in live 0/4 and in backtest). 'pullback' params kept for reference.",
+ "copybook": {
+  "enabled": true,
+  "target": "2heJbC32Tpfcb3nbUb5ER61K11FGZVfVGtVnDm6LDogF",
+  "label": "@unipcs",
+  "start_balance_usd": 25.0,
+  "position_pct_of_equity": 0.2,
+  "max_open_positions": 4,
+  "min_position_usd": 1.0,
+  "min_spend_sol": 0.005,
+  "min_spend_stable": 1.0,
+  "min_sell_fraction": 0.05,
+  "full_exit_fraction": 0.9,
+  "max_signal_age_s": 180,
+  "poll_s": 5,
+  "price_poll_s": 15,
+  "rpc_urls": [
+   "https://solana-rpc.publicnode.com",
+   "https://api.mainnet-beta.solana.com"
+  ],
+  "dead_liq_usd": 1000,
+  "no_quote_timeout_s": 900
+ },
+ "_copybook_note": "PAPER copy of public wallet @unipcs (user decision 20.11): own $25 paper book (state/copybook.json), mirrors new buys paid >=0.005 SOL or >=$1 USDC/USDT (add-ons and airdrops skipped), mirrors sells proportionally (>=90% = full exit), 20% of copy equity per copy, max 4, desk cost model. Public RPC only, no keys. Never touches any wallet.",
+ "take_profit": {
+  "at": 0.15,
+  "fraction": 0.5,
+  "stop_after": 0.03
+ },
+ "_strict_note": "Variant S filter (user 20.11 'przerób desk tak aby zarabiał', paper): pair age >= 6 h, 1h change 0..+100% (no parabolic pumps), 6h change >= +10%, buy now (pullback entry off: backtest worse), max 2 open, 20% per trade. Backtest: no robust edge; positive mean comes from one outlier."
 }
