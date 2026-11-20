@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-20T06:54:09+01:00",
+ "generated": "2026-11-20T06:54:13+01:00",
  "mode": "PAPER",
  "stats": {
   "equity": 24.8446,
@@ -57,10 +57,13 @@
    }
   },
   "entry_note_pl": "Wejście po cofnięciu: -5% od szczytu, odbicie +3%, rezygnacja po -15% lub 15 min",
+  "reentry_cooldown_min": 60,
+  "reentry_ban_after_loss": "end_of_day",
+  "reentry_note_pl": "Po stracie (stop lub wynik netto na minusie) ten sam mint i ticker są zablokowane do północy (Warszawa). Po zysku blokada 60 min.",
   "filter": {
    "min_liquidity_usd": 30000,
    "min_vol_h1_usd": 5000,
-   "min_pair_age_min": 30,
+   "min_pair_age_min": 20,
    "min_m5_txns": 10,
    "max_m5_change_pct": 25,
    "max_h1_change_pct": 300,
@@ -654,7 +657,7 @@
   "mcap>2000000": "kapitalizacja > $2 mln",
   "liq<30000": "płynność < $30 tys.",
   "vol_h1<5000": "wolumen 1h < $5 tys.",
-  "pair_too_new": "para młodsza niż 30 min",
+  "pair_too_new": "para młodsza niż 20 min",
   "downtrend_m5": "spadek 5m",
   "downtrend_h1": "spadek 1h",
   "downtrend_h6": "spadek 6h",
@@ -683,6 +686,7 @@
   "rugcheck_unavailable": "RugCheck niedostępny (kupno pominięte)",
   "rugcheck_deferred": "RugCheck: limit sprawdzeń w rundzie",
   "entries_closed": "koniec sesji — brak nowych wejść",
+  "reentry_ban": "stop dziś – zablokowany do północy",
   "score<69": "ocena analityka < 69",
   "mcap>200000": "kapitalizacja > $200 tys."
  },
@@ -876,7 +880,7 @@
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone",
-   "age_s": 5,
+   "age_s": 4,
    "ok": true,
    "restarts": 0
   },
@@ -884,7 +888,7 @@
    "key": "scanner",
    "name": "Scanner + Analityk",
    "desc": "Zbiera coiny z DexScreenera, Jupitera, Raydiuma, GeckoTerminala i ocenia momentum (0–100)",
-   "age_s": 5,
+   "age_s": 9,
    "ok": true,
    "restarts": 1
   },
