@@ -3,7 +3,8 @@
 Reads the target wallet's public transactions (getTransaction jsonParsed from a public RPC) and mirrors them
 on a separate paper book:
   * new position = token balance goes 0 -> >0 AND the wallet paid >= min_spend_sol SOL or >= min_spend_stable USD
-    in USDC/USDT in the same tx. Add-ons (balance already > 0) and airdrops/transfers (nothing paid) are skipped.
+    in USDC/USDT in the same tx. Airdrops/transfers (nothing paid) are always skipped.
+  * add-on = already holding and paid the same minimum; copied only when copy_addons is true.
   * sell = token balance drops; fraction = sold / pre. >= full_exit_fraction (0.9) -> full exit;
     >= min_sell_fraction (0.05) -> proportional partial sell of our paper qty.
 Fills use the desk cost model (lib.strategy.sim_buy / sim_sell: slippage max(1%, 2*size/liq) + network fee per side).
@@ -18,7 +19,8 @@ DEFAULTS = {"enabled": False, "target": None, "label": "@wallet", "start_balance
             "min_spend_sol": 0.005, "min_spend_stable": 1.0, "min_sell_fraction": 0.05,
             "full_exit_fraction": 0.9, "max_signal_age_s": 180, "poll_s": 5, "price_poll_s": 15,
             "rpc_urls": ["https://solana-rpc.publicnode.com", "https://api.mainnet-beta.solana.com"],
-            "dead_liq_usd": 1000, "no_quote_timeout_s": 900}
+            "dead_liq_usd": 1000, "no_quote_timeout_s": 900,
+            "copy_addons": False, "copy_addon_mode": "proportional", "max_token_pct_of_equity": 0.40}
 
 def conf(cfg):
     c = dict(DEFAULTS); c.update((cfg or {}).get("copybook") or {})
@@ -88,3 +90,41 @@ def copy_size(equity, cash, n_open, cc):
 def book_equity(book):
     return float(book.get("cash") or 0) + sum(float(p["qty"]) * float(p.get("last_price") or p["entry_price"]) * (0.0 if p.get("dead") else 1.0)
                                                for p in book.get("positions") or [])
+
+def his_spend_usd(ev, sol_usd):
+    """USD the target spent in this event (SOL * sol_usd + USDC/USDT). Received (negative) counts as 0."""
+    return max(0.0, float(ev.get("sol_spent") or 0)) * float(sol_usd or 0) + max(0.0, float(ev.get("stable_spent") or 0))
+
+def addon_paid(ev, cc):
+    """True when the add-on (or buy) paid the configured minimum in SOL or stables. Unpaid transfers stay skipped."""
+    return float(ev.get("sol_spent") or 0) >= float(cc["min_spend_sol"]) or float(ev.get("stable_spent") or 0) >= float(cc["min_spend_stable"])
+
+def addon_size(equity, cash, pos, ev, cc, sol_usd=0.0):
+    """Paper USD size for a paid add-on. 0 if disabled, unpaid, below min, or the token is already at the cap.
+
+    copy_addon_mode 'proportional' (default): our initial copy * (his add spend / his initial spend).
+    'fixed': same USD as our initial copy of this token.
+    Hard cap: cost_left + size <= max_token_pct_of_equity * equity (default 40%). Never exceeds cash.
+    Does not consume an extra open-position slot (the token is already held).
+    """
+    if not cc.get("copy_addons"):
+        return 0.0
+    if not addon_paid(ev, cc):
+        return 0.0
+    cap_pct = float(cc.get("max_token_pct_of_equity") or 0.40)
+    room = cap_pct * float(equity) - float(pos.get("cost_left") or 0)
+    if room < float(cc["min_position_usd"]):
+        return 0.0
+    our_initial = float(pos.get("initial_cost") or pos.get("cost_usd") or 0)
+    mode = (cc.get("copy_addon_mode") or "proportional").lower()
+    if mode == "fixed":
+        size = our_initial
+    else:
+        their_init = float(pos.get("their_initial_spend") or 0)
+        their_add = his_spend_usd(ev, sol_usd)
+        if their_init <= 1e-9 or their_add <= 1e-9 or our_initial <= 0:
+            return 0.0
+        size = our_initial * (their_add / their_init)
+    size = min(size, room, float(cash))
+    size = round(size, 2)
+    return size if size >= float(cc["min_position_usd"]) else 0.0

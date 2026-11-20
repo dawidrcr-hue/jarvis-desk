@@ -25,7 +25,7 @@ PAPER ONLY: no wallet, no keys, no secrets; uses the workflow's own GITHUB_TOKEN
 Strict filter: pair age >= 6 h, 1h change 0..+100%, 6h change >= +10%, plus the existing rules (mcap $40k-200k, liquidity >= $30k,
 score >= 69, buy/sell ratios, m5 <= +25%, RugCheck, EOD ban after a loss). Entry: buy now (pullback off). Exits: stop -6%;
 peak >= +10% -> stop +3%; at +15% sell 50% (config `take_profit`) and stop +3%; trailing 12/20/25 pp from +24/+100/+200%.
-Max 2 open, 20% of equity each. No entry cutoff (`stop_at` null). Backtest scripts + results: `backtest/` (real GeckoTerminal
+Max 3 open, 20% of equity each. No entry cutoff (`stop_at` null). Backtest scripts + results: `backtest/` (real GeckoTerminal
 1-minute candles; no robust edge found, see results files).
 
 ## Paper copy book @unipcs (agents/copybook.py, state/copybook.json)

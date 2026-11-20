@@ -1,6 +1,7 @@
 import os, sys, json, unittest
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from lib.copylogic import classify, conf, copy_size, book_equity, token_deltas, quote_spent, WSOL, USDC
+from lib.copylogic import (classify, conf, copy_size, book_equity, token_deltas, quote_spent, WSOL, USDC,
+                           addon_size, addon_paid, his_spend_usd)
 CFG = json.load(open(os.path.join(os.path.dirname(__file__), "..", "config.json")))
 W = "2heJbC32Tpfcb3nbUb5ER61K11FGZVfVGtVnDm6LDogF"
 CC = conf(CFG)
@@ -24,6 +25,10 @@ class TCopy(unittest.TestCase):
         self.assertAlmostEqual(CC["min_spend_sol"], 0.005)
         self.assertAlmostEqual(CC["min_spend_stable"], 1.0)
         self.assertAlmostEqual(CC["full_exit_fraction"], 0.9)
+        self.assertTrue(CC["copy_addons"])
+        self.assertEqual(CC["copy_addon_mode"], "proportional")
+        self.assertAlmostEqual(CC["max_token_pct_of_equity"], 0.40)
+
         for k in CFG.get("copybook", {}):
             self.assertNotIn("key", k.lower()); self.assertNotIn("secret", k.lower())
 
@@ -70,7 +75,52 @@ class TCopy(unittest.TestCase):
         b = {"cash": 10.0, "positions": [{"qty": 100, "entry_price": 0.1, "last_price": 0.2}, {"qty": 100, "entry_price": 0.1, "dead": True}]}
         self.assertAlmostEqual(book_equity(b), 30.0)
 
+class TAddonSize(unittest.TestCase):
+    def setUp(self):
+        self.cc = dict(CC)
+        self.cc["copy_addons"] = True
+        self.cc["copy_addon_mode"] = "proportional"
+        self.cc["max_token_pct_of_equity"] = 0.40
+        self.pos = {"cost_usd": 5.0, "cost_left": 5.0, "initial_cost": 5.0, "their_initial_spend": 10.0}
+
+    def test_disabled_is_zero(self):
+        cc = dict(self.cc, copy_addons=False)
+        ev = {"sol_spent": 0.1, "stable_spent": 0.0}
+        self.assertEqual(addon_size(25.0, 20.0, self.pos, ev, cc, sol_usd=100.0), 0.0)
+
+    def test_unpaid_addon_is_skipped(self):
+        ev = {"sol_spent": 0.0001, "stable_spent": 0.0}
+        self.assertFalse(addon_paid(ev, self.cc))
+        self.assertEqual(addon_size(25.0, 20.0, self.pos, ev, self.cc, sol_usd=100.0), 0.0)
+
+    def test_proportional_to_his_initial(self):
+        # he first spent $10, now spends $5 -> we add half of our $5 initial = $2.50
+        ev = {"sol_spent": 0.0, "stable_spent": 5.0}
+        self.assertAlmostEqual(addon_size(25.0, 20.0, self.pos, ev, self.cc, sol_usd=100.0), 2.50)
+
+    def test_fixed_matches_initial_copy(self):
+        cc = dict(self.cc, copy_addon_mode="fixed")
+        ev = {"sol_spent": 0.0, "stable_spent": 5.0}
+        self.assertAlmostEqual(addon_size(25.0, 20.0, self.pos, ev, cc, sol_usd=100.0), 5.0)
+
+    def test_hard_cap_40_percent_of_equity(self):
+        ev = {"sol_spent": 0.0, "stable_spent": 100.0}  # would be huge proportionally
+        # room = 0.4*25 - 5 = 5
+        self.assertAlmostEqual(addon_size(25.0, 20.0, self.pos, ev, self.cc, sol_usd=100.0), 5.0)
+        pos = dict(self.pos, cost_left=10.0)  # already at 40% of 25
+        self.assertEqual(addon_size(25.0, 20.0, pos, ev, self.cc, sol_usd=100.0), 0.0)
+
+    def test_capped_by_cash_and_min(self):
+        ev = {"sol_spent": 0.0, "stable_spent": 10.0}  # would be $5
+        self.assertAlmostEqual(addon_size(25.0, 1.50, self.pos, ev, self.cc, sol_usd=100.0), 1.50)
+        self.assertEqual(addon_size(25.0, 0.50, self.pos, ev, self.cc, sol_usd=100.0), 0.0)
+
+    def test_his_spend_usd(self):
+        self.assertAlmostEqual(his_spend_usd({"sol_spent": 0.2, "stable_spent": 3.0}, 50.0), 13.0)
+        self.assertAlmostEqual(his_spend_usd({"sol_spent": -1.0, "stable_spent": -2.0}, 50.0), 0.0)
+
 class TCopyAgent(unittest.TestCase):
+
     def test_sell_copy_partial_then_full(self):
         import tempfile, importlib
         from agents import copybook as cb
