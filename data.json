@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-20T10:20:37+01:00",
+ "generated": "2026-11-20T10:21:38+01:00",
  "mode": "PAPER",
  "stats": {
   "equity": 24.2076,
@@ -1143,36 +1143,67 @@
   {
    "t": 1795166438,
    "e": 24.2076
+  },
+  {
+   "t": 1795166499,
+   "e": 24.2076
   }
  ],
  "filter": {
-  "ts": "2026-11-20T10:20:20+01:00",
-  "n": 436,
+  "ts": "2026-11-20T10:21:10+01:00",
+  "n": 461,
   "passed": 0,
   "reject_counts": {
-   "pair_too_new": 46,
-   "mcap<40000": 143,
-   "liq<30000": 201,
-   "vol_h1<5000": 303,
-   "low_activity_m5": 311,
-   "overextended_m5": 20,
-   "overextended_h1": 3,
+   "pair_too_new": 52,
+   "mcap<40000": 165,
+   "liq<30000": 223,
+   "vol_h1<5000": 315,
+   "overextended_m5": 17,
+   "low_activity_m5": 323,
    "rug_lp_unlocked": 1,
    "rug_score": 1,
    "rug_danger": 1,
-   "downtrend_m5": 329,
-   "downtrend_h6": 195,
-   "volume_fading": 290,
-   "downtrend_h1": 279,
-   "score<69": 2,
-   "mcap>200000": 185,
-   "sells>buys_m5": 277,
-   "reentry_ban": 6,
-   "sells>buys_h1": 217,
-   "no_price": 6
+   "downtrend_m5": 338,
+   "overextended_h1": 3,
+   "downtrend_h6": 208,
+   "volume_fading": 309,
+   "downtrend_h1": 289,
+   "score<69": 1,
+   "mcap>200000": 187,
+   "sells>buys_m5": 297,
+   "reentry_ban": 7,
+   "sells>buys_h1": 228,
+   "no_price": 11
   }
  },
  "rugcheck_recent": [
+  {
+   "ts": "2026-11-20T10:21:10+01:00",
+   "symbol": "DCTY",
+   "mint": "CTw3S11XHk5vZzqzkHjMtBoF87nqizX97xath17npqL",
+   "ok": false,
+   "cached": true,
+   "reasons": [
+    "rug_lp_unlocked (LP 0% < 80%, pump_fun_amm)",
+    "rug_score (52 > 30)",
+    "rug_danger (Large Amount of LP Unlocked)"
+   ],
+   "summary": {
+    "score_norm": 52,
+    "top10_pct": 14.61,
+    "top1_pct": 3.35,
+    "creator_pct": 0.12,
+    "lp_locked_pct": 0.0,
+    "market": "pump_fun_amm",
+    "dangers": [
+     "Large Amount of LP Unlocked"
+    ],
+    "rugged": false,
+    "launchpad": null,
+    "insiders": 0
+   },
+   "err": null
+  },
   {
    "ts": "2026-11-20T10:20:20+01:00",
    "symbol": "DCTY",
@@ -1469,33 +1500,6 @@
     "insiders": 0
    },
    "err": null
-  },
-  {
-   "ts": "2026-11-20T10:10:24+01:00",
-   "symbol": "牛逼",
-   "mint": "NxpWbpTGRELaRM3op7WGazAcJcxpiPgeJyge2FvSyUz",
-   "ok": false,
-   "cached": true,
-   "reasons": [
-    "rug_lp_unlocked (LP 0% < 80%, pump_fun_amm)",
-    "rug_score (52 > 30)",
-    "rug_danger (Large Amount of LP Unlocked)"
-   ],
-   "summary": {
-    "score_norm": 52,
-    "top10_pct": 16.89,
-    "top1_pct": 3.76,
-    "creator_pct": 0.12,
-    "lp_locked_pct": 0.0,
-    "market": "pump_fun_amm",
-    "dangers": [
-     "Large Amount of LP Unlocked"
-    ],
-    "rugged": false,
-    "launchpad": null,
-    "insiders": 0
-   },
-   "err": null
   }
  ],
  "reason_pl": {
@@ -1539,57 +1543,68 @@
  "near": [
   {
    "symbol": "SNLOVE",
-   "score": 90.7,
-   "mcap": 56332,
-   "liq": 99758,
-   "chg_m5": 21.15,
-   "chg_h1": 26.88,
+   "score": 90.9,
+   "mcap": 56482,
+   "liq": 99896,
+   "chg_m5": 21.47,
+   "chg_h1": 27.22,
    "reasons": [
     "pair_too_new"
    ]
   },
   {
    "symbol": "牛逼",
-   "score": 70.9,
-   "mcap": 82807,
-   "liq": 117654,
-   "chg_m5": -3.32,
-   "chg_h1": 114.0,
+   "score": 71.9,
+   "mcap": 82412,
+   "liq": 117409,
+   "chg_m5": -3.78,
+   "chg_h1": 113.0,
    "reasons": [
-    "downtrend_m5 (-3.32%)"
+    "downtrend_m5 (-3.78%)"
    ]
   },
   {
    "symbol": "BABYDOG",
-   "score": 66.5,
-   "mcap": 90898,
-   "liq": 166509,
-   "chg_m5": 1.67,
-   "chg_h1": 23.64,
+   "score": 67.6,
+   "mcap": 91062,
+   "liq": 166782,
+   "chg_m5": 1.86,
+   "chg_h1": 23.87,
    "reasons": [
-    "score<69 (66.5)"
+    "score<69 (67.6)"
    ]
   },
   {
-   "symbol": "GMEx",
-   "score": 51.3,
-   "mcap": 164121,
-   "liq": 395760,
-   "chg_m5": 0.02,
-   "chg_h1": 1.31,
+   "symbol": "GATO",
+   "score": 52.8,
+   "mcap": 2604402,
+   "liq": 175758,
+   "chg_m5": 0.65,
+   "chg_h1": 3.62,
    "reasons": [
-    "score<69 (51.3)"
+    "mcap>200000 (2604402)"
    ]
   },
   {
-   "symbol": "BABA",
-   "score": 31.7,
-   "mcap": 133129,
-   "liq": 111215,
-   "chg_m5": 0.6,
-   "chg_h1": 0.23,
+   "symbol": "ACT",
+   "score": 45.4,
+   "mcap": 8537326,
+   "liq": 1146570,
+   "chg_m5": 0.22,
+   "chg_h1": 0.16,
    "reasons": [
-    "sells>buys_m5 (0.97)"
+    "mcap>200000 (8537326)"
+   ]
+  },
+  {
+   "symbol": "rockstar",
+   "score": 31.8,
+   "mcap": 92396,
+   "liq": 30996,
+   "chg_m5": 6.02,
+   "chg_h1": 0.72,
+   "reasons": [
+    "sells>buys_h1 (0.62)"
    ]
   },
   {
@@ -1606,130 +1621,118 @@
   },
   {
    "symbol": "AAPLx",
-   "score": 56.1,
-   "mcap": 351922,
-   "liq": 458735,
-   "chg_m5": 0.02,
-   "chg_h1": 0.2,
+   "score": 57.4,
+   "mcap": 351973,
+   "liq": 458768,
+   "chg_m5": 0.03,
+   "chg_h1": 0.21,
    "reasons": [
-    "mcap>200000 (351922)",
-    "downtrend_h6 (-0.2%)"
+    "mcap>200000 (351973)",
+    "downtrend_h6 (-0.18%)"
    ]
   },
   {
    "symbol": "CATMARIO",
-   "score": 54.7,
-   "mcap": 253951,
-   "liq": 51669,
-   "chg_m5": 3.46,
-   "chg_h1": 56.53,
+   "score": 48.8,
+   "mcap": 246332,
+   "liq": 50850,
+   "chg_m5": 0.35,
+   "chg_h1": 51.84,
    "reasons": [
     "reentry_ban",
-    "mcap>200000 (253951)"
+    "mcap>200000 (246332)"
+   ]
+  },
+  {
+   "symbol": "GMEx",
+   "score": 47.1,
+   "mcap": 164122,
+   "liq": 395760,
+   "chg_m5": 0.01,
+   "chg_h1": 1.31,
+   "reasons": [
+    "low_activity_m5",
+    "volume_fading (0.52)"
    ]
   },
   {
    "symbol": "Huss",
-   "score": 47.5,
-   "mcap": 375449,
-   "liq": 46939,
-   "chg_m5": 6.38,
-   "chg_h1": 4.36,
+   "score": 45.2,
+   "mcap": 371119,
+   "liq": 46660,
+   "chg_m5": 5.16,
+   "chg_h1": 3.16,
    "reasons": [
-    "mcap>200000 (375449)",
-    "sells>buys_m5 (0.56)"
+    "mcap>200000 (371119)",
+    "sells>buys_m5 (0.68)"
    ]
   },
   {
-   "symbol": "GATO",
-   "score": 45.9,
-   "mcap": 2582584,
-   "liq": 175013,
-   "chg_m5": -0.19,
-   "chg_h1": 2.75,
+   "symbol": "CASH",
+   "score": 43.3,
+   "mcap": 104301,
+   "liq": 41293,
+   "chg_m5": -0.06,
+   "chg_h1": -0.06,
    "reasons": [
-    "mcap>200000 (2582584)",
-    "downtrend_m5 (-0.19%)"
-   ]
-  },
-  {
-   "symbol": "USDG",
-   "score": 38.8,
-   "mcap": 10749971,
-   "liq": 3492784,
-   "chg_m5": 0.17,
-   "chg_h1": -0.08,
-   "reasons": [
-    "mcap>200000 (10749971)",
-    "downtrend_h1 (-0.08%)"
-   ]
-  },
-  {
-   "symbol": "rockstar",
-   "score": 24.9,
-   "mcap": 91378,
-   "liq": 30815,
-   "chg_m5": 3.88,
-   "chg_h1": -0.49,
-   "reasons": [
-    "downtrend_h1 (-0.49%)",
-    "sells>buys_h1 (0.61)"
+    "downtrend_m5 (-0.06%)",
+    "downtrend_h1 (-0.06%)"
    ]
   }
  ],
  "sources": {
   "counts": {
    "pump_graduated_p0": "ERR blocked (Cloudflare 403) - skipped, no bypass",
-   "gt_trending": 40,
    "ds_profiles_latest": 23,
+   "gt_trending": 40,
    "jup_toptrending_1h": 50,
    "ray_volume": 48,
    "pump_graduated_p1": "ERR blocked (Cloudflare 403) - skipped, no bypass",
-   "ray_standard": 54,
+   "ray_standard": 53,
    "pump_complete_mcap": "ERR blocked (Cloudflare 403) - skipped, no bypass",
    "ds_profiles_recent": 29,
-   "launchlab_lasttrade": 154,
+   "launchlab_lasttrade": 155,
    "pump_adv_graduated": "ERR blocked (Cloudflare 403) - skipped, no bypass",
    "launchlab_new": 112,
    "ds_boosts_latest": 27,
    "jup_toporganic_1h": 47,
    "ds_boosts_top": 28,
-   "gt_trend5m": "ERR HTTP Error 429: Too Many Requests",
    "ds_cto": 9,
+   "gt_trend5m": 20,
    "ds_search_pump": 20,
    "jup_toptrending_6h": 50,
-   "gt_trend1h": 20,
+   "gt_trend1h": "ERR HTTP Error 429: Too Many Requests",
    "ds_search_SOL": 17,
    "ds_search_moon": 12,
-   "ds_search_meme": 10,
    "gt_trend6h": "ERR HTTP Error 429: Too Many Requests",
+   "ds_search_meme": 10,
    "jup_toporganic_6h": 47,
    "ds_search_pumpswap": 30,
    "gt_top_tx": "ERR HTTP Error 429: Too Many Requests",
    "ds_search_pumpfun": 30,
    "jup_recent": 30,
    "ds_search_raydium": 30,
-   "gt_new": "ERR HTTP Error 429: Too Many Requests",
    "ds_search_letsbonk": 1,
+   "gt_new": "ERR HTTP Error 429: Too Many Requests",
    "gt_pumpswap_trend": "ERR HTTP Error 429: Too Many Requests",
-   "gt_pumpfun": "ERR HTTP Error 429: Too Many Requests",
-   "gt_pumpswap": 20,
+   "gt_pumpfun": 20,
+   "gt_pumpswap": "ERR HTTP Error 429: Too Many Requests",
    "gt_raydium": "ERR HTTP Error 429: Too Many Requests",
    "gt_raydium_clmm": "ERR HTTP Error 429: Too Many Requests",
    "gt_launchlab": "ERR HTTP Error 429: Too Many Requests",
-   "gt_letsbonk": "ERR HTTP Error 429: Too Many Requests"
+   "gt_letsbonk": 20
   },
-  "discovered": 551,
-  "watch": 283,
-  "priced": 436,
-  "ts": 1795166418.0293221
+  "discovered": 598,
+  "watch": 296,
+  "priced": 461,
+  "ts": 1795166468.1625469
  },
  "agents": [
   {
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone",
-   "age_s": 2,
+   "age_s": 3,
    "ok": true,
    "restarts": 0
   },
@@ -1737,7 +1740,7 @@
    "key": "scanner",
    "name": "Scanner + Analityk",
    "desc": "Zbiera coiny z DexScreenera, Jupitera, Raydiuma, GeckoTerminala i ocenia momentum (0–100)",
-   "age_s": 0,
+   "age_s": 3,
    "ok": true,
    "restarts": 4
   },
@@ -1745,7 +1748,7 @@
    "key": "filter",
    "name": "Filtr",
    "desc": "Odrzuca coiny spoza zakresu kapitalizacji (config), bez trendu wzrostowego, z małą płynnością; loguje powody",
-   "age_s": 2,
+   "age_s": 3,
    "ok": true,
    "restarts": 0
   },
