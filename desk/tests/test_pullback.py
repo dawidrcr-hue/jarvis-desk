@@ -111,6 +111,24 @@ class TTrader(unittest.TestCase):
         pf["positions"] = []
         self.assertEqual(tr._add_setup_locked(pf, dict(PB, stop_at="2000-01-01T00:00:00+01:00"), sig), "entries_closed")
 
+    def test_setup_blocked_after_loss_until_eod(self):
+        tr = self.tr
+        now = time.time()
+        pf = {"positions": [], "cash": 25.0,
+              "closed": [{"mint": "M", "symbol": "X", "pnl_usd": -0.5, "pnl_pct": -0.1,
+                          "exit_ts": now - 10 * 60, "reason": "stop -8%"}]}
+        sig = {"ts": now, "cand": {"mint": "M", "symbol": "X", "pair": "P", "price": 1.0}}
+        self.assertEqual(tr._add_setup_locked(pf, dict(PB, stop_at=None), sig), "reentry_ban")
+        # same ticker, different mint also blocked
+        sig2 = {"ts": now, "cand": {"mint": "OTHER", "symbol": "x", "pair": "P", "price": 1.0}}
+        self.assertEqual(tr._add_setup_locked(pf, dict(PB, stop_at=None), sig2), "reentry_ban")
+        # profitable exit 10 min ago is only the 60-min cooldown
+        pf["closed"][0].update(pnl_usd=0.4, pnl_pct=0.08, reason="trailing stop +12.8%")
+        self.assertEqual(tr._add_setup_locked(pf, dict(PB, stop_at=None), sig), "reentry_cooldown")
+        # profitable exit 61 min ago is allowed
+        pf["closed"][0]["exit_ts"] = now - 61 * 60
+        self.assertIsNone(tr._add_setup_locked(pf, dict(PB, stop_at=None), sig))
+
     def test_open_setup_cancelled_after_stop_at_no_buy(self):
         tr = self.tr
         c_open = dict(PB, stop_at=None)

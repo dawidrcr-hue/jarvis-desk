@@ -1,6 +1,8 @@
 import os, sys, time, unittest
+from datetime import datetime
+from zoneinfo import ZoneInfo
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from lib.strategy import ladder_update, sim_buy, sim_sell, slippage, position_size, filter_reasons, features, dead_liquidity_reason, position_mark, portfolio_equity, dead_exit, DEAD_REASON, missed_quote_limit, norm_symbol, trail_gap_for, ladder_note_pl, entries_allowed, stop_at_ts
+from lib.strategy import ladder_update, sim_buy, sim_sell, slippage, position_size, filter_reasons, features, dead_liquidity_reason, position_mark, portfolio_equity, dead_exit, DEAD_REASON, missed_quote_limit, norm_symbol, trail_gap_for, ladder_note_pl, entries_allowed, stop_at_ts, is_loss_exit, reentry_blocks, reentry_note_pl, warsaw_date, pullback_entry_reasons
 import json
 CFG = json.load(open(os.path.join(os.path.dirname(__file__), "..", "config.json")))
 
@@ -238,6 +240,101 @@ class TAlreadyHeld(unittest.TestCase):
         self.assertIn("reentry_cooldown", rs)
         self.assertFalse(filter_reasons(ft, CFG["filter"], cooldown_symbols={"OTHER"}))
 
+
+
+
+class TReentryBan(unittest.TestCase):
+    """After a losing exit, mint and ticker are banned until midnight Europe/Warsaw.
+    Profitable exits keep the 60-minute cooldown only."""
+
+    W = ZoneInfo("Europe/Warsaw")
+
+    def ts(self, *a):
+        return datetime(*a, tzinfo=self.W).timestamp()
+
+    def trade(self, mint="MINTA", symbol="KFC", pnl=-0.5, ts=None, reason="stop -8%"):
+        return {"mint": mint, "symbol": symbol, "pnl_usd": pnl, "pnl_pct": pnl / 5.0,
+                "exit_ts": ts, "reason": reason}
+
+    def test_live_config(self):
+        self.assertEqual(CFG["reentry_ban_after_loss"], "end_of_day")
+        self.assertEqual(CFG["reentry_cooldown_min"], 60)
+        self.assertEqual(CFG["filter"]["min_pair_age_min"], 20)
+        self.assertIn("do północy", reentry_note_pl(CFG))
+        self.assertIn("60 min", reentry_note_pl(CFG))
+
+    def test_pair_age_20(self):
+        ft = _healthy(); ft["age_min"] = 19.9
+        self.assertIn("pair_too_new", filter_reasons(ft, CFG["filter"]))
+        ft["age_min"] = 20
+        self.assertFalse(filter_reasons(ft, CFG["filter"]))
+
+    def test_is_loss_exit(self):
+        self.assertTrue(is_loss_exit({"pnl_usd": -0.15, "pnl_pct": -0.03, "reason": "stop na wejściu (0%)"}))
+        self.assertTrue(is_loss_exit({"pnl_usd": -5.0, "pnl_pct": -1.0, "reason": "rug/brak płynności"}))
+        self.assertFalse(is_loss_exit({"pnl_usd": 0.98, "pnl_pct": 0.21, "reason": "trailing stop +35.2%"}))
+        self.assertFalse(is_loss_exit({"pnl_usd": 0, "pnl_pct": 0}))
+
+    def test_loss_today_banned_until_midnight(self):
+        now = self.ts(2026, 11, 20, 18, 0, 0)
+        closed = [self.trade(ts=self.ts(2026, 11, 20, 6, 43, 25))]
+        cool, cool_s, banned, banned_s = reentry_blocks(closed, CFG, now=now)
+        self.assertEqual(banned, {"MINTA"})
+        self.assertEqual(banned_s, {"KFC"})
+        self.assertFalse(cool)  # ban replaces cooldown
+        # still banned one second before midnight
+        _, _, banned2, _ = reentry_blocks(closed, CFG, now=self.ts(2026, 11, 20, 23, 59, 59))
+        self.assertEqual(banned2, {"MINTA"})
+        # free at midnight
+        _, _, banned3, _ = reentry_blocks(closed, CFG, now=self.ts(2026, 11, 21, 0, 0, 0))
+        self.assertFalse(banned3)
+
+    def test_profit_keeps_60min_cooldown_only(self):
+        now = self.ts(2026, 11, 20, 18, 0, 0)
+        closed = [self.trade(pnl=0.86, ts=now - 30 * 60, reason="trailing stop +23.1%")]
+        cool, cool_s, banned, banned_s = reentry_blocks(closed, CFG, now=now)
+        self.assertFalse(banned); self.assertFalse(banned_s)
+        self.assertEqual(cool, {"MINTA"}); self.assertEqual(cool_s, {"KFC"})
+        cool2, _, banned2, _ = reentry_blocks(closed, CFG, now=now + 31 * 60)
+        self.assertFalse(cool2); self.assertFalse(banned2)
+
+    def test_yesterday_loss_not_banned(self):
+        now = self.ts(2026, 11, 20, 0, 10, 0)
+        closed = [self.trade(ts=self.ts(2026, 11, 19, 23, 50, 0))]
+        cool, _, banned, _ = reentry_blocks(closed, CFG, now=now)
+        self.assertFalse(banned)  # new Warsaw day, EOD ban expired at midnight
+        self.assertEqual(cool, {"MINTA"})  # 23:50 -> 00:10 is only 20 min, 60-min cooldown still on
+        cool2, _, banned2, _ = reentry_blocks(closed, CFG, now=self.ts(2026, 11, 20, 1, 0, 0))
+        self.assertFalse(banned2)
+        self.assertFalse(cool2)
+
+    def test_ticker_ban_blocks_other_mint(self):
+        now = self.ts(2026, 11, 20, 12, 0, 0)
+        closed = [self.trade(mint="MINTA", symbol="kfc", ts=self.ts(2026, 11, 20, 7, 0, 0))]
+        _, _, banned, banned_s = reentry_blocks(closed, CFG, now=now)
+        copy = _healthy(baseToken={"address": "MINTB", "symbol": "KFC"})
+        rs = filter_reasons(copy, CFG["filter"], banned=banned, banned_symbols=banned_s)
+        self.assertIn("reentry_ban", rs)
+        other = _healthy(baseToken={"address": "MINTC", "symbol": "OTHER"})
+        self.assertFalse(filter_reasons(other, CFG["filter"], banned=banned, banned_symbols=banned_s))
+        self.assertIn("reentry_ban", pullback_entry_reasons(copy, CFG["filter"], banned=banned, banned_symbols=banned_s))
+
+    def test_ban_disabled_falls_back_to_cooldown(self):
+        now = self.ts(2026, 11, 20, 18, 0, 0)
+        closed = [self.trade(ts=now - 30 * 60)]
+        c = dict(CFG, reentry_ban_after_loss="")
+        cool, cool_s, banned, _ = reentry_blocks(closed, c, now=now)
+        self.assertFalse(banned)
+        self.assertEqual(cool, {"MINTA"})
+        # 2 hours later, free
+        cool2, _, banned2, _ = reentry_blocks(closed, c, now=now + 2 * 3600)
+        self.assertFalse(cool2); self.assertFalse(banned2)
+
+    def test_filter_prefers_ban_reason_over_cooldown(self):
+        ft = _healthy()
+        rs = filter_reasons(ft, CFG["filter"], cooldown={ft["mint"]}, banned={ft["mint"]})
+        self.assertIn("reentry_ban", rs)
+        self.assertNotIn("reentry_cooldown", rs)
 
 class TDeadLiq(unittest.TestCase):
     def setUp(self):

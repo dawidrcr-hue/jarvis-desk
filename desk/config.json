@@ -6,6 +6,8 @@
  "min_position_usd": 1.0,
  "max_open_positions": 4,
  "reentry_cooldown_min": 60,
+ "reentry_ban_after_loss": "end_of_day",
+ "_reentry_note": "After a profitable exit, same mint/ticker is blocked for reentry_cooldown_min minutes. After a losing exit (stop or net loss), mint and ticker are banned until midnight Europe/Warsaw. User decision 20.11.",
  "ladder": [
   [
    0.12,
@@ -26,7 +28,7 @@
   "min_mcap_usd": 40000,
   "min_liquidity_usd": 30000,
   "min_vol_h1_usd": 5000,
-  "min_pair_age_min": 30,
+  "min_pair_age_min": 20,
   "require_m5_up": true,
   "require_h1_up": true,
   "min_h6_change": 0.0,
