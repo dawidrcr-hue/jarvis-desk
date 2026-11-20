@@ -4,7 +4,7 @@
 import os, sys, time, json, glob
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from lib.common import P, load, save, log, heartbeat, cfg, now_iso
-from lib.strategy import filter_reasons, norm_symbol, entries_allowed
+from lib.strategy import filter_reasons, norm_symbol, entries_allowed, reentry_blocks
 from lib import safety
 
 def decision_log_many(recs):
@@ -40,9 +40,7 @@ def main():
                 pf = load(P("state", "portfolio.json"), {})
                 held = {p["mint"] for p in pf.get("positions", [])}
                 held_symbols = {norm_symbol(p.get("symbol")) for p in pf.get("positions", [])}
-                cool_s = c.get("reentry_cooldown_min", 60) * 60
-                cooldown = {t["mint"] for t in pf.get("closed", []) if time.time() - t.get("exit_ts", 0) < cool_s}
-                cooldown_symbols = {norm_symbol(t.get("symbol")) for t in pf.get("closed", []) if time.time() - t.get("exit_ts", 0) < cool_s}
+                cooldown, cooldown_symbols, banned, banned_symbols = reentry_blocks(pf.get("closed", []), c)
                 # Signals already queued, not yet filled, also occupy a mint/ticker slot.
                 for f in glob.glob(P("signals", "approved", "*.json")):
                     cand = (load(f) or {}).get("cand") or {}
@@ -54,7 +52,7 @@ def main():
                     if i % 80 == 0:
                         heartbeat("filter", status="filtering", n=i)
                         decision_log_many(buf); buf = []
-                    rs = filter_reasons(ft, c["filter"], held, cooldown, held_symbols, cooldown_symbols)
+                    rs = filter_reasons(ft, c["filter"], held, cooldown, held_symbols, cooldown_symbols, banned, banned_symbols)
                     if not rs and not entries_allowed(c):
                         rs = ["entries_closed"]
                     for r in rs: stats[r.split(" ")[0]] = stats.get(r.split(" ")[0], 0) + 1

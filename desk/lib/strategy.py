@@ -6,8 +6,9 @@ UPTREND definition (all must hold, thresholds in config.json -> filter):
   * m5 txns >= 10                                                      -> it is actually trading now
   * volume acceleration = (vol_m5*12) / vol_h1 >= 0.8                  -> last 5m pace not dying vs the hour
   * NOT overextended: m5 change <= 25%, h1 change <= 300%              -> avoid buying a vertical candle top
-Hygiene: $40k <= mcap (marketCap, else FDV) <= $200k (max cut 19.11 by user), liquidity >= $30k, vol h1 >= $5k, pair age >= 30 min,
+Hygiene: $40k <= mcap (marketCap, else FDV) <= $200k (max cut 19.11 by user), liquidity >= $30k, vol h1 >= $5k, pair age >= 20 min,
          analyst score >= 69, not already held (same mint or same ticker, case-insensitive), not exited in the last reentry_cooldown_min minutes.
+         After a losing exit (stop or net loss), the mint and ticker are banned until midnight Europe/Warsaw when reentry_ban_after_loss is end_of_day.
          If cfg stop_at is set, after that instant no new entries (open positions still managed). Unset/null keeps entries open.
 """
 import time
@@ -83,17 +84,89 @@ def norm_symbol(s):
 def _norm_symbols(items):
     return {norm_symbol(x) for x in items if norm_symbol(x)}
 
-def filter_reasons(ft, fc, held=(), cooldown=(), held_symbols=(), cooldown_symbols=()):
+def warsaw_date(ts, tz=None):
+    """Calendar date of a unix timestamp in Europe/Warsaw."""
+    tz = tz or ZoneInfo("Europe/Warsaw")
+    return datetime.fromtimestamp(float(ts), tz=tz).date()
+
+def is_loss_exit(trade):
+    """True if a closed trade should trigger the end-of-day reentry ban.
+
+    Covers the initial stop, a stop at entry that finished in the red, rugs,
+    and any other exit with a net loss. A profitable trailing-stop exit does not.
+    """
+    try:
+        if float(trade.get("pnl_usd") or 0) < 0:
+            return True
+        if float(trade.get("pnl_pct") or 0) < 0:
+            return True
+    except (TypeError, ValueError):
+        return False
+    return False
+
+def reentry_blocks(closed, cfg, now=None):
+    """Cooldown and end-of-day ban sets (mints and tickers) from closed trades.
+
+    Returns (cooldown, cooldown_symbols, banned, banned_symbols).
+    A loss exit is banned until midnight Europe/Warsaw when
+    cfg['reentry_ban_after_loss'] == 'end_of_day'. Profitable exits (and losses
+    if that setting is off) stay on the reentry_cooldown_min window only.
+    A mint/ticker in the ban set is omitted from the cooldown set so the
+    filter can show the more specific reason.
+    """
+    now = time.time() if now is None else now
+    cool_s = float((cfg or {}).get("reentry_cooldown_min") or 60) * 60
+    ban_on = str((cfg or {}).get("reentry_ban_after_loss") or "").lower() == "end_of_day"
+    cooldown, cooldown_symbols = set(), set()
+    banned, banned_symbols = set(), set()
+    today = None
+    if ban_on:
+        try:
+            today = warsaw_date(now)
+        except (TypeError, ValueError, OSError, OverflowError):
+            today = None
+    for t in closed or []:
+        mint = t.get("mint")
+        sym = norm_symbol(t.get("symbol"))
+        exit_ts = t.get("exit_ts") or 0
+        if ban_on and today is not None and is_loss_exit(t):
+            try:
+                if warsaw_date(exit_ts) == today:
+                    if mint:
+                        banned.add(mint)
+                    if sym:
+                        banned_symbols.add(sym)
+                    continue
+            except (TypeError, ValueError, OSError, OverflowError):
+                pass
+        if now - exit_ts < cool_s:
+            if mint:
+                cooldown.add(mint)
+            if sym:
+                cooldown_symbols.add(sym)
+    return cooldown, cooldown_symbols, banned, banned_symbols
+
+def reentry_note_pl(cfg):
+    """Polish one-liner for the site describing the reentry rules."""
+    cool = int((cfg or {}).get("reentry_cooldown_min") or 60)
+    if str((cfg or {}).get("reentry_ban_after_loss") or "").lower() == "end_of_day":
+        return (f"Po stracie (stop lub wynik netto na minusie) ten sam mint i ticker "
+                f"są zablokowane do północy (Warszawa). Po zysku blokada {cool} min.")
+    return f"Po sprzedaży ten sam mint i ticker są zablokowane {cool} min."
+
+def filter_reasons(ft, fc, held=(), cooldown=(), held_symbols=(), cooldown_symbols=(), banned=(), banned_symbols=()):
     """Return list of rejection reasons (empty list = pass).
 
-    already_held / reentry_cooldown match the mint or the same ticker
+    already_held / reentry_cooldown / reentry_ban match the mint or the same ticker
     (memecoin copies often share a symbol with a different mint).
     """
     r = []
     sym = norm_symbol(ft.get("symbol"))
     if ft["mint"] in held or (sym and sym in _norm_symbols(held_symbols)):
         r.append("already_held")
-    if ft["mint"] in cooldown or (sym and sym in _norm_symbols(cooldown_symbols)):
+    if ft["mint"] in banned or (sym and sym in _norm_symbols(banned_symbols)):
+        r.append("reentry_ban")
+    elif ft["mint"] in cooldown or (sym and sym in _norm_symbols(cooldown_symbols)):
         r.append("reentry_cooldown")
     if ft["price"] <= 0: r.append("no_price")
     if ft["mcap"] < fc["min_mcap_usd"]: r.append(f"mcap<{fc['min_mcap_usd']:.0f} ({ft['mcap']:.0f})")
@@ -321,7 +394,7 @@ def pullback_step(setup, price, now, cfg):
         return "cancel:timeout"
     return "wait"
 
-PULLBACK_HYGIENE = ("already_held", "reentry_cooldown", "no_price", "mcap<", "mcap>", "liq<", "vol_h1<", "pair_too_new", "downtrend_h1")
+PULLBACK_HYGIENE = ("already_held", "reentry_cooldown", "reentry_ban", "no_price", "mcap<", "mcap>", "liq<", "vol_h1<", "pair_too_new", "downtrend_h1")
 
 def pullback_entry_reasons(ft, fc, *a, **kw):
     """Requote check for a pullback buy: hygiene + 1h uptrend only. The short-term momentum checks

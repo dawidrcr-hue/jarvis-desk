@@ -8,7 +8,7 @@ import os, sys, time, json, glob, threading
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from lib.common import P, load, save, log, heartbeat, cfg, notify, now_iso, HTTP_TIMEOUT
 from lib.market import pair_prices, pairs_for_mints
-from lib.strategy import features, filter_reasons, sim_buy, sim_sell, position_size, ladder_update, ladder_note_pl, dead_liquidity_reason, portfolio_equity, dead_exit, DEAD_REASON, norm_symbol, entries_allowed, entry_mode, pullback_params, pullback_new, pullback_step, pullback_entry_reasons
+from lib.strategy import features, filter_reasons, sim_buy, sim_sell, position_size, ladder_update, ladder_note_pl, dead_liquidity_reason, portfolio_equity, dead_exit, DEAD_REASON, norm_symbol, entries_allowed, entry_mode, pullback_params, pullback_new, pullback_step, pullback_entry_reasons, reentry_blocks
 
 LOCK = threading.Lock()
 SETUPS = {}   # mint -> pullback setup (entry.mode == "pullback" only; in-memory, saved to state/setups.json for the site/debug)
@@ -24,6 +24,9 @@ def _add_setup_locked(pf, c, sig):
     if time.time() - sig.get("ts", 0) > 300: return "stale_signal"
     sym = norm_symbol(cand.get("symbol"))
     if any(p["mint"] == mint or (sym and norm_symbol(p.get("symbol")) == sym) for p in pf["positions"]): return "already_held"
+    cool, cool_sym, banned, banned_sym = reentry_blocks(pf.get("closed") or [], c)
+    if mint in banned or (sym and sym in banned_sym): return "reentry_ban"
+    if mint in cool or (sym and sym in cool_sym): return "reentry_cooldown"
     if mint in SETUPS or (sym and any(norm_symbol(x.get("symbol")) == sym for x in SETUPS.values())): return "setup_exists"
     if len(SETUPS) >= int(pullback_params(c)["max_setups"]): return "max_setups"
     price = float(cand.get("price") or 0)
@@ -97,6 +100,12 @@ def close(pf, c, pos, price, liq, reason):
            f"Czas w pozycji {rec['hold_min']:.0f} min. Equity papierowe: {fmt(equity(pf, c))}.",
            {"mint": pos["mint"], "pos_id": pos["id"], "pnl_usd": pnl})
     log("trader", "paper SELL", symbol=pos["symbol"], reason=reason, pnl=round(pnl, 4))
+    sym_c = norm_symbol(pos.get("symbol"))
+    dropped = [m for m, st in SETUPS.items() if m == pos.get("mint") or (sym_c and norm_symbol(st.get("symbol")) == sym_c)]
+    for m in dropped:
+        SETUPS.pop(m, None)
+    if dropped:
+        save_setups()
 
 def signal_loop(pf):
     """Background: consume approved signals. A hung requote must not block stop polling on the main thread."""
@@ -139,6 +148,9 @@ def _try_enter_two_phase(pf, c, sig):
     sym = norm_symbol(cand.get("symbol"))
     if sym and any(norm_symbol(p.get("symbol")) == sym for p in pf["positions"]):
         return "already_held"
+    cool, cool_sym, banned, banned_sym = reentry_blocks(pf.get("closed") or [], c)
+    if mint in banned or (sym and sym in banned_sym): return "reentry_ban"
+    if mint in cool or (sym and sym in cool_sym): return "reentry_cooldown"
     if len(pf["positions"]) >= c["max_open_positions"]: return "max_positions"
     LOCK.release()
     q = None
@@ -158,15 +170,15 @@ def _try_enter_two_phase(pf, c, sig):
         return "already_held"
     if len(pf["positions"]) >= c["max_open_positions"]: return "max_positions"
     ft = features(q)
-    cool_s = c["reentry_cooldown_min"] * 60
-    cool = {t["mint"] for t in pf["closed"] if time.time() - t.get("exit_ts", 0) < cool_s}
-    cool_sym = {norm_symbol(t.get("symbol")) for t in pf["closed"] if time.time() - t.get("exit_ts", 0) < cool_s}
+    cool, cool_sym, banned, banned_sym = reentry_blocks(pf.get("closed") or [], c)
     held = {p["mint"] for p in pf["positions"]}
     held_sym = {norm_symbol(p.get("symbol")) for p in pf["positions"]}
     if norm_symbol(ft.get("symbol")) and norm_symbol(ft.get("symbol")) in held_sym and mint not in held:
         return "already_held"
+    if mint in banned or (sym and sym in banned_sym) or (norm_symbol(ft.get("symbol")) in banned_sym):
+        return "reentry_ban"
     check = pullback_entry_reasons if sig.get("pullback_buy") else filter_reasons
-    rs = check(ft, c["filter"], held, cool, held_sym, cool_sym)
+    rs = check(ft, c["filter"], held, cool, held_sym, cool_sym, banned, banned_sym)
     if rs: return "requote_reject: " + "; ".join(rs)
     eq = equity(pf, c)
     size = position_size(eq, pf["cash"], c)
