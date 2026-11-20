@@ -43,7 +43,7 @@
   "last_error": null,
   "created": "2026-11-20T13:03:28+01:00"
  },
- "generated": "2026-11-20T20:53:27+01:00",
+ "generated": "2026-11-20T20:54:07+01:00",
  "mode": "PAPER",
  "stats": {
   "equity": 27.5423,
@@ -1810,41 +1810,12 @@
   }
  ],
  "filter": {
-  "ts": "2026-11-20T20:53:11+01:00",
-  "n": 379,
-  "passed": 0,
-  "reject_counts": {
-   "vol_h1<5000": 241,
-   "pair_too_new": 59,
-   "overextended_m5": 3,
-   "overextended_h1": 3,
-   "liq<30000": 179,
-   "reentry_cooldown": 4,
-   "mcap>200000": 150,
-   "no_price": 11,
-   "mcap<40000": 125,
-   "volume_fading": 302,
-   "downtrend_h6": 274,
-   "low_activity_m5": 272,
-   "downtrend_m5": 307,
-   "downtrend_h1": 267,
-   "sells>buys_h1": 226,
-   "sells>buys_m5": 267,
-   "reentry_ban": 5
-  }
+  "ts": null,
+  "n": null,
+  "passed": null,
+  "reject_counts": {}
  },
- "rugcheck_recent": [
-  {
-   "ts": "2026-11-20T20:40:07+01:00",
-   "symbol": "PROBE",
-   "mint": "So11111111111111111111111111111111111111112",
-   "ok": true,
-   "cached": false,
-   "reasons": [],
-   "summary": null,
-   "err": null
-  }
- ],
+ "rugcheck_recent": [],
  "reason_pl": {
   "mcap<40000": "kapitalizacja < $40 tys.",
   "mcap>2000000": "kapitalizacja > $2 mln",
@@ -1883,202 +1854,26 @@
   "score<69": "ocena analityka < 69",
   "mcap>200000": "kapitalizacja > $200 tys."
  },
- "near": [
-  {
-   "symbol": "HANDLE",
-   "score": 65.5,
-   "mcap": 92377,
-   "liq": 166429,
-   "chg_m5": 1.3,
-   "chg_h1": 32.85,
-   "reasons": [
-    "pair_too_new"
-   ]
-  },
-  {
-   "symbol": "PATRICK",
-   "score": 75.8,
-   "mcap": 49526,
-   "liq": 86705,
-   "chg_m5": 2.92,
-   "chg_h1": 29.87,
-   "reasons": [
-    "reentry_cooldown",
-    "pair_too_new"
-   ]
-  },
-  {
-   "symbol": "PUSSY",
-   "score": 58.1,
-   "mcap": 70821,
-   "liq": 42959,
-   "chg_m5": -1.49,
-   "chg_h1": 61.53,
-   "reasons": [
-    "reentry_cooldown",
-    "downtrend_m5 (-1.49%)"
-   ]
-  },
-  {
-   "symbol": "ber",
-   "score": 44.9,
-   "mcap": 363369,
-   "liq": 53599,
-   "chg_m5": 3.5,
-   "chg_h1": 21.8,
-   "reasons": [
-    "mcap>200000 (363369)",
-    "volume_fading (0.69)"
-   ]
-  },
-  {
-   "symbol": "tKalshi",
-   "score": 32.2,
-   "mcap": 1037824,
-   "liq": 728777,
-   "chg_m5": 0.22,
-   "chg_h1": 0.95,
-   "reasons": [
-    "mcap>200000 (1037824)",
-    "downtrend_h6 (3.21%)"
-   ]
-  },
-  {
-   "symbol": "LOOSY",
-   "score": 52.6,
-   "mcap": 311282,
-   "liq": 40194,
-   "chg_m5": 5.72,
-   "chg_h1": 2.68,
-   "reasons": [
-    "mcap>200000 (311282)",
-    "downtrend_h6 (-82.77%)",
-    "volume_fading (0.55)"
-   ]
-  },
-  {
-   "symbol": "SPX",
-   "score": 51.4,
-   "mcap": 32384784,
-   "liq": 1432935,
-   "chg_m5": 0.16,
-   "chg_h1": 1.5,
-   "reasons": [
-    "mcap>200000 (32384784)",
-    "downtrend_h6 (-4.02%)",
-    "volume_fading (0.73)"
-   ]
-  },
-  {
-   "symbol": "BP",
-   "score": 50.7,
-   "mcap": 193382927,
-   "liq": 5268651,
-   "chg_m5": 0.01,
-   "chg_h1": 0.01,
-   "reasons": [
-    "mcap>200000 (193382927)",
-    "downtrend_h6 (-7.66%)",
-    "volume_fading (0.76)"
-   ]
-  },
-  {
-   "symbol": "FLOAT",
-   "score": 50.2,
-   "mcap": 2307246,
-   "liq": 260457,
-   "chg_m5": 1.82,
-   "chg_h1": 33.82,
-   "reasons": [
-    "mcap>200000 (2307246)",
-    "sells>buys_h1 (0.79)",
-    "volume_fading (0.40)"
-   ]
-  },
-  {
-   "symbol": "SHIT",
-   "score": 48.6,
-   "mcap": 1241399,
-   "liq": 91038,
-   "chg_m5": -1.69,
-   "chg_h1": 5.81,
-   "reasons": [
-    "mcap>200000 (1241399)",
-    "downtrend_m5 (-1.69%)",
-    "downtrend_h6 (3.58%)"
-   ]
-  },
-  {
-   "symbol": "UVXY",
-   "score": 46.3,
-   "mcap": 517341,
-   "liq": 70306,
-   "chg_m5": 0.78,
-   "chg_h1": 4.3,
-   "reasons": [
-    "mcap>200000 (517341)",
-    "downtrend_h6 (7.31%)",
-    "volume_fading (0.33)"
-   ]
-  },
-  {
-   "symbol": "LUNO",
-   "score": 45.3,
-   "mcap": 294442,
-   "liq": 39430,
-   "chg_m5": 1.16,
-   "chg_h1": 0.11,
-   "reasons": [
-    "mcap>200000 (294442)",
-    "downtrend_h6 (-15.97%)",
-    "low_activity_m5"
-   ]
-  }
- ],
+ "near": [],
  "sources": {
-  "counts": {
-   "pump_graduated_p0": "ERR blocked (Cloudflare 403) - skipped, no bypass",
-   "ds_profiles_latest": 26,
-   "gt_trending": 20,
-   "jup_toptrending_6h": 50,
-   "ray_volume": 47,
-   "pump_graduated_p1": "ERR blocked (Cloudflare 403) - skipped, no bypass",
-   "ray_standard": 53,
-   "pump_complete_mcap": "ERR blocked (Cloudflare 403) - skipped, no bypass",
-   "ds_profiles_recent": 22,
-   "launchlab_lasttrade": 152,
-   "pump_adv_graduated": "ERR blocked (Cloudflare 403) - skipped, no bypass",
-   "launchlab_new": 119,
-   "ds_boosts_latest": 22,
-   "gt_top_vol": "ERR HTTP Error 429: Too Many Requests",
-   "gt_raydium": "ERR cooling after 429",
-   "gt_raydium_clmm": "ERR cooling after 429",
-   "jup_toporganic_6h": 47,
-   "ds_boosts_top": 21,
-   "ds_cto": 4,
-   "ds_search_moonshot": 12,
-   "ds_search_launchlab": 0,
-   "ds_search_bags": 30,
-   "ds_search_pump": 18,
-   "ds_search_SOL": 18
-  },
-  "discovered": 475,
-  "watch": 272,
-  "watch_priced": 104,
-  "priced": 379,
-  "priced_of": 381,
-  "seeded": 62,
-  "duration_s": 13.85,
-  "discover_s": 10.6,
-  "price_s": 3.24,
-  "ts": 1795204389.6731079
+  "counts": null,
+  "discovered": null,
+  "watch": null,
+  "watch_priced": null,
+  "priced": 0,
+  "priced_of": null,
+  "seeded": null,
+  "duration_s": null,
+  "discover_s": null,
+  "price_s": null,
+  "ts": 0
  },
  "agents": [
   {
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone",
-   "age_s": 1,
+   "age_s": 0,
    "ok": true,
    "restarts": 0
   },
@@ -2094,7 +1889,7 @@
    "key": "filter",
    "name": "Filtr",
    "desc": "Odrzuca coiny spoza zakresu kapitalizacji (config), bez trendu wzrostowego, z małą płynnością; loguje powody",
-   "age_s": 1,
+   "age_s": 0,
    "ok": true,
    "restarts": 0
   },
@@ -2110,8 +1905,8 @@
    "key": "copybook",
    "name": "Kopia @unipcs (papier)",
    "desc": "Śledzi publiczne transakcje portfela i kopiuje je na osobnym papierowym koncie",
-   "age_s": 1,
-   "ok": true,
+   "age_s": 1795204447,
+   "ok": false,
    "restarts": 0
   },
   {
