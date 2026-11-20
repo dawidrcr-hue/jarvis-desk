@@ -4,11 +4,12 @@ writes state/candidates.json. Keeps a rolling watchlist of in-range tokens so th
 import os, sys, time
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from lib.common import P, load, save, log, heartbeat, cfg, now_iso
-from lib.market import discover_mints, pairs_for_mints, select_mints_to_price, annotate_and_trim
+from lib.market import (discover_mints, pairs_for_mints, select_mints_to_price, annotate_and_trim,
+                       remember_unpriceable, hydrate_watch_entry)
 from lib.strategy import features, score
 
 WATCH_TTL = 6 * 3600
-WATCH_MAX = 400
+WATCH_MAX = 600
 
 def cycle():
     c = cfg()
@@ -21,16 +22,18 @@ def cycle():
     hb("discover")
     wl = load(P("state", "watchlist.json"), {}) or {}
     now = time.time()
-    # Leave ~half the budget (min 20s) for pricing after discovery.
-    discover_deadline = min(deadline, t0 + max(20.0, budget * 0.55))
-    found, src_stats = discover_mints(deadline=discover_deadline, on_progress=hb)
+    remember_unpriceable(wl)
+    # Discovery is rotated and usually finishes in ~15s; keep at least 20s for pricing.
+    discover_deadline = min(deadline, t0 + max(15.0, budget * 0.45))
+    found, src_stats, seed_pairs = discover_mints(deadline=discover_deadline, on_progress=hb)
     t_disc = time.time()
     for m, src in found.items():
         e = wl.setdefault(m, {"first_seen": now, "sources": []})
+        hydrate_watch_entry(m, e)
         e["last_seen"] = now; e["sources"] = sorted(set(e.get("sources") or []) | set(src))
     to_price = select_mints_to_price(wl, set(found), now, c)
     hb("price")
-    pairs = pairs_for_mints(to_price, deadline=deadline, on_progress=hb)
+    pairs = pairs_for_mints(to_price, deadline=deadline, on_progress=hb, seed=seed_pairs)
     t_price = time.time()
     cands = []
     priced_meta = {}
@@ -39,15 +42,22 @@ def cycle():
         cands.append(ft)
         priced_meta[m] = {"mcap": ft.get("mcap") or 0, "liq": ft.get("liq") or 0}
     cands.sort(key=lambda x: -x["score"])
+    watch_max = int(c.get("watch_max", WATCH_MAX))
     wl = annotate_and_trim(wl, priced_meta, set(found), set(to_price), time.time(), c,
-                           watch_max=WATCH_MAX, watch_ttl=WATCH_TTL)
+                           watch_max=watch_max, watch_ttl=WATCH_TTL)
     save(P("state", "watchlist.json"), wl)
     dur = time.time() - t0
+    n_watch_priced = sum(1 for e in wl.values() if e.get("last_mcap") is not None)
     save(P("state", "candidates.json"), {"ts": time.time(), "iso": now_iso(), "n_discovered": len(found),
-                                         "n_watch": len(wl), "source_counts": src_stats, "candidates": cands,
-                                         "duration_s": round(dur, 2)})
-    log("scanner", "scan done", discovered=len(found), watch=len(wl), priced=len(cands),
-        priced_of=len(to_price), duration_s=round(dur, 2),
+                                         "n_watch": len(wl), "n_watch_priced": n_watch_priced,
+                                         "source_counts": src_stats, "candidates": cands,
+                                         "priced_of": len(to_price), "n_seeded": len(seed_pairs or {}),
+                                         "duration_s": round(dur, 2),
+                                         "discover_s": round(t_disc - t0, 2),
+                                         "price_s": round(t_price - t_disc, 2)})
+    log("scanner", "scan done", discovered=len(found), watch=len(wl), watch_priced=n_watch_priced,
+        priced=len(cands), priced_of=len(to_price), seeded=len(seed_pairs or {}),
+        duration_s=round(dur, 2),
         discover_s=round(t_disc - t0, 2), price_s=round(t_price - t_disc, 2),
         sources=src_stats, top=[(x["symbol"], x["score"]) for x in cands[:5]])
 

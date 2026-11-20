@@ -120,7 +120,11 @@ def build():
                             for r in tail_jsonl(P("logs", "filter.log"), 400) if r.get("msg") == "rugcheck"][-12:][::-1],
         "reason_pl": reason_pl(c), "near": near,
         "sources": {"counts": cand.get("source_counts"), "discovered": cand.get("n_discovered"), "watch": cand.get("n_watch"),
-                    "priced": len(cand.get("candidates", [])), "ts": snap_ts},
+                    "watch_priced": cand.get("n_watch_priced"),
+                    "priced": len(cand.get("candidates", [])), "priced_of": cand.get("priced_of"),
+                    "seeded": cand.get("n_seeded"),
+                    "duration_s": cand.get("duration_s"), "discover_s": cand.get("discover_s"),
+                    "price_s": cand.get("price_s"), "ts": snap_ts},
         "agents": agents,
     }
 
