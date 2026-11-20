@@ -1,4 +1,4 @@
-"""Live config = variant S (20.11): strict filter, stop -6%, +10% -> stop +3%, 50% take-profit at +15%, max 2, buy now, no cutoff."""
+"""Live config = variant S (20.11): strict filter, stop -6%, +10% -> stop +3%, 50% take-profit at +15%, max 3, buy now, no cutoff."""
 import os, sys, json, time, unittest, tempfile
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from lib.strategy import (ladder_update, ladder_note_pl, take_profit, take_profit_due, apply_take_profit, entries_allowed,
@@ -24,7 +24,7 @@ class TLiveConfig(unittest.TestCase):
     def test_variant_s_values(self):
         self.assertEqual(CFG["initial_stop"], -0.06)
         self.assertEqual(CFG["ladder"], [[0.10, 0.03]])
-        self.assertEqual(CFG["max_open_positions"], 2)
+        self.assertEqual(CFG["max_open_positions"], 3)
         self.assertEqual(CFG["take_profit"], {"at": 0.15, "fraction": 0.5, "stop_after": 0.03})
         f = CFG["filter"]
         self.assertEqual(f["min_pair_age_min"], 360); self.assertEqual(f["max_h1_change_pct"], 100); self.assertEqual(f["min_h6_change"], 10.0)

@@ -4,7 +4,7 @@
  "start_balance_usd": 25.0,
  "position_pct_of_equity": 0.2,
  "min_position_usd": 1.0,
- "max_open_positions": 2,
+ "max_open_positions": 3,
  "reentry_cooldown_min": 60,
  "reentry_ban_after_loss": "end_of_day",
  "_reentry_note": "After a profitable exit, same mint/ticker is blocked for reentry_cooldown_min minutes. After a losing exit (stop or net loss), mint and ticker are banned until midnight Europe/Warsaw. User decision 20.11.",
@@ -60,7 +60,7 @@
  "_ladder_note": "Variant S (20.11 13:xx, backtest on real GeckoTerminal 1-min candles): stop -6%; peak>=+10% -> stop +3% (covers ~3 pp round-trip costs); at +15% sell 50% and stop +3%; trailing 12 pp from +24%, 20 pp from +100%, 25 pp from +200%. Stop never moves down. Previous (19.11): stop -8%, +12% -> 0%.",
  "dead_liq_usd": 1000,
  "no_quote_timeout_s": 600,
- "_size_note": "20% equity per trade (start $25 -> $5). $0.02 fee would eat ~1%/side at smaller sizes. Max 4 open. User decision 19.11.",
+ "_size_note": "20% equity per trade (start $25 -> $5). $0.02 fee would eat ~1%/side at smaller sizes. Max 3 open (user 20.11 20:42; size stays 20%). User decision 19.11.",
  "_dead_liq_note": "If pair liquidity < $1000 or no DexScreener quote for 10+ min, close as total loss (-100%), reason rug/brak płynności. MTM marks such positions at $0.",
  "scan_budget_s": 45,
  "http_timeout_s": 8,
@@ -114,15 +114,18 @@
    "https://api.mainnet-beta.solana.com"
   ],
   "dead_liq_usd": 1000,
-  "no_quote_timeout_s": 900
+  "no_quote_timeout_s": 900,
+  "copy_addons": true,
+  "copy_addon_mode": "proportional",
+  "max_token_pct_of_equity": 0.4
  },
- "_copybook_note": "PAPER copy of public wallet @unipcs (user decision 20.11): own $25 paper book (state/copybook.json), mirrors new buys paid >=0.005 SOL or >=$1 USDC/USDT (add-ons and airdrops skipped), mirrors sells proportionally (>=90% = full exit), 20% of copy equity per copy, max 4, desk cost model. Public RPC only, no keys. Never touches any wallet.",
+ "_copybook_note": "PAPER copy of public wallet @unipcs (user decision 20.11): own $25 paper book (state/copybook.json), mirrors new buys paid >=0.005 SOL or >=$1 USDC/USDT, and paid add-ons (copy_addons true; user 20.11 20:39) sized proportionally to his add vs his initial spend, capped so one token never exceeds 40% of copy equity. Unpaid transfers/airdrops skipped. Mirrors sells proportionally (>=90% = full exit), 20% of copy equity per new copy, max 4 tokens. Desk cost model. Public RPC only, no keys. Never touches any wallet. Backtest of add-ons: 1775 public signatures 23.10–20.11, but public RPC only returned full txs for 19–20.11 plus 4 from 23–24.10; in that sample 0 paid new buys, 0 paid add-ons (4 unpaid token increases skipped), 8 sells — paper equity $25 either way (not worse). Proportional mode chosen as more conservative than a fixed-size add.",
  "take_profit": {
   "at": 0.15,
   "fraction": 0.5,
   "stop_after": 0.03
  },
- "_strict_note": "Variant S filter (user 20.11 'przerób desk tak aby zarabiał', paper): pair age >= 6 h, 1h change 0..+100% (no parabolic pumps), 6h change >= +10%, buy now (pullback entry off: backtest worse), max 2 open, 20% per trade. Backtest: no robust edge; positive mean comes from one outlier.",
+ "_strict_note": "Variant S filter (user 20.11 'przerób desk tak aby zarabiał', paper): pair age >= 6 h, 1h change 0..+100% (no parabolic pumps), 6h change >= +10%, buy now (pullback entry off: backtest worse), max 3 open, 20% per trade. Backtest: no robust edge; positive mean comes from one outlier.",
  "watch_max": 600,
  "_scan_note": "Faster paper scan since 20.11 20:xx (user: przyspiesz cykle i więcej coinów). scan_interval 5s (was 15), scan_budget 45s (was 70), watch_max 600 (was 400). Discovery sources rotate across cycles; DexScreener misses back off so unpriceable LaunchLab mints do not eat the pricing budget. price_poll_s stays 3. Risk rules unchanged."
 }

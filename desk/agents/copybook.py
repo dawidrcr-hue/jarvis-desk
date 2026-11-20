@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from lib.common import P, load, save, log, heartbeat, cfg, notify, now_iso, http_json
 from lib.market import pair_prices, pairs_for_mints
 from lib.strategy import sim_buy, sim_sell, features
-from lib.copylogic import conf, classify, copy_size, book_equity
+from lib.copylogic import conf, classify, copy_size, book_equity, addon_size, his_spend_usd, addon_paid, WSOL
 
 C = "copybook"
 ST = P("state", "copybook.json")
@@ -41,6 +41,31 @@ def quote_for(mint):
     q = pairs_for_mints([mint], deadline=time.time() + 10).get(mint)
     return features(q) if q else None
 
+_sol_px = {"ts": 0.0, "px": 0.0}
+def sol_price_usd():
+    """Cached DexScreener SOL/USD for sizing paid add-ons. Public, read-only."""
+    now = time.time()
+    if now - _sol_px["ts"] < 60 and _sol_px["px"] > 0:
+        return _sol_px["px"]
+    try:
+        d = http_json(f"https://api.dexscreener.com/tokens/v1/solana/{WSOL}", timeout=8) or []
+        if not isinstance(d, list):
+            d = d.get("pairs") or []
+        best = 0.0
+        for p in d:
+            quote = ((p.get("quoteToken") or {}).get("symbol") or "").upper()
+            px = float(p.get("priceUsd") or 0)
+            if quote in ("USDC", "USDT") and px > best:
+                best = px
+        if best <= 0:
+            best = max((float(p.get("priceUsd") or 0) for p in d), default=0.0)
+        if best > 0:
+            _sol_px.update(ts=now, px=best)
+            return best
+    except Exception:
+        pass
+    return _sol_px["px"] or 0.0
+
 def open_copy(book, cc, c, ev, sig):
     mint = ev["mint"]
     if any(p["mint"] == mint for p in book["positions"]): return "już w kopii"
@@ -61,7 +86,8 @@ def open_copy(book, cc, c, ev, sig):
            "entry_ts": time.time(), "entry_iso": now_iso(), "entry_price": ft["price"], "entry_fill": b["fill"], "qty": b["qty"],
            "qty0": b["qty"], "cost_usd": size, "cost_left": size, "realized": 0.0, "entry_slip": b["slip"], "entry_mcap": ft["mcap"],
            "entry_liq": ft["liq"], "last_price": ft["price"], "last_liq": ft["liq"], "last_quote_ts": time.time(),
-           "their_sig": sig, "their_sol": ev.get("sol_spent"), "their_stable": ev.get("stable_spent")}
+           "their_sig": sig, "their_sol": ev.get("sol_spent"), "their_stable": ev.get("stable_spent"),
+           "initial_cost": size, "their_initial_spend": his_spend_usd(ev, sol_price_usd())}
     book["cash"] -= size; book["positions"].append(pos)
     paid = f"{ev['sol_spent']:.3f} SOL" if (ev.get("sol_spent") or 0) >= cc["min_spend_sol"] else f"{ev.get('stable_spent', 0):.2f} USD w stablecoinach"
     notify("copy_buy", f"PAPIER kopia: kupno ${ft['symbol']} za {fmt(size)}",
@@ -70,6 +96,46 @@ def open_copy(book, cc, c, ev, sig):
            f"poślizg {b['slip']*100:.1f}%. Sprzedaż tylko lustrzanie za {cc['label']}. {ft['url']} · https://solscan.io/tx/{sig}",
            {"mint": mint, "pos_id": pos["id"], "book": "copy"})
     log(C, "copy BUY", symbol=ft["symbol"], mint=mint, size=size, price=ft["price"])
+    return None
+
+def add_copy(book, cc, c, pos, ev, sig):
+    """Mirror a paid add-on into an already-open paper copy, capped at max_token_pct_of_equity."""
+    if not cc.get("copy_addons"):
+        return "dokupienia wyłączone"
+    if not addon_paid(ev, cc):
+        return "dokupienie bez zapłaty (pomijam jak airdrop)"
+    age = time.time() - (ev.get("block_time") or 0)
+    if age > cc["max_signal_age_s"]:
+        return f"sygnał za stary ({age:.0f} s)"
+    ft = None
+    for _ in range(3):
+        ft = quote_for(pos["mint"])
+        if ft and ft["price"] > 0: break
+        time.sleep(3)
+    if not ft or ft["price"] <= 0: return "brak ceny na DexScreener"
+    eq = book_equity(book)
+    size = addon_size(eq, book["cash"], pos, ev, cc, sol_price_usd())
+    if size <= 0:
+        return "limit 40% na token albo brak gotówki"
+    b = sim_buy(size, ft["price"], ft["liq"], c["costs"])
+    old_qty = pos["qty"]
+    if old_qty + b["qty"] > 0:
+        pos["entry_price"] = (old_qty * pos["entry_price"] + b["qty"] * b["fill"]) / (old_qty + b["qty"])
+    pos["qty"] += b["qty"]
+    pos["cost_usd"] = float(pos.get("cost_usd") or 0) + size
+    pos["cost_left"] = float(pos.get("cost_left") or 0) + size
+    pos["last_price"] = ft["price"]
+    pos["last_liq"] = ft["liq"]
+    pos["last_quote_ts"] = time.time()
+    pos["last_addon_sig"] = sig
+    book["cash"] -= size
+    paid = f"{ev['sol_spent']:.3f} SOL" if (ev.get("sol_spent") or 0) >= cc["min_spend_sol"] else f"{ev.get('stable_spent', 0):.2f} USD w stablecoinach"
+    notify("copy_buy", f"PAPIER kopia: dokupienie ${pos['symbol']} za {fmt(size)}",
+           f"{prefix(cc)} {cc['label']} dokupił ${pos['symbol']} (zapłacił {paid}). Kopia papierowa: dokupienie za {fmt(size)} "
+           f"(łącznie w tym tokenie {fmt(pos['cost_usd'])}, limit {int(round(float(cc.get('max_token_pct_of_equity') or 0.4)*100))}% equity kopii {fmt(eq)}). "
+           f"Poślizg {b['slip']*100:.1f}%. {pos.get('url') or ''} · https://solscan.io/tx/{sig}",
+           {"mint": pos["mint"], "pos_id": pos["id"], "book": "copy", "addon": True})
+    log(C, "copy ADDON", symbol=pos["symbol"], mint=pos["mint"], size=size, price=ft["price"])
     return None
 
 def sell_copy(book, cc, c, pos, frac, reason, price=None, liq=None, dead=False):
@@ -137,13 +203,23 @@ def poll_wallet(book, cc, c):
                         notify("copy_skip", f"PAPIER kopia: pominięte {ev['mint'][:6]}",
                                f"{prefix(cc)} {cc['label']} otworzył nową pozycję ({ev['mint'][:6]}…), kopia papierowa NIE kupiła: {why}. https://dexscreener.com/solana/{ev['mint']}",
                                {"mint": ev["mint"], "book": "copy"})
+                elif ev["kind"] == "addon" and pos:
+                    if cc.get("copy_addons"):
+                        why = add_copy(book, cc, c, pos, ev, s["signature"])
+                        dec = "dokupienie" if not why else "dokupienie pominięte: " + why
+                        if why:
+                            notify("copy_skip", f"PAPIER kopia: dokupienie pominięte ${pos.get('symbol') or ev['mint'][:6]}",
+                                   f"{prefix(cc)} {cc['label']} dokupił ({ev['mint'][:6]}…), kopia papierowa NIE dokupiła: {why}. https://solscan.io/tx/{s['signature']}",
+                                   {"mint": ev["mint"], "book": "copy", "addon": True})
+                    else:
+                        dec = "dokupienie – pomijam"
                 elif ev["kind"] == "sell" and pos:
                     f = ev["sell_frac"]
                     if f >= cc["min_sell_fraction"]:
-                        t = time.strftime("%H:%M", time.localtime(ev.get("block_time") or time.time()))
-                        sell_copy(book, cc, c, pos, f, f"{cc['label']} sprzedał {f*100:.0f}% o {t}"); dec = "lustrzana sprzedaż"
+                        hhmm = time.strftime("%H:%M", time.localtime(ev.get("block_time") or time.time()))
+                        sell_copy(book, cc, c, pos, f, f"{cc['label']} sprzedał {f*100:.0f}% o {hhmm}"); dec = "lustrzana sprzedaż"
                 else:
-                    dec = {"addon": "dokupienie – pomijam", "airdrop": "transfer/airdrop – pomijam"}.get(ev["kind"], "sprzedaż poza kopią")
+                    dec = {"addon": "dokupienie poza kopią", "airdrop": "transfer/airdrop – pomijam"}.get(ev["kind"], "sprzedaż poza kopią")
                 book["events"].append({"sig": s["signature"], "ts": ev.get("block_time"), "mint": ev["mint"], "kind": ev["kind"],
                                        "sol": ev.get("sol_spent"), "decision": dec})
             book["handled_sigs"] = (book["handled_sigs"] + [s["signature"]])[-200:]
