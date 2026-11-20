@@ -80,5 +80,16 @@
   "reject_transfer_fee": true,
   "max_checks_per_snapshot": 6
  },
- "_rugcheck_note": "Final gate before every paper buy (user decision 19.11): RugCheck /v1/tokens/<mint>/report. Reject: mint/freeze authority, LP locked <80% on traded pair (graduated pump.fun pools report 100% burned), top10 holders excl. pool/locker >35%, single holder >15%, creator >10%, rugged flag, score_normalised >30, any danger-level risk, permanent delegate/transfer hook/transfer fee. Unreachable -> skip buy (fail-closed). Cache 10 min."
+ "_rugcheck_note": "Final gate before every paper buy (user decision 19.11): RugCheck /v1/tokens/<mint>/report. Reject: mint/freeze authority, LP locked <80% on traded pair (graduated pump.fun pools report 100% burned), top10 holders excl. pool/locker >35%, single holder >15%, creator >10%, rugged flag, score_normalised >30, any danger-level risk, permanent delegate/transfer hook/transfer fee. Unreachable -> skip buy (fail-closed). Cache 10 min.",
+ "entry": {
+  "mode": "now",
+  "pullback": {
+   "dip_pct": 0.05,
+   "bounce_pct": 0.03,
+   "window_min": 15,
+   "cancel_pct": 0.15,
+   "max_setups": 8
+  }
+ },
+ "_entry_note": "entry.mode 'now' = live behaviour (buy right after filter + RugCheck). 'pullback' (NOT enabled; needs user approval) = a pass opens a setup: wait for a >=5% dip from the local high, then buy on a >=3% bounce from the low; cancel at -15% from the high or after 15 min. Backtest 20.11 (variant P2)."
 }

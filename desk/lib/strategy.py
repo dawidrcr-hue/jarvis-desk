@@ -258,3 +258,60 @@ def dead_exit(pos):
     cost = pos["cost_usd"]
     return {"proceeds": 0.0, "fill": 0.0, "slip": 1.0, "fee": 0.0,
             "pnl_usd": -cost, "pnl_pct": -1.0, "gross_pct": -1.0, "reason": DEAD_REASON}
+
+# ---------------- entry mode: buy now vs. buy after the first pullback ----------------
+# config.entry = {"mode": "now" | "pullback", "pullback": {dip_pct, bounce_pct, window_min, cancel_pct, max_setups}}
+# "now" (default) = current live behaviour: buy right after the filter + RugCheck pass.
+# "pullback": the pass only opens a SETUP. Then, on live quotes:
+#   1) track the local high H (starts at the signal price);
+#   2) wait until price retraces >= dip_pct from H  -> remember the low L (updated while it keeps falling);
+#   3) buy when price bounces >= bounce_pct above L;
+#   cancel if price falls >= cancel_pct below H, or nothing happened within window_min minutes.
+PULLBACK_DEFAULTS = {"dip_pct": 0.05, "bounce_pct": 0.02, "window_min": 15, "cancel_pct": 0.15, "max_setups": 8}
+
+def entry_mode(cfg):
+    m = str(((cfg or {}).get("entry") or {}).get("mode") or "now").lower()
+    return m if m in ("now", "pullback") else "now"
+
+def pullback_params(cfg):
+    p = dict(PULLBACK_DEFAULTS)
+    p.update(((cfg or {}).get("entry") or {}).get("pullback") or {})
+    return p
+
+def pullback_new(cand, price, now, cfg):
+    """New pullback setup from a filter pass (cand = features dict)."""
+    p = pullback_params(cfg)
+    return {"mint": cand.get("mint"), "symbol": cand.get("symbol"), "pair": cand.get("pair"), "cand": cand,
+            "signal_ts": now, "signal_price": price, "high": price, "low": None, "state": "wait_dip",
+            "expires_ts": now + p["window_min"] * 60, "last_price": price}
+
+def pullback_step(setup, price, now, cfg):
+    """Feed one live price. Returns 'wait', 'buy' or 'cancel:<reason>'. Mutates setup."""
+    p = pullback_params(cfg)
+    if price is None or price <= 0:
+        return "cancel:timeout" if now >= setup["expires_ts"] else "wait"
+    setup["last_price"] = price
+    if setup["state"] == "wait_dip":
+        setup["high"] = max(setup["high"], price)
+    else:
+        setup["low"] = min(setup["low"], price)
+    hi = setup["high"]
+    if price <= hi * (1 - p["cancel_pct"]) + 1e-15:
+        setup["state"] = "cancelled"
+        return "cancel:too_deep"
+    if setup["state"] == "wait_dip" and price <= hi * (1 - p["dip_pct"]) + 1e-15:
+        setup["state"] = "dip"; setup["low"] = price; setup["dip_ts"] = now
+    elif setup["state"] == "dip" and price >= setup["low"] * (1 + p["bounce_pct"]) - 1e-15:
+        setup["state"] = "bought"
+        return "buy"
+    if now >= setup["expires_ts"]:
+        setup["state"] = "cancelled"
+        return "cancel:timeout"
+    return "wait"
+
+PULLBACK_HYGIENE = ("already_held", "reentry_cooldown", "no_price", "mcap<", "mcap>", "liq<", "vol_h1<", "pair_too_new", "downtrend_h1")
+
+def pullback_entry_reasons(ft, fc, *a, **kw):
+    """Requote check for a pullback buy: hygiene + 1h uptrend only. The short-term momentum checks
+    (m5 up, m5 buy/sell, score, vol accel) are expected to dip during the pullback, so they are not re-applied."""
+    return [r for r in filter_reasons(dict(ft), dict(fc, min_score=-1e9), *a, **kw) if r.startswith(PULLBACK_HYGIENE)]
