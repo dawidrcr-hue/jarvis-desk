@@ -47,11 +47,11 @@
     "decision": "transfer/airdrop – pomijam"
    }
   ],
-  "last_poll": "2026-11-21T00:53:51+01:00",
+  "last_poll": "2026-11-21T00:54:51+01:00",
   "last_error": null,
   "created": "2026-11-20T13:03:28+01:00"
  },
- "generated": "2026-11-21T00:53:51+01:00",
+ "generated": "2026-11-21T00:54:53+01:00",
  "mode": "PAPER",
  "stats": {
   "equity": 27.2196,
@@ -1568,33 +1568,43 @@
    "e": 27.2196
   },
   {
-   "t": 1795218832,
+   "t": 1795218893,
    "e": 27.2196
   }
  ],
  "filter": {
-  "ts": "2026-11-21T00:53:37+01:00",
-  "n": 360,
+  "ts": "2026-11-21T00:54:47+01:00",
+  "n": 338,
   "passed": 0,
   "reject_counts": {
-   "mcap<40000": 97,
-   "liq<30000": 154,
-   "vol_h1<5000": 235,
-   "pair_too_new": 61,
-   "overextended_m5": 6,
-   "overextended_h1": 9,
-   "mcap>200000": 162,
-   "low_activity_m5": 257,
-   "sells>buys_m5": 218,
-   "downtrend_h6": 237,
-   "downtrend_m5": 276,
-   "downtrend_h1": 213,
-   "sells>buys_h1": 183,
-   "volume_fading": 260,
-   "no_price": 8
+   "mcap<40000": 94,
+   "liq<30000": 150,
+   "vol_h1<5000": 221,
+   "pair_too_new": 60,
+   "overextended_m5": 3,
+   "overextended_h1": 6,
+   "downtrend_h6": 239,
+   "low_activity_m5": 237,
+   "mcap>200000": 142,
+   "sells>buys_m5": 193,
+   "downtrend_m5": 246,
+   "downtrend_h1": 182,
+   "volume_fading": 244,
+   "sells>buys_h1": 160,
+   "no_price": 7
   }
  },
  "rugcheck_recent": [
+  {
+   "ts": "2026-11-21T00:54:32+01:00",
+   "symbol": "PROBE",
+   "mint": "So11111111111111111111111111111111111111112",
+   "ok": true,
+   "cached": false,
+   "reasons": [],
+   "summary": null,
+   "err": null
+  },
   {
    "ts": "2026-11-21T00:24:29+01:00",
    "symbol": "PROBE",
@@ -1708,27 +1718,6 @@
     "insiders": 9
    },
    "err": null
-  },
-  {
-   "ts": "2026-11-20T22:57:50+01:00",
-   "symbol": "PUSSY",
-   "mint": "FZxHLUGiGchY5uvvoeqh1EKiXTrGdN67WUBhUc1fLoat",
-   "ok": true,
-   "cached": true,
-   "reasons": [],
-   "summary": {
-    "score_norm": 1,
-    "top10_pct": 29.15,
-    "top1_pct": 8.87,
-    "creator_pct": 0.0,
-    "lp_locked_pct": 100.0,
-    "market": "raydium_cpmm",
-    "dangers": [],
-    "rugged": false,
-    "launchpad": null,
-    "insiders": 8
-   },
-   "err": null
   }
  ],
  "reason_pl": {
@@ -1773,188 +1762,189 @@
   {
    "symbol": "BABYDOG",
    "score": 75.0,
-   "mcap": 80042,
-   "liq": 134370,
-   "chg_m5": 4.81,
-   "chg_h1": 77.36,
+   "mcap": 80729,
+   "liq": 135126,
+   "chg_m5": 4.66,
+   "chg_h1": 78.88,
+   "reasons": [
+    "pair_too_new"
+   ]
+  },
+  {
+   "symbol": "STBL",
+   "score": 64.0,
+   "mcap": 86132,
+   "liq": 162703,
+   "chg_m5": 1.71,
+   "chg_h1": 11.99,
    "reasons": [
     "pair_too_new"
    ]
   },
   {
    "symbol": "SHIT",
-   "score": 70.9,
-   "mcap": 1569156,
-   "liq": 103616,
-   "chg_m5": 5.98,
-   "chg_h1": 21.65,
+   "score": 61.5,
+   "mcap": 1568467,
+   "liq": 103592,
+   "chg_m5": 3.82,
+   "chg_h1": 20.12,
    "reasons": [
-    "mcap>200000 (1569156)"
-   ]
-  },
-  {
-   "symbol": "STBL",
-   "score": 62.9,
-   "mcap": 85675,
-   "liq": 162137,
-   "chg_m5": 1.3,
-   "chg_h1": 11.4,
-   "reasons": [
-    "pair_too_new"
-   ]
-  },
-  {
-   "symbol": "PATRICK",
-   "score": 40.4,
-   "mcap": 163878,
-   "liq": 44466,
-   "chg_m5": 6.02,
-   "chg_h1": 30.07,
-   "reasons": [
-    "volume_fading (0.60)"
-   ]
-  },
-  {
-   "symbol": "Rings",
-   "score": 62.4,
-   "mcap": 2257292,
-   "liq": 112819,
-   "chg_m5": 9.31,
-   "chg_h1": 47.56,
-   "reasons": [
-    "mcap>200000 (2257292)",
-    "sells>buys_m5 (0.75)"
+    "mcap>200000 (1568467)"
    ]
   },
   {
    "symbol": "DCTY",
-   "score": 56.4,
-   "mcap": 1782552,
-   "liq": 74186,
-   "chg_m5": 0.77,
-   "chg_h1": 7.22,
+   "score": 77.3,
+   "mcap": 42071,
+   "liq": 79117,
+   "chg_m5": 8.53,
+   "chg_h1": 8.53,
    "reasons": [
-    "mcap>200000 (1782552)",
-    "downtrend_h6 (-6.84%)"
+    "pair_too_new",
+    "downtrend_h6 (8.53%)"
+   ]
+  },
+  {
+   "symbol": "Rings",
+   "score": 65.5,
+   "mcap": 2279274,
+   "liq": 113367,
+   "chg_m5": 10.38,
+   "chg_h1": 49.0,
+   "reasons": [
+    "mcap>200000 (2279274)",
+    "sells>buys_m5 (0.76)"
    ]
   },
   {
    "symbol": "Ban",
-   "score": 54.2,
-   "mcap": 42319113,
-   "liq": 1864406,
-   "chg_m5": 0.13,
-   "chg_h1": 0.16,
+   "score": 55.7,
+   "mcap": 42332181,
+   "liq": 1864693,
+   "chg_m5": 0.16,
+   "chg_h1": 0.2,
    "reasons": [
-    "mcap>200000 (42319113)",
-    "downtrend_h6 (3.93%)"
+    "mcap>200000 (42332181)",
+    "downtrend_h6 (3.97%)"
+   ]
+  },
+  {
+   "symbol": "UODF",
+   "score": 53.1,
+   "mcap": 537816046,
+   "liq": 1615510,
+   "chg_m5": 0.04,
+   "chg_h1": 1.16,
+   "reasons": [
+    "mcap>200000 (537816046)",
+    "downtrend_h6 (8.49%)"
+   ]
+  },
+  {
+   "symbol": "PATRICK",
+   "score": 51.2,
+   "mcap": 169667,
+   "liq": 45080,
+   "chg_m5": 15.39,
+   "chg_h1": 43.69,
+   "reasons": [
+    "sells>buys_m5 (0.94)",
+    "volume_fading (0.60)"
    ]
   },
   {
    "symbol": "NEURALINK",
-   "score": 45.5,
-   "mcap": 503084,
-   "liq": 311880,
-   "chg_m5": 0.53,
-   "chg_h1": 1.59,
+   "score": 43.8,
+   "mcap": 502598,
+   "liq": 311767,
+   "chg_m5": 0.43,
+   "chg_h1": 1.49,
    "reasons": [
-    "mcap>200000 (503084)",
-    "downtrend_h6 (3.01%)"
-   ]
-  },
-  {
-   "symbol": "FIONA",
-   "score": 34.5,
-   "mcap": 1240611,
-   "liq": 104459,
-   "chg_m5": 0.28,
-   "chg_h1": 3.86,
-   "reasons": [
-    "mcap>200000 (1240611)",
-    "downtrend_h6 (-13.88%)"
-   ]
-  },
-  {
-   "symbol": "NVDA",
-   "score": 31.1,
-   "mcap": 510080,
-   "liq": 81570,
-   "chg_m5": 0.1,
-   "chg_h1": 0.25,
-   "reasons": [
-    "mcap>200000 (510080)",
-    "downtrend_h6 (-4.44%)"
+    "mcap>200000 (502598)",
+    "downtrend_h6 (2.91%)"
    ]
   },
   {
    "symbol": "GTA6",
-   "score": 28.4,
-   "mcap": 143906,
-   "liq": 205266,
-   "chg_m5": 1.55,
-   "chg_h1": 15.52,
+   "score": 36.8,
+   "mcap": 148895,
+   "liq": 208933,
+   "chg_m5": 5.16,
+   "chg_h1": 19.11,
    "reasons": [
     "pair_too_new",
-    "volume_fading (0.54)"
+    "volume_fading (0.51)"
    ]
   },
   {
-   "symbol": "Buttcoin",
-   "score": 59.6,
-   "mcap": 7362711,
-   "liq": 560796,
-   "chg_m5": 19.09,
-   "chg_h1": 24.02,
+   "symbol": "NVDA",
+   "score": 35.3,
+   "mcap": 510717,
+   "liq": 81655,
+   "chg_m5": 0.23,
+   "chg_h1": 0.38,
    "reasons": [
-    "mcap>200000 (7362711)",
-    "sells>buys_m5 (0.44)",
-    "sells>buys_h1 (0.65)"
+    "mcap>200000 (510717)",
+    "downtrend_h6 (-4.32%)"
+   ]
+  },
+  {
+   "symbol": "AI",
+   "score": 23.9,
+   "mcap": 103955,
+   "liq": 32216,
+   "chg_m5": 2.62,
+   "chg_h1": -23.2,
+   "reasons": [
+    "downtrend_h1 (-23.2%)",
+    "volume_fading (0.45)"
    ]
   }
  ],
  "sources": {
   "counts": {
-   "gt_trend1h": 20,
-   "ds_profiles_latest": 27,
    "pump_graduated_p0": "ERR blocked (Cloudflare 403) - skipped, no bypass",
-   "jup_toporganic_1h": 47,
-   "ray_volume": 48,
+   "ds_profiles_latest": 27,
+   "jup_recent": 30,
+   "gt_top_tx": 12,
+   "ray_volume": 47,
    "pump_graduated_p1": "ERR blocked (Cloudflare 403) - skipped, no bypass",
    "ray_standard": 55,
    "pump_complete_mcap": "ERR blocked (Cloudflare 403) - skipped, no bypass",
    "ds_profiles_recent": 21,
-   "launchlab_lasttrade": 164,
+   "launchlab_lasttrade": 167,
    "pump_adv_graduated": "ERR blocked (Cloudflare 403) - skipped, no bypass",
    "launchlab_new": 119,
    "ds_boosts_latest": 25,
-   "gt_trending": 20,
-   "jup_toptrending_6h": 50,
+   "gt_trend6h": "ERR HTTP Error 429: Too Many Requests",
+   "gt_top_tx_p2": "ERR cooling after 429",
+   "gt_pumpswap_trend": "ERR cooling after 429",
+   "jup_toptrending_1h": 50,
    "ds_boosts_top": 26,
    "ds_cto": 2,
-   "gt_bags": "ERR HTTP Error 429: Too Many Requests",
-   "ds_search_pump": 20,
-   "ds_search_SOL": 18,
-   "ds_search_moon": 7,
-   "ds_search_meme": 10,
-   "ds_search_pumpswap": 30
+   "ds_search_letsbonk": 4,
+   "ds_search_meteora": 30,
+   "ds_search_orca": 30,
+   "ds_search_moonshot": 12,
+   "ds_search_launchlab": 0
   },
-  "discovered": 464,
-  "watch": 291,
-  "watch_priced": 101,
-  "priced": 360,
-  "priced_of": 362,
-  "seeded": 67,
-  "duration_s": 12.75,
+  "discovered": 466,
+  "watch": 302,
+  "watch_priced": 102,
+  "priced": 338,
+  "priced_of": 354,
+  "seeded": 59,
+  "duration_s": 12.89,
   "discover_s": 9.92,
-  "price_s": 2.82,
-  "ts": 1795218816.0374012
+  "price_s": 2.96,
+  "ts": 1795218887.0996225
  },
  "agents": [
   {
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone",
-   "age_s": 4,
+   "age_s": 0,
    "ok": true,
    "restarts": 0
   },
@@ -1970,7 +1960,7 @@
    "key": "filter",
    "name": "Filtr",
    "desc": "Odrzuca coiny spoza zakresu kapitalizacji (config), bez trendu wzrostowego, z małą płynnością; loguje powody",
-   "age_s": 5,
+   "age_s": 0,
    "ok": true,
    "restarts": 0
   },
