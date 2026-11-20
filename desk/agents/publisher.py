@@ -5,7 +5,7 @@ No wallet data, no keys/secrets. Paper desk only."""
 import os, sys, time, json, hashlib, subprocess, shutil, collections, signal
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from lib.common import P, load, save, cfg, log, heartbeat, now_iso
-from lib.strategy import portfolio_equity, position_mark, trail_tiers, ladder_note_pl, entries_allowed
+from lib.strategy import portfolio_equity, position_mark, trail_tiers, ladder_note_pl, entries_allowed, entry_mode, pullback_params, entry_note_pl
 from lib import safety
 
 C = "publisher"
@@ -94,7 +94,7 @@ def build():
                   "avg_pnl_pct": sum(t["pnl_pct"] for t in closed) / len(closed) if closed else None, "costs_paid": round(costs, 4)},
         "rules": {"size_pct": c["position_pct_of_equity"], "max_open": c["max_open_positions"], "initial_stop": c["initial_stop"],
                   "ladder": c["ladder"], "trail_after": c.get("trail_after"), "trail_gap": c.get("trail_gap"), "trail_tiers": trail_tiers(c), "ladder_note_pl": ladder_note_pl(c), "min_mcap": c["filter"]["min_mcap_usd"], "max_mcap": c["filter"].get("max_mcap_usd"),
-                  "stop_at": c.get("stop_at"), "entries_open": entries_allowed(c),
+                  "stop_at": c.get("stop_at"), "entries_open": entries_allowed(c), "entry_mode": entry_mode(c), "entry": {"mode": entry_mode(c), "pullback": pullback_params(c)}, "entry_note_pl": entry_note_pl(c),
                   "filter": {k: c["filter"].get(k) for k in ("min_liquidity_usd", "min_vol_h1_usd", "min_pair_age_min", "min_m5_txns", "max_m5_change_pct", "max_h1_change_pct", "min_score")},
                   "rugcheck": {k: rcc.get(k) for k in ("enabled", "max_top10_pct", "max_single_holder_pct", "max_creator_pct", "min_lp_locked_pct", "max_score_normalised")}},
         "positions": [{k: p.get(k) for k in keep_p} for p in pos],

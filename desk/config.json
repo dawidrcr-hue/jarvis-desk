@@ -20,8 +20,8 @@
  },
  "scan_interval_s": 15,
  "price_poll_s": 3,
- "stop_at": "2026-11-20T06:00:00+01:00",
- "_stop_at_note": "After 06:00 Europe/Warsaw on 2026-11-20, no new paper buys. Open positions are still managed and closed; the site keeps publishing. Workflow stays enabled so Actions runs can chain until then. User decision 19.11.",
+ "stop_at": null,
+ "_stop_at_note": "stop_at is unset (null): new paper entries stay open around the clock. Open positions are always managed. User decision 20.11 (enable pullback and lift the 06:00 cutoff).",
  "filter": {
   "min_mcap_usd": 40000,
   "min_liquidity_usd": 30000,
@@ -82,7 +82,7 @@
  },
  "_rugcheck_note": "Final gate before every paper buy (user decision 19.11): RugCheck /v1/tokens/<mint>/report. Reject: mint/freeze authority, LP locked <80% on traded pair (graduated pump.fun pools report 100% burned), top10 holders excl. pool/locker >35%, single holder >15%, creator >10%, rugged flag, score_normalised >30, any danger-level risk, permanent delegate/transfer hook/transfer fee. Unreachable -> skip buy (fail-closed). Cache 10 min.",
  "entry": {
-  "mode": "now",
+  "mode": "pullback",
   "pullback": {
    "dip_pct": 0.05,
    "bounce_pct": 0.03,
@@ -91,5 +91,5 @@
    "max_setups": 8
   }
  },
- "_entry_note": "entry.mode 'now' = live behaviour (buy right after filter + RugCheck). 'pullback' (NOT enabled; needs user approval) = a pass opens a setup: wait for a >=5% dip from the local high, then buy on a >=3% bounce from the low; cancel at -15% from the high or after 15 min. Backtest 20.11 (variant P2)."
+ "_entry_note": "entry.mode 'pullback' (enabled 20.11, variant P2): a filter+RugCheck pass opens a setup; buy after a >=5% dip from the local high and a >=3% bounce from the low; cancel at -15% from the high or after 15 min. 'now' would buy immediately after the gates."
 }

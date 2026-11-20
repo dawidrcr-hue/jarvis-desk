@@ -8,7 +8,7 @@ UPTREND definition (all must hold, thresholds in config.json -> filter):
   * NOT overextended: m5 change <= 25%, h1 change <= 300%              -> avoid buying a vertical candle top
 Hygiene: $40k <= mcap (marketCap, else FDV) <= $200k (max cut 19.11 by user), liquidity >= $30k, vol h1 >= $5k, pair age >= 30 min,
          analyst score >= 69, not already held (same mint or same ticker, case-insensitive), not exited in the last reentry_cooldown_min minutes.
-         After cfg stop_at, no new entries (open positions still managed).
+         If cfg stop_at is set, after that instant no new entries (open positions still managed). Unset/null keeps entries open.
 """
 import time
 from datetime import datetime
@@ -277,6 +277,18 @@ def pullback_params(cfg):
     p = dict(PULLBACK_DEFAULTS)
     p.update(((cfg or {}).get("entry") or {}).get("pullback") or {})
     return p
+
+def entry_note_pl(cfg):
+    """Polish one-liner for the site describing the live entry mode."""
+    if entry_mode(cfg) != "pullback":
+        return ""
+    p = pullback_params(cfg)
+    dip = int(round(float(p["dip_pct"]) * 100))
+    bounce = int(round(float(p["bounce_pct"]) * 100))
+    cancel = int(round(float(p["cancel_pct"]) * 100))
+    window = int(p["window_min"])
+    return (f"Wejście po cofnięciu: -{dip}% od szczytu, odbicie +{bounce}%, "
+            f"rezygnacja po -{cancel}% lub {window} min")
 
 def pullback_new(cand, price, now, cfg):
     """New pullback setup from a filter pass (cand = features dict)."""

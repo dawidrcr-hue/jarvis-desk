@@ -1,6 +1,6 @@
 import os, sys, json, time, glob, unittest, tempfile
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from lib.strategy import entry_mode, pullback_params, pullback_new, pullback_step, pullback_entry_reasons, filter_reasons, PULLBACK_DEFAULTS
+from lib.strategy import entry_mode, pullback_params, pullback_new, pullback_step, pullback_entry_reasons, filter_reasons, PULLBACK_DEFAULTS, entry_note_pl
 CFG = json.load(open(os.path.join(os.path.dirname(__file__), "..", "config.json")))
 PB = dict(CFG, entry={"mode": "pullback", "pullback": {"dip_pct": 0.05, "bounce_pct": 0.02, "window_min": 15, "cancel_pct": 0.15, "max_setups": 8}})
 
@@ -18,8 +18,18 @@ def ft(**kw):
     base.update(kw); return base
 
 class TMode(unittest.TestCase):
-    def test_live_config_stays_buy_now(self):
-        self.assertEqual(entry_mode(CFG), "now")
+    def test_live_config_is_pullback(self):
+        self.assertEqual(entry_mode(CFG), "pullback")
+        self.assertEqual(CFG["entry"]["mode"], "pullback")
+        p = pullback_params(CFG)
+        self.assertAlmostEqual(p["dip_pct"], 0.05)
+        self.assertAlmostEqual(p["bounce_pct"], 0.03)
+        self.assertAlmostEqual(p["cancel_pct"], 0.15)
+        self.assertEqual(p["window_min"], 15)
+        self.assertEqual(p["max_setups"], 8)
+        self.assertEqual(entry_note_pl(CFG),
+                         "Wejście po cofnięciu: -5% od szczytu, odbicie +3%, rezygnacja po -15% lub 15 min")
+        self.assertEqual(entry_note_pl({"entry": {"mode": "now"}}), "")
     def test_default_and_unknown(self):
         self.assertEqual(entry_mode({}), "now")
         self.assertEqual(entry_mode({"entry": {"mode": "weird"}}), "now")

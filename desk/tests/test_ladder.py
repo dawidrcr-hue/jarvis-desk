@@ -124,7 +124,8 @@ class TTrailTiers(unittest.TestCase):
         self.assertIn("od +100% trailing 20 pkt", note)
         self.assertIn("od +200% trailing 25 pkt", note)
         self.assertEqual(CFG["initial_stop"], -0.08)
-        self.assertEqual(CFG["stop_at"], "2026-11-20T06:00:00+01:00")
+        self.assertIsNone(CFG["stop_at"])
+        self.assertTrue(entries_allowed(CFG, now=1795200000))
 
     def test_peak_150_stop_130(self):
         pos, px, _ = run([2.5])
@@ -185,6 +186,11 @@ class TStopAt(unittest.TestCase):
 
     def test_unparsable_fails_closed(self):
         self.assertFalse(entries_allowed({"stop_at": "not-a-time"}, now=1))
+
+    def test_live_config_cutoff_disabled(self):
+        self.assertIsNone(CFG.get("stop_at"))
+        self.assertIsNone(stop_at_ts(CFG))
+        self.assertTrue(entries_allowed(CFG, now=1795200000))
 
 
 class TAlreadyHeld(unittest.TestCase):
