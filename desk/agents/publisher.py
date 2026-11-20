@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Publisher (PAPER): builds a public-safe data.json from jarvis-paper state and publishes the site to the
-existing GitHub Pages repo used by the old desk (/workspace/jarvis-desk/site -> dawikoro-tech/jarvis-desk).
+GitHub Pages site in this repo (dawidrcr-hue/jarvis-desk, https://dawidrcr-hue.github.io/jarvis-desk/).
 No wallet data, no keys/secrets. Paper desk only."""
 import os, sys, time, json, hashlib, subprocess, shutil, collections, signal
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
