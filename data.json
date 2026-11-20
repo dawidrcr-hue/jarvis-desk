@@ -22,11 +22,11 @@
   "positions": [],
   "closed": [],
   "events": [],
-  "last_poll": "2026-11-20T13:06:28+01:00",
+  "last_poll": "2026-11-20T14:24:55+01:00",
   "last_error": null,
   "created": "2026-11-20T13:03:28+01:00"
  },
- "generated": "2026-11-20T14:23:57+01:00",
+ "generated": "2026-11-20T14:24:58+01:00",
  "mode": "PAPER",
  "stats": {
   "equity": 25.0,
@@ -133,15 +133,46 @@
   {
    "t": 1795181037,
    "e": 25.0
+  },
+  {
+   "t": 1795181099,
+   "e": 25.0
   }
  ],
  "filter": {
-  "ts": null,
-  "n": null,
-  "passed": null,
-  "reject_counts": {}
+  "ts": "2026-11-20T14:24:32+01:00",
+  "n": 448,
+  "passed": 0,
+  "reject_counts": {
+   "mcap<40000": 150,
+   "liq<30000": 197,
+   "vol_h1<5000": 287,
+   "downtrend_h6": 292,
+   "pair_too_new": 87,
+   "overextended_h1": 13,
+   "overextended_m5": 18,
+   "low_activity_m5": 309,
+   "mcap>200000": 192,
+   "downtrend_h1": 298,
+   "downtrend_m5": 331,
+   "sells>buys_h1": 224,
+   "volume_fading": 302,
+   "sells>buys_m5": 294,
+   "no_price": 8
+  }
  },
- "rugcheck_recent": [],
+ "rugcheck_recent": [
+  {
+   "ts": "2026-11-20T14:23:57+01:00",
+   "symbol": "PROBE",
+   "mint": "So11111111111111111111111111111111111111112",
+   "ok": true,
+   "cached": false,
+   "reasons": [],
+   "summary": null,
+   "err": null
+  }
+ ],
  "reason_pl": {
   "mcap<40000": "kapitalizacja < $40 tys.",
   "mcap>2000000": "kapitalizacja > $2 mln",
@@ -180,20 +211,206 @@
   "score<69": "ocena analityka < 69",
   "mcap>200000": "kapitalizacja > $200 tys."
  },
- "near": [],
+ "near": [
+  {
+   "symbol": "Catnomics",
+   "score": 67.1,
+   "mcap": 43378,
+   "liq": 77975,
+   "chg_m5": 1.33,
+   "chg_h1": 19.26,
+   "reasons": [
+    "pair_too_new"
+   ]
+  },
+  {
+   "symbol": "BUCKME",
+   "score": 44.8,
+   "mcap": 170708,
+   "liq": 31844,
+   "chg_m5": 4.69,
+   "chg_h1": 10.69,
+   "reasons": [
+    "vol_h1<5000"
+   ]
+  },
+  {
+   "symbol": "EUROP",
+   "score": 54.0,
+   "mcap": 16130892,
+   "liq": 1150984,
+   "chg_m5": 0.03,
+   "chg_h1": 0.22,
+   "reasons": [
+    "mcap>200000 (16130892)",
+    "downtrend_h6 (0.1%)"
+   ]
+  },
+  {
+   "symbol": "BLOB",
+   "score": 51.4,
+   "mcap": 4697903,
+   "liq": 193410,
+   "chg_m5": -0.22,
+   "chg_h1": 6.91,
+   "reasons": [
+    "mcap>200000 (4697903)",
+    "downtrend_m5 (-0.22%)"
+   ]
+  },
+  {
+   "symbol": "FIONA",
+   "score": 51.0,
+   "mcap": 2601242,
+   "liq": 145866,
+   "chg_m5": 8.08,
+   "chg_h1": 3.33,
+   "reasons": [
+    "mcap>200000 (2601242)",
+    "sells>buys_m5 (0.69)"
+   ]
+  },
+  {
+   "symbol": "DOOMSDAY",
+   "score": 45.8,
+   "mcap": 335685,
+   "liq": 46730,
+   "chg_m5": -2.48,
+   "chg_h1": 30.09,
+   "reasons": [
+    "mcap>200000 (335685)",
+    "downtrend_m5 (-2.48%)"
+   ]
+  },
+  {
+   "symbol": "CYBERLEEK",
+   "score": 35.6,
+   "mcap": 2427789,
+   "liq": 427890,
+   "chg_m5": 0.07,
+   "chg_h1": 5.73,
+   "reasons": [
+    "mcap>200000 (2427789)",
+    "volume_fading (0.13)"
+   ]
+  },
+  {
+   "symbol": "Huss",
+   "score": 35.2,
+   "mcap": 452761,
+   "liq": 51530,
+   "chg_m5": 1.69,
+   "chg_h1": 10.05,
+   "reasons": [
+    "mcap>200000 (452761)",
+    "volume_fading (0.47)"
+   ]
+  },
+  {
+   "symbol": "AI",
+   "score": 30.3,
+   "mcap": 100703,
+   "liq": 31013,
+   "chg_m5": 2.21,
+   "chg_h1": 0.21,
+   "reasons": [
+    "downtrend_h6 (-9.85%)",
+    "volume_fading (0.59)"
+   ]
+  },
+  {
+   "symbol": "mihao",
+   "score": 59.2,
+   "mcap": 44493,
+   "liq": 33717,
+   "chg_m5": 19.31,
+   "chg_h1": 671.0,
+   "reasons": [
+    "pair_too_new",
+    "sells>buys_h1 (0.92)",
+    "overextended_h1 (671.0%)"
+   ]
+  },
+  {
+   "symbol": "OGTA",
+   "score": 58.9,
+   "mcap": 262594,
+   "liq": 39187,
+   "chg_m5": 8.41,
+   "chg_h1": -9.74,
+   "reasons": [
+    "mcap>200000 (262594)",
+    "downtrend_h1 (-9.74%)",
+    "downtrend_h6 (-48.66%)"
+   ]
+  },
+  {
+   "symbol": "CHOO",
+   "score": 58.2,
+   "mcap": 608140,
+   "liq": 75116,
+   "chg_m5": 4.8,
+   "chg_h1": 44.27,
+   "reasons": [
+    "mcap>200000 (608140)",
+    "low_activity_m5",
+    "volume_fading (0.12)"
+   ]
+  }
+ ],
  "sources": {
-  "counts": null,
-  "discovered": null,
-  "watch": null,
-  "priced": 0,
-  "ts": 0
+  "counts": {
+   "ds_profiles_latest": 23,
+   "pump_graduated_p0": "ERR blocked (Cloudflare 403) - skipped, no bypass",
+   "gt_trending": 40,
+   "ray_volume": 47,
+   "jup_toptrending_1h": 50,
+   "pump_graduated_p1": "ERR blocked (Cloudflare 403) - skipped, no bypass",
+   "ray_standard": 54,
+   "pump_complete_mcap": "ERR blocked (Cloudflare 403) - skipped, no bypass",
+   "ds_profiles_recent": 25,
+   "launchlab_lasttrade": 152,
+   "pump_adv_graduated": "ERR blocked (Cloudflare 403) - skipped, no bypass",
+   "launchlab_new": 118,
+   "ds_boosts_latest": 27,
+   "jup_toporganic_1h": 47,
+   "ds_boosts_top": 22,
+   "ds_cto": 8,
+   "gt_trend5m": 20,
+   "ds_search_pump": 22,
+   "jup_toptrending_6h": 50,
+   "ds_search_SOL": 18,
+   "gt_trend1h": 20,
+   "ds_search_moon": 13,
+   "gt_trend6h": 20,
+   "ds_search_meme": 10,
+   "jup_toporganic_6h": 47,
+   "ds_search_pumpswap": 30,
+   "ds_search_pumpfun": 30,
+   "gt_top_tx": 13,
+   "jup_recent": 30,
+   "ds_search_raydium": 30,
+   "gt_new": "ERR HTTP Error 429: Too Many Requests",
+   "ds_search_letsbonk": 2,
+   "gt_pumpswap_trend": "ERR HTTP Error 429: Too Many Requests",
+   "gt_pumpfun": "ERR HTTP Error 429: Too Many Requests",
+   "gt_pumpswap": "ERR HTTP Error 429: Too Many Requests",
+   "gt_raydium": "ERR HTTP Error 429: Too Many Requests",
+   "gt_raydium_clmm": "ERR HTTP Error 429: Too Many Requests",
+   "gt_launchlab": "ERR HTTP Error 429: Too Many Requests",
+   "gt_letsbonk": "ERR HTTP Error 429: Too Many Requests"
+  },
+  "discovered": 557,
+  "watch": 272,
+  "priced": 448,
+  "ts": 1795181072.0848672
  },
  "agents": [
   {
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone",
-   "age_s": 0,
+   "age_s": 1,
    "ok": true,
    "restarts": 0
   },
@@ -209,7 +426,7 @@
    "key": "filter",
    "name": "Filtr",
    "desc": "Odrzuca coiny spoza zakresu kapitalizacji (config), bez trendu wzrostowego, z małą płynnością; loguje powody",
-   "age_s": 0,
+   "age_s": 1,
    "ok": true,
    "restarts": 0
   },
@@ -225,8 +442,8 @@
    "key": "copybook",
    "name": "Kopia @unipcs (papier)",
    "desc": "Śledzi publiczne transakcje portfela i kopiuje je na osobnym papierowym koncie",
-   "age_s": 1795181037,
-   "ok": false,
+   "age_s": 3,
+   "ok": true,
    "restarts": 0
   },
   {
