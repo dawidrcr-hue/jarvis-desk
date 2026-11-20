@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-20T09:26:38+01:00",
+ "generated": "2026-11-20T09:27:39+01:00",
  "mode": "PAPER",
  "stats": {
   "equity": 24.2076,
@@ -931,36 +931,94 @@
   {
    "t": 1795163198,
    "e": 24.2076
+  },
+  {
+   "t": 1795163259,
+   "e": 24.2076
   }
  ],
  "filter": {
-  "ts": "2026-11-20T09:26:13+01:00",
-  "n": 432,
+  "ts": "2026-11-20T09:27:03+01:00",
+  "n": 442,
   "passed": 0,
   "reject_counts": {
-   "reentry_ban": 8,
-   "mcap<40000": 134,
-   "liq<30000": 195,
-   "vol_h1<5000": 312,
-   "pair_too_new": 35,
-   "overextended_m5": 8,
-   "rug_lp_unlocked": 1,
-   "rug_score": 1,
-   "rug_danger": 1,
+   "pair_too_new": 39,
+   "overextended_m5": 13,
    "overextended_h1": 4,
-   "volume_fading": 286,
-   "downtrend_m5": 307,
-   "low_activity_m5": 308,
-   "mcap>200000": 177,
-   "downtrend_h6": 161,
-   "downtrend_h1": 239,
-   "sells>buys_m5": 267,
-   "sells>buys_h1": 207,
+   "mcap<40000": 139,
+   "liq<30000": 199,
+   "rug_lp_unlocked": 2,
+   "rug_score": 2,
+   "rug_danger": 2,
+   "reentry_ban": 10,
+   "mcap>200000": 181,
+   "vol_h1<5000": 318,
+   "low_activity_m5": 312,
+   "volume_fading": 297,
+   "downtrend_h1": 238,
+   "downtrend_h6": 170,
+   "downtrend_m5": 303,
+   "sells>buys_m5": 265,
+   "sells>buys_h1": 204,
    "score<69": 1,
-   "no_price": 14
+   "no_price": 12
   }
  },
  "rugcheck_recent": [
+  {
+   "ts": "2026-11-20T09:27:03+01:00",
+   "symbol": "FIONA",
+   "mint": "BC47TsZsM85ZjZ36H5m7wYtXjFwyNWoKcr67pSaiGQk",
+   "ok": false,
+   "cached": true,
+   "reasons": [
+    "rug_lp_unlocked (LP 0% < 80%, pump_fun_amm)",
+    "rug_score (52 > 30)",
+    "rug_danger (Large Amount of LP Unlocked)"
+   ],
+   "summary": {
+    "score_norm": 52,
+    "top10_pct": 16.21,
+    "top1_pct": 3.56,
+    "creator_pct": 0.12,
+    "lp_locked_pct": 0.0,
+    "market": "pump_fun_amm",
+    "dangers": [
+     "Large Amount of LP Unlocked"
+    ],
+    "rugged": false,
+    "launchpad": null,
+    "insiders": 0
+   },
+   "err": null
+  },
+  {
+   "ts": "2026-11-20T09:27:03+01:00",
+   "symbol": "GTA6",
+   "mint": "DuXmtJaKMmm2gaWQzrqZ2KJcjy6dWQ4NoN4qaQVjGML",
+   "ok": false,
+   "cached": true,
+   "reasons": [
+    "rug_lp_unlocked (LP 0% < 80%, pump_fun_amm)",
+    "rug_score (52 > 30)",
+    "rug_danger (Large Amount of LP Unlocked)"
+   ],
+   "summary": {
+    "score_norm": 52,
+    "top10_pct": 12.26,
+    "top1_pct": 1.81,
+    "creator_pct": 0.12,
+    "lp_locked_pct": 0.0,
+    "market": "pump_fun_amm",
+    "dangers": [
+     "Large Amount of LP Unlocked"
+    ],
+    "rugged": false,
+    "launchpad": null,
+    "insiders": 0
+   },
+   "err": null
+  },
   {
    "ts": "2026-11-20T09:26:13+01:00",
    "symbol": "GTA6",
@@ -1213,60 +1271,6 @@
     "insiders": 0
    },
    "err": null
-  },
-  {
-   "ts": "2026-11-20T09:21:17+01:00",
-   "symbol": "FIONA",
-   "mint": "BC47TsZsM85ZjZ36H5m7wYtXjFwyNWoKcr67pSaiGQk",
-   "ok": false,
-   "cached": false,
-   "reasons": [
-    "rug_lp_unlocked (LP 0% < 80%, pump_fun_amm)",
-    "rug_score (52 > 30)",
-    "rug_danger (Large Amount of LP Unlocked)"
-   ],
-   "summary": {
-    "score_norm": 52,
-    "top10_pct": 16.21,
-    "top1_pct": 3.56,
-    "creator_pct": 0.12,
-    "lp_locked_pct": 0.0,
-    "market": "pump_fun_amm",
-    "dangers": [
-     "Large Amount of LP Unlocked"
-    ],
-    "rugged": false,
-    "launchpad": null,
-    "insiders": 0
-   },
-   "err": null
-  },
-  {
-   "ts": "2026-11-20T08:57:55+01:00",
-   "symbol": "PATRICK",
-   "mint": "J4QYfHh2EejZKxkjosB8c8by51HU2C16fv9s3MhW9em",
-   "ok": false,
-   "cached": false,
-   "reasons": [
-    "rug_lp_unlocked (LP 0% < 80%, pump_fun_amm)",
-    "rug_score (52 > 30)",
-    "rug_danger (Large Amount of LP Unlocked)"
-   ],
-   "summary": {
-    "score_norm": 52,
-    "top10_pct": 17.88,
-    "top1_pct": 3.98,
-    "creator_pct": 0.12,
-    "lp_locked_pct": 0.0,
-    "market": "pump_fun_amm",
-    "dangers": [
-     "Large Amount of LP Unlocked"
-    ],
-    "rugged": false,
-    "launchpad": null,
-    "insiders": 0
-   },
-   "err": null
   }
  ],
  "reason_pl": {
@@ -1310,146 +1314,147 @@
  "near": [
   {
    "symbol": "BABYDOG",
-   "score": 81.7,
-   "mcap": 81319,
-   "liq": 153997,
-   "chg_m5": 10.71,
-   "chg_h1": 10.71,
+   "score": 81.5,
+   "mcap": 81624,
+   "liq": 154398,
+   "chg_m5": 11.12,
+   "chg_h1": 11.12,
    "reasons": [
     "pair_too_new"
    ]
   },
   {
-   "symbol": "FIONA",
-   "score": 72.6,
-   "mcap": 76949,
-   "liq": 115004,
-   "chg_m5": -1.12,
-   "chg_h1": 88.99,
+   "symbol": "CATMARIO",
+   "score": 76.3,
+   "mcap": 84088,
+   "liq": 118069,
+   "chg_m5": 1.24,
+   "chg_h1": 119.0,
    "reasons": [
-    "downtrend_m5 (-1.12%)"
+    "reentry_ban"
    ]
   },
   {
    "symbol": "FIONA",
-   "score": 68.6,
-   "mcap": 2677983,
-   "liq": 147456,
-   "chg_m5": 2.42,
-   "chg_h1": 58.27,
+   "score": 69.8,
+   "mcap": 2729147,
+   "liq": 148900,
+   "chg_m5": 6.28,
+   "chg_h1": 61.44,
    "reasons": [
-    "mcap>200000 (2677983)"
+    "mcap>200000 (2729147)"
    ]
   },
   {
    "symbol": "BMT",
-   "score": 65.7,
+   "score": 65.2,
    "mcap": 17983441,
-   "liq": 186233,
-   "chg_m5": 2.0,
+   "liq": 186235,
+   "chg_m5": 1.79,
    "chg_h1": 4.17,
    "reasons": [
     "mcap>200000 (17983441)"
    ]
   },
   {
-   "symbol": "GOOGLx",
-   "score": 53.3,
-   "mcap": 274191,
-   "liq": 101489,
-   "chg_m5": 0.14,
-   "chg_h1": 0.97,
-   "reasons": [
-    "mcap>200000 (274191)"
-   ]
-  },
-  {
    "symbol": "ANT",
-   "score": 50.8,
-   "mcap": 1405022,
-   "liq": 1476270,
-   "chg_m5": 0.16,
+   "score": 47.9,
+   "mcap": 1405049,
+   "liq": 1476277,
+   "chg_m5": 0.13,
    "chg_h1": 0.96,
    "reasons": [
-    "mcap>200000 (1405022)"
-   ]
-  },
-  {
-   "symbol": "mihao",
-   "score": 47.7,
-   "mcap": 6912537,
-   "liq": 321965,
-   "chg_m5": 0.78,
-   "chg_h1": 0.45,
-   "reasons": [
-    "mcap>200000 (6912537)"
+    "mcap>200000 (1405049)"
    ]
   },
   {
    "symbol": "AMC",
-   "score": 45.4,
-   "mcap": 97800,
-   "liq": 66771,
-   "chg_m5": 0.53,
-   "chg_h1": 0.65,
+   "score": 42.7,
+   "mcap": 97882,
+   "liq": 69833,
+   "chg_m5": 0.52,
+   "chg_h1": 0.73,
    "reasons": [
-    "score<69 (45.4)"
+    "score<69 (42.7)"
    ]
   },
   {
-   "symbol": "CATMARIO",
-   "score": 73.7,
-   "mcap": 83181,
-   "liq": 117205,
-   "chg_m5": -3.69,
-   "chg_h1": 117.0,
+   "symbol": "DIGS",
+   "score": 32.8,
+   "mcap": 323121,
+   "liq": 58254,
+   "chg_m5": 0.87,
+   "chg_h1": 13.18,
    "reasons": [
-    "reentry_ban",
-    "downtrend_m5 (-3.69%)"
-   ]
-  },
-  {
-   "symbol": "FLOAT",
-   "score": 65.3,
-   "mcap": 1546014,
-   "liq": 217620,
-   "chg_m5": 2.64,
-   "chg_h1": 0.12,
-   "reasons": [
-    "mcap>200000 (1546014)",
-    "low_activity_m5"
+    "mcap>200000 (323121)"
    ]
   },
   {
    "symbol": "2Z",
-   "score": 61.7,
-   "mcap": 86502287,
-   "liq": 218907,
-   "chg_m5": 0.53,
-   "chg_h1": 1.56,
+   "score": 60.8,
+   "mcap": 86484363,
+   "liq": 218885,
+   "chg_m5": 0.42,
+   "chg_h1": 1.54,
    "reasons": [
-    "mcap>200000 (86502287)",
+    "mcap>200000 (86484363)",
     "vol_h1<5000"
    ]
   },
   {
-   "symbol": "PENGU",
-   "score": 60.7,
-   "mcap": 284966625,
-   "liq": 2141085,
-   "chg_m5": 0.17,
-   "chg_h1": 0.87,
+   "symbol": "JTO",
+   "score": 60.8,
+   "mcap": 130769753,
+   "liq": 160992,
+   "chg_m5": 0.24,
+   "chg_h1": 0.9,
    "reasons": [
-    "mcap>200000 (284966625)",
+    "mcap>200000 (130769753)",
     "vol_h1<5000"
+   ]
+  },
+  {
+   "symbol": "RENDER",
+   "score": 60.6,
+   "mcap": 564637259,
+   "liq": 266271,
+   "chg_m5": 0.23,
+   "chg_h1": 0.42,
+   "reasons": [
+    "mcap>200000 (564637259)",
+    "vol_h1<5000"
+   ]
+  },
+  {
+   "symbol": "Pnut ",
+   "score": 60.2,
+   "mcap": 28174330,
+   "liq": 2097645,
+   "chg_m5": 0.03,
+   "chg_h1": 0.24,
+   "reasons": [
+    "mcap>200000 (28174330)",
+    "vol_h1<5000"
+   ]
+  },
+  {
+   "symbol": "AAPLx",
+   "score": 60.1,
+   "mcap": 351513,
+   "liq": 462533,
+   "chg_m5": 0.02,
+   "chg_h1": 0.12,
+   "reasons": [
+    "mcap>200000 (351513)",
+    "downtrend_h6 (-0.31%)"
    ]
   }
  ],
  "sources": {
   "counts": {
    "pump_graduated_p0": "ERR blocked (Cloudflare 403) - skipped, no bypass",
-   "gt_trending": 40,
    "ds_profiles_latest": 26,
+   "gt_trending": 40,
    "jup_toptrending_1h": 50,
    "ray_volume": 48,
    "pump_graduated_p1": "ERR blocked (Cloudflare 403) - skipped, no bypass",
@@ -1458,8 +1463,8 @@
    "ds_profiles_recent": 28,
    "launchlab_lasttrade": 164,
    "pump_adv_graduated": "ERR blocked (Cloudflare 403) - skipped, no bypass",
-   "ds_boosts_latest": 27,
    "launchlab_new": 112,
+   "ds_boosts_latest": 27,
    "jup_toporganic_1h": 47,
    "ds_boosts_top": 27,
    "gt_trend5m": "ERR HTTP Error 429: Too Many Requests",
@@ -1469,8 +1474,8 @@
    "gt_trend1h": "ERR HTTP Error 429: Too Many Requests",
    "ds_search_SOL": 17,
    "ds_search_moon": 12,
-   "ds_search_meme": 10,
    "gt_trend6h": "ERR HTTP Error 429: Too Many Requests",
+   "ds_search_meme": 10,
    "jup_toporganic_6h": 47,
    "ds_search_pumpswap": 30,
    "gt_top_tx": 13,
@@ -1482,22 +1487,22 @@
    "gt_pumpswap_trend": "ERR HTTP Error 429: Too Many Requests",
    "gt_pumpfun": "ERR HTTP Error 429: Too Many Requests",
    "gt_pumpswap": "ERR HTTP Error 429: Too Many Requests",
-   "gt_raydium": "ERR HTTP Error 429: Too Many Requests",
-   "gt_raydium_clmm": 15,
+   "gt_raydium": 18,
+   "gt_raydium_clmm": "ERR HTTP Error 429: Too Many Requests",
    "gt_launchlab": "ERR HTTP Error 429: Too Many Requests",
    "gt_letsbonk": "ERR HTTP Error 429: Too Many Requests"
   },
-  "discovered": 544,
-  "watch": 301,
-  "priced": 432,
-  "ts": 1795163173.0642486
+  "discovered": 543,
+  "watch": 296,
+  "priced": 442,
+  "ts": 1795163222.7971263
  },
  "agents": [
   {
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone",
-   "age_s": 4,
+   "age_s": 5,
    "ok": true,
    "restarts": 0
   },
@@ -1513,7 +1518,7 @@
    "key": "filter",
    "name": "Filtr",
    "desc": "Odrzuca coiny spoza zakresu kapitalizacji (config), bez trendu wzrostowego, z małą płynnością; loguje powody",
-   "age_s": 5,
+   "age_s": 1,
    "ok": true,
    "restarts": 0
   },
