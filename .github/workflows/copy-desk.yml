@@ -44,6 +44,10 @@ jobs:
         run: python -m unittest discover -s tests -q
       - name: run paper copy desk
         working-directory: copydesk
+        env:
+          # optional signal to the live-copy routine; set by the user as repo secrets, never printed or logged
+          LIVE_COPY_WEBHOOK_URL: ${{ secrets.LIVE_COPY_WEBHOOK_URL }}
+          LIVE_COPY_WEBHOOK_AUTH: ${{ secrets.LIVE_COPY_WEBHOOK_AUTH }}
         run: python desk.py
       - name: desk log (tail)
         if: always()

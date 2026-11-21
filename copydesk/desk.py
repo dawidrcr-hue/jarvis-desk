@@ -15,11 +15,12 @@ import os, sys, json, time, uuid, signal, subprocess, traceback, datetime
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
-import core, net
+import core, net, hook, real
 from core import fmt_usd
 
 P = lambda *a: os.path.join(HERE, *a)
 BOOK = P("state", "book.json")
+REAL = P("state", "real.json")
 NOTES = P("notes.jsonl")
 DATA = os.path.join(REPO, "data.json")
 STOP = P("control", "stop.json")
@@ -58,6 +59,8 @@ def add_feed(book, cfg, kind, text, w=None, mint=None, url=None, ts=None):
     book["feed"] = book["feed"][-int(cfg["feed_keep"]):]
 
 def write_note(kind, title, message, data, cfg):
+    if data.get("mint") and data.get("alloc_pct") is not None and "Mint:" not in message:
+        message = f"{message} Mint: {data['mint']} · alokacja portfela {int(round(float(data['alloc_pct']) * 100))}%."
     ev = {"id": uuid.uuid4().hex[:12], "ts": now_iso(), "type": kind, "title": title, "message": message, "data": data}
     lines = []
     try:
@@ -68,6 +71,8 @@ def write_note(kind, title, message, data, cfg):
     tmp = NOTES + ".tmp"
     with open(tmp, "w") as f: f.write("\n".join(lines) + "\n")
     os.replace(tmp, NOTES)
+    try: hook.send(ev, log)          # optional signal to the live-copy routine (secrets via env only)
+    except Exception as e: log("webhook error", err=type(e).__name__)
     return ev
 
 # ---------------------------------------------------------------- desk
@@ -81,11 +86,19 @@ class Desk:
         self.clock = clock
         self.book = load(BOOK) or core.new_book(cfg, clock())
         self.wallets = cfg["wallets"]
-        for w in self.wallets: core.wallet_state(self.book, w, self.book["start_ts"])
+        for w in self.wallets:      # wallets added later start copying from when they were added, not from the book start
+            core.wallet_state(self.book, w, self.book["start_ts"] if w["key"] in self.book["wallets"] or not self.book.get("equity_history") else clock())
         self.next_poll = {w["key"]: 0.0 for w in self.wallets}
         self.last_px = 0.0; self.last_eq = 0.0; self.price_ok_ts = None; self.price_err = None
         self.sym_cache = {}
         self.dirty = True
+        self.real = None; self.last_real = 0.0
+        rw = cfg.get("real_wallet") or {}
+        if rw.get("address"):
+            since = datetime.datetime.fromisoformat(rw["since"]).timestamp() if rw.get("since") else clock()
+            st = load(REAL) or real.new_state(rw["address"], since)
+            if st.get("address") != rw["address"]: st = real.new_state(rw["address"], since)
+            self.real = real.RealWallet(cfg, st, self.rpc, self.prices, self.solpx, clock, log)
 
     # ---- helpers
     def eq(self): return core.equity(self.book)
@@ -189,6 +202,15 @@ class Desk:
             st["skipped"] += 1
             add_feed(self.book, self.cfg, "skip", f"{w['label']} kupił ${sym} {age/60:.0f} min temu – sygnał za stary, pomijam.", w, ev["mint"], core.ds_link(ev["mint"]))
             return
+        sol0 = self.solpx()
+        min_usd = float(w.get("min_buy_usd") or 0)
+        if min_usd > 0:
+            their = core.his_usd(ev, sol0)
+            if their < min_usd:
+                st["small_skipped"] = int(st.get("small_skipped") or 0) + 1
+                st["last_small_ts"] = ev.get("block_time")
+                return
+            st["big_seen"] = int(st.get("big_seen") or 0) + 1
         size, why = core.size_new(self.book, w["alloc_pct"], ev["mint"], self.cfg)
         if not size:
             st["skipped"] += 1
@@ -210,7 +232,7 @@ class Desk:
         st["copied_buys"] += 1
         msg = core.note_buy(w, pos, plan, fill, eq0)
         write_note("copy_buy", f"PAPIER kopia {w['label']}: kupno ${pos['symbol']} za {fmt_usd(size)}", msg,
-                   {"wallet": w["key"], "mint": ev["mint"], "pos_id": pos["id"], "size_usd": size, "delay_s": round(pos["delay_s"], 1),
+                   {"wallet": w["key"], "mint": ev["mint"], "ticker": pos["symbol"], "alloc_pct": w["alloc_pct"], "pos_id": pos["id"], "size_usd": size, "delay_s": round(pos["delay_s"], 1),
                     "their_sig": sig}, self.cfg)
         add_feed(self.book, self.cfg, "buy", f"Kopia {w['label']}: kupno ${pos['symbol']} za {fmt_usd(size)} ({int(round(w['alloc_pct']*100))}%), "
                  f"opóźnienie {pos['delay_s']:.0f} s, poślizg {fill['impact_pct']*100:+.2f}%.", w, ev["mint"], core.ds_link(ev["mint"]))
@@ -232,7 +254,7 @@ class Desk:
         st["copied_buys"] += 1
         msg = core.note_buy(w, pos, plan, fill, eq0, addon=True)
         write_note("copy_buy", f"PAPIER kopia {w['label']}: dokupienie ${pos['symbol']} za {fmt_usd(size)}", msg,
-                   {"wallet": w["key"], "mint": pos["mint"], "pos_id": pos["id"], "size_usd": size, "addon": True, "their_sig": sig}, self.cfg)
+                   {"wallet": w["key"], "mint": pos["mint"], "ticker": pos["symbol"], "alloc_pct": w["alloc_pct"], "pos_id": pos["id"], "size_usd": size, "addon": True, "their_sig": sig}, self.cfg)
         add_feed(self.book, self.cfg, "buy", f"Kopia {w['label']}: dokupienie ${pos['symbol']} za {fmt_usd(size)} (proporcjonalnie).", w, pos["mint"], core.ds_link(pos["mint"]))
         log("COPY ADDON", wallet=w["key"], symbol=pos["symbol"], size=size)
 
@@ -264,7 +286,7 @@ class Desk:
         msg = core.note_sell(w, pos, frac, sf, rec, eq1, delay, ev.get("transfer_only"))
         title = (f"PAPIER kopia {w['label']}: sprzedaż ${pos['symbol']} {rec['pnl_pct']*100:+.1f}%" if rec
                  else f"PAPIER kopia {w['label']}: sprzedaż {frac*100:.0f}% ${pos['symbol']}")
-        write_note("copy_sell", title, msg, {"wallet": w["key"], "mint": pos["mint"], "pos_id": pos["id"], "frac": round(frac, 4),
+        write_note("copy_sell", title, msg, {"wallet": w["key"], "mint": pos["mint"], "ticker": pos["symbol"], "alloc_pct": w["alloc_pct"], "pos_id": pos["id"], "frac": round(frac, 4),
                    "pnl_usd": rec["pnl_usd"] if rec else None, "equity": round(eq1, 4), "delay_s": round(delay, 1), "their_sig": sig}, self.cfg)
         txt = (f"Kopia {w['label']}: sprzedaż całości ${pos['symbol']} – wynik {fmt_usd(rec['pnl_usd'], True)} ({rec['pnl_pct']*100:+.1f}%)." if rec
                else f"Kopia {w['label']}: sprzedaż {frac*100:.0f}% ${pos['symbol']} za {fmt_usd(sf['proceeds'])}.")
@@ -295,7 +317,7 @@ class Desk:
                 w = next((x for x in self.wallets if x["key"] == p["wallet"]), {"key": p["wallet"], "label": p["label"]})
                 msg = core.note_dead(p, rec, self.eq())
                 write_note("copy_sell", f"PAPIER kopia {p['label']}: ${p['symbol']} rug/brak płynności", msg,
-                           {"wallet": p["wallet"], "mint": p["mint"], "pos_id": p["id"], "pnl_usd": rec["pnl_usd"], "dead": True}, self.cfg)
+                           {"wallet": p["wallet"], "mint": p["mint"], "ticker": p["symbol"], "alloc_pct": w.get("alloc_pct"), "pos_id": p["id"], "pnl_usd": rec["pnl_usd"], "dead": True}, self.cfg)
                 add_feed(self.book, self.cfg, "sell", f"${p['symbol']} ({p['label']}) bez płynności – zamknięte jako strata {fmt_usd(rec['pnl_usd'], True)}.", w, p["mint"], core.ds_link(p["mint"]))
         self.dirty = True
 
@@ -303,7 +325,9 @@ class Desk:
         self.book["equity_history"].append([int(self.clock()), round(self.eq(), 4)])
         self.book["equity_history"] = core.thin_history(self.book["equity_history"])
 
-    def save(self): save(BOOK, self.book)
+    def save(self):
+        save(BOOK, self.book)
+        if self.real: save(REAL, self.real.st)
 
     # ---- public data.json (no wallet keys/secrets: only public addresses of the copied wallets)
     def data(self, run):
@@ -322,7 +346,9 @@ class Desk:
                             "last_activity_ts": st.get("last_activity_ts"), "last_trade_ts": st.get("last_trade_ts"),
                             "last_poll_ts": st.get("last_poll_ts"), "errors": st.get("errors"), "last_error": st.get("last_error"),
                             "queue": len(st.get("queue") or []), "copied_buys": st.get("copied_buys"), "copied_sells": st.get("copied_sells"),
-                            "skipped": st.get("skipped"), "airdrops_skipped": st.get("airdrops_skipped")})
+                            "skipped": st.get("skipped"), "airdrops_skipped": st.get("airdrops_skipped"),
+                            "min_buy_usd": w.get("min_buy_usd"), "filter_label": w.get("filter_label") if w.get("min_buy_usd") else None,
+                            "small_skipped": st.get("small_skipped") or 0, "big_seen": st.get("big_seen") or 0, "start_ts": st.get("start_ts")})
         pos = []
         for p in b["positions"]:
             v = core.mark_value(p)
@@ -353,6 +379,7 @@ class Desk:
                 "stats": {"trades": len(b["closed"]), "wins": sum(1 for c in b["closed"] if c["pnl_usd"] > 0),
                           "realized": round(sum(c["pnl_usd"] for c in b["closed"]), 4),
                           "avg_delay_s": round(sum(delays) / len(delays), 1) if delays else None},
+                "real": self.real.view() if self.real else None,
                 "costs": {"phantom_fee_pct": self.cfg["costs"]["phantom_fee_pct"], "network_sol": self.cfg["costs"]["base_fee_sol"] + self.cfg["costs"]["priority_fee_sol"],
                           "sol_usd": round(net._sol["px"] or 0, 4), "quotes": "Jupiter (publiczne API) + DexScreener"},
                 "health": {"status": "ok" if ok else "warn", "run_id": run.get("run_id"), "run_started": run.get("started"),
@@ -369,6 +396,8 @@ class Desk:
                 self.next_poll[w["key"]] = self.clock() + float(self.cfg["wallet_poll_s"])
         if now - self.last_px >= float(self.cfg["price_poll_s"]):
             self.last_px = now; self.mark(); self.solpx()
+        if self.real and now - self.last_real >= float((self.cfg.get("real_wallet") or {}).get("poll_s", 30)):
+            self.last_real = now; self.real.update(); self.dirty = True
         if now - self.last_eq >= float(self.cfg["equity_snapshot_s"]):
             self.last_eq = now; self.snapshot(); self.dirty = True
 
@@ -376,7 +405,7 @@ class Desk:
 def git(*a, t=90):
     return subprocess.run(["git", "-C", REPO, *a], timeout=t, capture_output=True, text=True)
 
-PATHS = ["data.json", "copydesk/state/book.json", "copydesk/notes.jsonl"]
+PATHS = ["data.json", "copydesk/state/book.json", "copydesk/state/real.json", "copydesk/notes.jsonl"]
 _last_commit = {"ts": 0.0}
 
 def publish(desk, run, min_gap):

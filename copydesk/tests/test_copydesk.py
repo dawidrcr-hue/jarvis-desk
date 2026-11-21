@@ -2,13 +2,16 @@ import os, sys, json, time, tempfile, unittest, shutil
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, ROOT)
-import core, net, desk as D
+import core, net, hook, real, desk as D
 
 CFG = json.load(open(os.path.join(ROOT, "config.json")))
 FX = lambda n: json.load(open(os.path.join(HERE, "fixtures", n)))
 UNI = "2heJbC32Tpfcb3nbUb5ER61K11FGZVfVGtVnDm6LDogF"
 SOL589 = "3SW1va94ZdQGyRVW7hUFj9Mt3BX3KvqCPo42zZDSApFC"
 NAWY = "nAWy4pMBkTsVhK6JWGvVm5VKsyxns3sFz4iYGi38qNc"
+FRANK = "498g1rVnFcnjBjpfw1xyqA1WvgQXUU8RWuELjxkjAayQ"
+PURPLE = "4B84JPcX9D7VX2jmq9nMvGoSmL3GVaxUYCqnuo2ZiTVp"
+REALW = "Gyt2TBaQTGskoZ2PfUNcVTC3brSRvmgTQEexvgZ4MP34"
 TOK = "TokMint1111111111111111111111111111111111111"
 
 def tb(mint, amt, owner=UNI, dec=6):
@@ -107,7 +110,7 @@ class FakeRpc:
 class TDesk(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.mkdtemp()
-        D.BOOK = os.path.join(self.tmp, "book.json"); D.NOTES = os.path.join(self.tmp, "notes.jsonl"); D.DATA = os.path.join(self.tmp, "data.json")
+        D.BOOK = os.path.join(self.tmp, "book.json"); D.NOTES = os.path.join(self.tmp, "notes.jsonl"); D.DATA = os.path.join(self.tmp, "data.json"); D.REAL = os.path.join(self.tmp, "real.json")
         self.t = [100000.0]
         self.px = {TOK: {"price": 0.002, "liq": 80000, "symbol": "TEST", "url": "u", "pair": "p", "mcap": 1}}
         self.rpc = FakeRpc()
@@ -201,8 +204,109 @@ class TDesk(unittest.TestCase):
         s = json.dumps(data)
         for bad in ("secret", "private", "token\":", "seed"): self.assertNotIn(bad, s.lower())
         self.assertEqual(data["badge"], "PAPIER – bez prawdziwych pieniędzy")
-        self.assertEqual(len(data["wallets"]), 3); self.assertEqual(data["positions"][0]["label"], "@SOL589")
+        self.assertEqual(len(data["wallets"]), 5); self.assertEqual(data["positions"][0]["label"], "@SOL589")
         self.assertIn("solscan.io/account/", data["wallets"][0]["solscan"])
+
+class TBigEntries(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.mkdtemp()
+        D.BOOK = os.path.join(self.tmp, "book.json"); D.NOTES = os.path.join(self.tmp, "notes.jsonl"); D.DATA = os.path.join(self.tmp, "data.json"); D.REAL = os.path.join(self.tmp, "real.json")
+        self.t = [100000.0]; self.rpc = FakeRpc()
+        cfg = json.loads(json.dumps(CFG)); cfg["real_wallet"] = {}
+        self.fw = next(w for w in cfg["wallets"] if w["key"] == "frank"); self.fw["min_buy_usd"] = 1000
+        px = {TOK: {"price": 0.002, "liq": 80000, "symbol": "BIG", "url": "u", "pair": "p", "mcap": 1}}
+        self.d = D.Desk(cfg, rpc=self.rpc, prices=lambda ms: {m: px[m] for m in ms if m in px},
+                        quote=lambda i, o, a, b: int(a / 1e9 * 100 / 0.002 * 1e6) if i == core.WSOL else int(a / 1e6 * 0.002 / 100 * 1e9),
+                        solpx=lambda: 100.0, clock=lambda: self.t[0])
+        self.d.poll_wallet(self.fw)
+    def tearDown(self): shutil.rmtree(self.tmp)
+    def test_small_skipped_big_copied_sell_proportional(self):
+        self.rpc.add(FRANK, "SMALL", mktx([], [tb(TOK, 1000, FRANK)], 10, 5, bt=self.t[0] + 1, owner=FRANK))      # 5 SOL = $500 < $1000
+        self.t[0] += 3; self.d.poll_wallet(self.fw)
+        self.assertEqual(self.d.book["positions"], []); self.assertEqual(self.d.book["wallets"]["frank"]["small_skipped"], 1)
+        self.assertFalse(os.path.exists(D.NOTES))
+        self.rpc.add(FRANK, "SELLS", mktx([tb(TOK, 1000, FRANK)], [], 5, 6, bt=self.t[0] + 1, owner=FRANK)); self.t[0] += 3; self.d.poll_wallet(self.fw)
+        self.rpc.add(FRANK, "BIG", mktx([], [tb(TOK, 9000, FRANK)], 30, 15, bt=self.t[0] + 1, owner=FRANK))       # 15 SOL = $1500
+        self.t[0] += 3; self.d.poll_wallet(self.fw)
+        self.assertEqual(len(self.d.book["positions"]), 1); self.assertAlmostEqual(self.d.book["positions"][0]["cost_usd"], 2.5)
+        n = json.loads(open(D.NOTES).read().splitlines()[-1]); self.assertIn("Kopia Frank degods: kupno $BIG za $2.50 (10%)", n["message"])
+        self.assertEqual(n["data"]["ticker"], "BIG"); self.assertEqual(n["data"]["alloc_pct"], 0.10)
+        self.assertIn(f"Mint: {TOK} · alokacja portfela 10%.", n["message"])
+        self.rpc.add(FRANK, "S2", mktx([tb(TOK, 9000, FRANK)], [tb(TOK, 4500, FRANK)], 15, 20, bt=self.t[0] + 1, owner=FRANK))
+        self.t[0] += 3; q0 = self.d.book["positions"][0]["qty"]; self.d.poll_wallet(self.fw)
+        self.assertAlmostEqual(self.d.book["positions"][0]["qty"], q0 * 0.5)
+        v = self.d.data({"run_id": "x"}); fr = next(w for w in v["wallets"] if w["key"] == "frank")
+        self.assertEqual(fr["filter_label"], "tylko duże wejścia"); self.assertEqual(fr["min_buy_usd"], 1000)
+        ns = [json.loads(l) for l in open(D.NOTES).read().splitlines()]
+        self.assertTrue(all(x["data"]["mint"] == TOK and f"Mint: {TOK}" in x["message"] and "alokacja portfela 10%" in x["message"] for x in ns))
+    def test_purplereign_copies_small_buys_at_15pct(self):
+        pw = next(w for w in self.d.cfg["wallets"] if w["key"] == "purplereign"); self.d.poll_wallet(pw)
+        self.rpc.add(PURPLE, "P1", mktx([], [tb(TOK, 50, PURPLE)], 10, 9.5, bt=self.t[0] + 1, owner=PURPLE))   # 0.5 SOL = $50, no filter
+        self.t[0] += 3; self.d.poll_wallet(pw)
+        self.assertEqual(len(self.d.book["positions"]), 1); self.assertAlmostEqual(self.d.book["positions"][0]["cost_usd"], 3.75)
+        n = json.loads(open(D.NOTES).read().splitlines()[-1])
+        self.assertIn("(15%)", n["message"]); self.assertIn(f"Mint: {TOK} · alokacja portfela 15%.", n["message"])
+    def test_dust_pre_counts_as_new_and_usdc_size(self):
+        cfg = self.d.cfg
+        ev = core.classify(mktx([tb(TOK, 5, FRANK)], [tb(TOK, 9000, FRANK)], 30, 15, bt=1, owner=FRANK), FRANK, cfg)[0]
+        self.assertEqual(ev["kind"], "new")
+        ev = core.classify(mktx([tb(TOK, 4000, FRANK)], [tb(TOK, 9000, FRANK)], 30, 15, bt=1, owner=FRANK), FRANK, cfg)[0]
+        self.assertEqual(ev["kind"], "addon")
+        tx = mktx([tb(core.USDC, 5000, FRANK)], [tb(core.USDC, 1, FRANK), tb(TOK, 9000, FRANK)], 1, 0.99999, bt=1, owner=FRANK)
+        ev = [e for e in core.classify(tx, FRANK, cfg) if e["mint"] == TOK][0]
+        self.assertEqual(ev["kind"], "new"); self.assertGreaterEqual(core.his_usd(ev, 100.0), 4999)
+    def test_new_wallet_starts_now(self):
+        self.d.book["equity_history"] = [[1, 25]]
+        del self.d.book["wallets"]["frank"]; D.save(D.BOOK, self.d.book)
+        self.t[0] += 500
+        d2 = D.Desk(self.d.cfg, rpc=self.rpc, prices=lambda ms: {}, quote=lambda *a: None, solpx=lambda: 100.0, clock=lambda: self.t[0])
+        self.assertEqual(d2.book["wallets"]["frank"]["start_ts"], self.t[0])
+        self.assertEqual(d2.book["wallets"]["unipcs"]["start_ts"], 100000.0)
+
+class THook(unittest.TestCase):
+    def test_payload_and_skip_without_secret(self):
+        os.environ.pop("LIVE_COPY_WEBHOOK_URL", None)
+        note = {"id": "abc", "ts": "t", "type": "copy_buy", "data": {"ticker": "X", "mint": "M", "wallet": "frank"}}
+        self.assertIsNone(hook.send(note, lambda *a, **k: None))
+        self.assertEqual(hook.payload(note), {"note_id": "abc", "side": "buy", "ticker": "X", "mint": "M", "wallet": "frank", "alloc_pct": None, "ts": "t"})
+        self.assertEqual(hook.payload(dict(note, type="copy_sell"))["side"], "sell")
+    def test_retries_and_never_logs_url(self):
+        logs = []; calls = []
+        def fake_urlopen(req, timeout=None):
+            calls.append((req.full_url, req.headers.get("Authorization"), timeout)); raise OSError("boom https://secret.example/x")
+        old = hook.urllib.request.urlopen; hook.urllib.request.urlopen = fake_urlopen
+        try:
+            ok = hook._post({"note_id": "1", "side": "buy"}, "https://secret.example/hook", "Bearer s3cret", lambda m, **k: logs.append((m, k)), sleep=lambda s: None)
+        finally: hook.urllib.request.urlopen = old
+        self.assertFalse(ok); self.assertEqual(len(calls), 3); self.assertEqual(calls[0][1], "Bearer s3cret"); self.assertEqual(calls[0][2], 5)
+        txt = json.dumps(logs); self.assertNotIn("secret.example", txt); self.assertNotIn("s3cret", txt)
+    def test_ignores_other_notes(self):
+        os.environ["LIVE_COPY_WEBHOOK_URL"] = "http://127.0.0.1:9/x"
+        try: self.assertIsNone(hook.send({"type": "info"}, lambda *a, **k: None))
+        finally: os.environ.pop("LIVE_COPY_WEBHOOK_URL", None)
+
+class TReal(unittest.TestCase):
+    def test_classify_real_buy_sell(self):
+        b = real.classify_real(mktx([], [tb(TOK, 100, REALW)], 1.0, 0.9, bt=5, owner=REALW), REALW, 100)
+        self.assertEqual(b[0]["side"], "buy"); self.assertAlmostEqual(b[0]["usd"], 10, places=3)
+        s = real.classify_real(mktx([tb(TOK, 100, REALW)], [], 0.9, 0.95, bt=6, owner=REALW), REALW, 100)
+        self.assertEqual(s[0]["side"], "sell")
+        self.assertEqual(real.classify_real(mktx([], [tb(TOK, 1, REALW)], 1, 1, owner=REALW), REALW, 100)[0]["side"], "transfer_in")
+    def test_update_and_view(self):
+        class R(FakeRpc):
+            def call(self, m, p):
+                if m == "getBalance": return {"value": 300_000_000}
+                if m == "getTokenAccountsByOwner":
+                    if p[1]["programId"] != real.TOKEN_PROGRAMS[0]: return {"value": []}
+                    return {"value": [{"account": {"data": {"parsed": {"info": {"mint": TOK, "tokenAmount": {"uiAmount": 100, "decimals": 6}}}}}}]}
+        r = R(); r.add(REALW, "RB", mktx([], [tb(TOK, 100, REALW)], 0.4, 0.3, bt=50, owner=REALW))
+        st = real.new_state(REALW, 10)
+        w = real.RealWallet({}, st, r, lambda ms: {TOK: {"price": 0.12, "liq": 1, "symbol": "TT"}}, lambda: 100.0, clock=lambda: 1000)
+        w.update(); v = w.view()
+        self.assertAlmostEqual(v["equity_usd"], 30 + 12); self.assertEqual(v["positions"][0]["symbol"], "TT")
+        self.assertAlmostEqual(v["positions"][0]["pnl_usd"], 2.0, places=3)
+        self.assertEqual(v["trades"][0]["side"], "buy"); self.assertIn("solscan.io/tx/RB", v["trades"][0]["solscan"])
+        self.assertIsNone(v["last_error"])
 
 class TQueueRpc(unittest.TestCase):
     def test_merge_queue(self):
@@ -226,15 +330,27 @@ class TQueueRpc(unittest.TestCase):
 class TConfig(unittest.TestCase):
     def test_config(self):
         a = {w["address"]: w["alloc_pct"] for w in CFG["wallets"]}
-        self.assertEqual(a, {UNI: 0.25, NAWY: 0.10, SOL589: 0.10})
+        self.assertEqual(a, {UNI: 0.25, NAWY: 0.10, SOL589: 0.10, FRANK: 0.10, PURPLE: 0.15})
+        fr = next(w for w in CFG["wallets"] if w["address"] == FRANK)
+        self.assertGreater(fr["min_buy_usd"], 0); self.assertEqual(fr["filter_label"], "tylko duże wejścia")
+        for w in CFG["wallets"]:
+            if w["address"] != FRANK: self.assertFalse(w.get("min_buy_usd"))
+        self.assertEqual(CFG["real_wallet"]["address"], REALW)
         self.assertEqual(CFG["start_equity_usd"], 25.0); self.assertEqual(CFG["max_token_pct_of_equity"], 0.40)
         self.assertEqual(CFG["costs"]["phantom_fee_pct"], 0.0085); self.assertEqual(CFG["min_position_usd"], 0.5)
         self.assertGreaterEqual(CFG["publish_min_interval_s"], 60)
         for u in CFG["rpc_urls"]: self.assertNotIn("api-key", u); self.assertNotIn("?", u)
+    def test_workflow_webhook_env(self):
+        wf = open(os.path.join(os.path.dirname(ROOT), ".github", "workflows", "copy-desk.yml")).read()
+        self.assertIn("LIVE_COPY_WEBHOOK_URL: ${{ secrets.LIVE_COPY_WEBHOOK_URL }}", wf)
+        self.assertIn("LIVE_COPY_WEBHOOK_AUTH: ${{ secrets.LIVE_COPY_WEBHOOK_AUTH }}", wf)
+        self.assertNotIn("echo", wf.split("run paper copy desk")[1].split("desk log")[0])
+
     def test_workflow(self):
         wf = open(os.path.join(os.path.dirname(ROOT), ".github", "workflows", "copy-desk.yml")).read()
         self.assertIn("name: copy-desk", wf); self.assertIn("group: copy-desk", wf); self.assertIn("cancel-in-progress: false", wf)
-        self.assertNotIn("run_actions.py", wf); self.assertNotIn("secrets.", wf)
+        self.assertNotIn("run_actions.py", wf)
+        self.assertEqual(sorted(set(__import__("re").findall(r"secrets\.(\w+)", wf))), ["LIVE_COPY_WEBHOOK_AUTH", "LIVE_COPY_WEBHOOK_URL"])
 
 if __name__ == "__main__":
     unittest.main()
