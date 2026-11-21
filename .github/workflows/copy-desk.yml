@@ -1,0 +1,51 @@
+name: copy-desk
+# PAPER copy-trading desk (simulation only: no wallet, no Phantom, no keys, no secrets, no real funds).
+# Each run copies the public wallets on paper for ~5h40m, committing data.json + copydesk state to main
+# at most once per ~65 s, then saves and exits. The cron keeps one run queued in the concurrency group,
+# so the next run starts when the current one ends and resumes from the committed state.
+# Graceful handoff/stop: commit copydesk/control/stop.json {"run_id": "<run id>"}.
+on:
+  schedule:
+    - cron: "7,37 * * * *"
+  workflow_dispatch:
+    inputs:
+      run_seconds:
+        description: "How long this run copies (seconds)"
+        required: false
+        default: "20400"
+permissions:
+  contents: write
+concurrency:
+  group: copy-desk
+  cancel-in-progress: false
+jobs:
+  copy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    env:
+      TZ: Europe/Warsaw
+      PYTHONUNBUFFERED: "1"
+      DESK_RUN_SECONDS: ${{ github.event.inputs.run_seconds || '20400' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: git identity
+        run: |
+          git config user.name "jarvis-copy-desk[bot]"
+          git config user.email "jarvis-copy-desk@users.noreply.github.com"
+          git pull -q --ff-only origin main || true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: tests
+        working-directory: copydesk
+        run: python -m unittest discover -s tests -q
+      - name: run paper copy desk
+        working-directory: copydesk
+        run: python desk.py
+      - name: desk log (tail)
+        if: always()
+        working-directory: copydesk
+        run: tail -n 60 logs/desk.log 2>/dev/null || true

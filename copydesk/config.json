@@ -1,0 +1,38 @@
+{
+ "_note": "PAPER copy desk: simulation only. No wallet, no keys, no signing, no Phantom, no real funds. Public data only.",
+ "start_equity_usd": 25.0,
+ "wallets": [
+  {"key": "unipcs", "label": "@unipcs", "address": "2heJbC32Tpfcb3nbUb5ER61K11FGZVfVGtVnDm6LDogF", "alloc_pct": 0.25},
+  {"key": "nawy", "label": "bez nazwy (nAWy…8qNc)", "address": "nAWy4pMBkTsVhK6JWGvVm5VKsyxns3sFz4iYGi38qNc", "alloc_pct": 0.10},
+  {"key": "sol589", "label": "@SOL589", "address": "3SW1va94ZdQGyRVW7hUFj9Mt3BX3KvqCPo42zZDSApFC", "alloc_pct": 0.10}
+ ],
+ "min_position_usd": 0.5,
+ "max_token_pct_of_equity": 0.40,
+ "min_spend_sol": 0.005,
+ "min_spend_stable": 1.0,
+ "full_exit_fraction": 0.98,
+ "min_sell_fraction": 0.01,
+ "max_buy_signal_age_s": 600,
+ "costs": {
+  "phantom_fee_pct": 0.0085,
+  "base_fee_sol": 0.000005,
+  "priority_fee_sol": 0.00005,
+  "token_account_rent_sol": 0.00203928,
+  "fallback_pool_fee_pct": 0.0025,
+  "fallback_impact_mult": 2.0,
+  "jupiter_slippage_bps": 500
+ },
+ "rpc_urls": ["https://solana-rpc.publicnode.com", "https://api.mainnet-beta.solana.com"],
+ "max_tx_version": 1,
+ "wallet_poll_s": 6,
+ "price_poll_s": 20,
+ "equity_snapshot_s": 60,
+ "publish_min_interval_s": 65,
+ "dead_liq_usd": 1000,
+ "dead_after_s": 900,
+ "tx_retry_max": 8,
+ "tx_retry_max_age_s": 600,
+ "notes_keep": 300,
+ "feed_keep": 120,
+ "closed_keep": 200
+}
