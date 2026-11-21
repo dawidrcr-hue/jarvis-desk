@@ -126,6 +126,9 @@ class Desk:
         except Exception as e:
             st["errors"] += 1; st["last_error"] = repr(e)[:160]; log("signatures error", wallet=w["key"], err=repr(e)[:200])
             return
+        prev = st.get("last_poll_ts")
+        if prev and 0 < now - prev < 600:                      # measured interval between successful polls (EMA)
+            dt = now - prev; st["poll_every_s"] = round(dt if not st.get("poll_every_s") else 0.8 * st["poll_every_s"] + 0.2 * dt, 2)
         st["last_poll_ts"] = now; st["last_error"] = None
         if sigs:
             bt = max((s.get("blockTime") or 0) for s in sigs)
@@ -344,7 +347,7 @@ class Desk:
                             "positions": [p["id"] for p in ops], "pnl_usd": round(real + unreal, 4), "realized": round(real, 4),
                             "unrealized": round(unreal, 4), "trades": len(cl), "wins": sum(1 for c in cl if c["pnl_usd"] > 0),
                             "last_activity_ts": st.get("last_activity_ts"), "last_trade_ts": st.get("last_trade_ts"),
-                            "last_poll_ts": st.get("last_poll_ts"), "errors": st.get("errors"), "last_error": st.get("last_error"),
+                            "last_poll_ts": st.get("last_poll_ts"), "poll_every_s": st.get("poll_every_s"), "errors": st.get("errors"), "last_error": st.get("last_error"),
                             "queue": len(st.get("queue") or []), "copied_buys": st.get("copied_buys"), "copied_sells": st.get("copied_sells"),
                             "skipped": st.get("skipped"), "airdrops_skipped": st.get("airdrops_skipped"),
                             "min_buy_usd": w.get("min_buy_usd"), "filter_label": w.get("filter_label") if w.get("min_buy_usd") else None,
@@ -366,6 +369,8 @@ class Desk:
                    "exit_delay_s": round(c.get("exit_delay_s") or 0, 1) if c.get("exit_delay_s") is not None else None}
                   for c in b["closed"][-60:]][::-1]
         polls = [b["wallets"][w["key"]].get("last_poll_ts") or 0 for w in self.wallets]
+        every = [b["wallets"][w["key"]].get("poll_every_s") for w in self.wallets]
+        every = [e for e in every if e]
         lag = now - min(polls) if polls and min(polls) else None
         ok = lag is not None and lag < 120 and (self.price_ok_ts and now - self.price_ok_ts < 180)
         delays = [p.get("delay_s") for p in b["positions"]] + [c.get("delay_s") for c in b["closed"]]
@@ -384,6 +389,8 @@ class Desk:
                           "sol_usd": round(net._sol["px"] or 0, 4), "quotes": "Jupiter (publiczne API) + DexScreener"},
                 "health": {"status": "ok" if ok else "warn", "run_id": run.get("run_id"), "run_started": run.get("started"),
                            "run_ends": run.get("ends"), "poll_lag_s": round(lag, 1) if lag is not None else None,
+                           "poll_every_s": round(max(every), 1) if every else None, "poll_target_s": float(self.cfg["wallet_poll_s"]),
+                           "publish_every_s": float(self.cfg["publish_min_interval_s"]),
                            "price_ok_ts": self.price_ok_ts, "price_err": self.price_err, "rpc_calls": self.rpc.calls, "rpc_errors": self.rpc.errors,
                            "rpc_last_error": self.rpc.last_error, "tx_version": self.rpc.max_version,
                            "where": "GitHub Actions (copy-desk)" if os.environ.get("GITHUB_ACTIONS") else "lokalnie"}}
