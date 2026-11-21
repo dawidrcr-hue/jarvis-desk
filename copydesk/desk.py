@@ -379,7 +379,7 @@ class Desk:
                 "stats": {"trades": len(b["closed"]), "wins": sum(1 for c in b["closed"] if c["pnl_usd"] > 0),
                           "realized": round(sum(c["pnl_usd"] for c in b["closed"]), 4),
                           "avg_delay_s": round(sum(delays) / len(delays), 1) if delays else None},
-                "real": self.real.view() if self.real else None,
+                "real": self.real_view(),
                 "costs": {"phantom_fee_pct": self.cfg["costs"]["phantom_fee_pct"], "network_sol": self.cfg["costs"]["base_fee_sol"] + self.cfg["costs"]["priority_fee_sol"],
                           "sol_usd": round(net._sol["px"] or 0, 4), "quotes": "Jupiter (publiczne API) + DexScreener"},
                 "health": {"status": "ok" if ok else "warn", "run_id": run.get("run_id"), "run_started": run.get("started"),
@@ -387,6 +387,26 @@ class Desk:
                            "price_ok_ts": self.price_ok_ts, "price_err": self.price_err, "rpc_calls": self.rpc.calls, "rpc_errors": self.rpc.errors,
                            "rpc_last_error": self.rpc.last_error, "tx_version": self.rpc.max_version,
                            "where": "GitHub Actions (copy-desk)" if os.environ.get("GITHUB_ACTIONS") else "lokalnie"}}
+
+    def real_view(self):
+        """Real wallet (read-only) + which copied wallet each real token came from (same mint bought on paper)."""
+        if not self.real: return None
+        v = self.real.view(); b = self.book
+        src = {}
+        for p in list(b["closed"]) + list(b["positions"]):
+            src[p["mint"]] = (p["wallet"], p["label"])
+        for x in v["positions"] + v["trades"]:
+            k = src.get(x["mint"]); x["wallet"], x["label"] = (k if k else (None, None))
+        per = {}
+        for x in v["positions"]:
+            if x["wallet"]:
+                d = per.setdefault(x["wallet"], {"open": 0, "pnl_usd": 0.0, "trades": 0})
+                d["open"] += 1; d["pnl_usd"] += x["pnl_usd"] or 0
+        for x in v["trades"]:
+            if x["wallet"] and x["side"] in ("buy", "sell"):
+                per.setdefault(x["wallet"], {"open": 0, "pnl_usd": 0.0, "trades": 0})["trades"] += 1
+        v["per_wallet"] = per
+        return v
 
     def step(self):
         now = self.clock()

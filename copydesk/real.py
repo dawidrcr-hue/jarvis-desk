@@ -4,7 +4,7 @@ getTransaction on a public RPC, prices from DexScreener. State: copydesk/state/r
 import time
 import core
 
-TOKEN_PROGRAMS = ["TokenkegQfeZyiNwAJbNbGqPxSWuJTQ7GpvYGyUQRjn", "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"]
+TOKEN_PROGRAMS = ["TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA", "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"]
 
 def new_state(address, since_ts):
     return {"address": address, "since_ts": since_ts, "last_sig": None, "queue": [], "handled": [], "trades": [],
@@ -97,20 +97,24 @@ class RealWallet:
                 tr.setdefault("symbol", None)
                 if not tr["symbol"] and self.sym.get(tr["mint"]): tr["symbol"] = self.sym[tr["mint"]]
             st["holdings"] = holdings; st["sol"] = sol; st["sol_usd"] = sol_usd
-            eq = sol * sol_usd + sum(h["value"] or 0 for h in holdings.values())
+            ex = self.excluded()
+            eq = sol * sol_usd + sum(h["value"] or 0 for m, h in holdings.items() if m not in ex)   # untouched tokens (e.g. $JOY) not in equity
             st["equity_usd"] = eq
             if st.get("start_equity_usd") is None and sol_usd > 0:
                 st["start_equity_usd"] = eq; st["start_ts"] = self.clock()
             now = self.clock()
-            if not st["equity_history"] or now - st["equity_history"][-1][0] >= 60:
+            if not st["equity_history"] or now - st["equity_history"][-1][0] >= 25:     # sampled every loop (~30 s)
                 st["equity_history"].append([int(now), round(eq, 4)]); st["equity_history"] = core.thin_history(st["equity_history"], 2000)
             st["updated_ts"] = now; st["last_error"] = None
         except Exception as e:
             st["last_error"] = type(e).__name__ + ": " + str(e)[:120]
             self.log("real wallet error", err=st["last_error"])
 
+    def excluded(self):
+        return {m for m in ((self.cfg.get("real_wallet") or {}).get("exclude_mints") or {})}
+
     def view(self):
-        st = self.st
+        st = self.st; ex = self.excluded()
         per = {}
         for t in st["trades"]:
             if t["side"] not in ("buy", "sell"): continue
@@ -118,7 +122,12 @@ class RealWallet:
             if t["side"] == "buy": p["bought_usd"] += t["usd"]; p["buys"] += 1
             else: p["sold_usd"] += t["usd"]; p["sells"] += 1
         pos = []
+        untouched = []
         for m, h in st["holdings"].items():
+            if m in ex or not (h.get("qty") or 0) > 0:
+                if m in ex and (h.get("qty") or 0) > 0:
+                    untouched.append({"mint": m, "symbol": (self.cfg["real_wallet"]["exclude_mints"].get(m) or h["symbol"]), "qty": h["qty"], "value": h["value"]})
+                continue
             c = per.get(m)
             pnl = (h["value"] or 0) + c["sold_usd"] - c["bought_usd"] if c and c["buys"] and h["value"] is not None else None
             pos.append({"mint": m, "symbol": h["symbol"], "qty": h["qty"], "price": h["price"], "value": h["value"],
@@ -129,12 +138,12 @@ class RealWallet:
         pos.sort(key=lambda p: -(p["value"] or 0))
         trades = [{"sig": t["sig"], "solscan": f"https://solscan.io/tx/{t['sig']}", "ts": t["ts"], "side": t["side"], "mint": t["mint"],
                    "symbol": t.get("symbol") or t["mint"][:6], "qty": t["qty"], "sol": t["sol"], "usd": t["usd"], "url": core.ds_link(t["mint"])}
-                  for t in st["trades"][-60:]][::-1]
+                  for t in st["trades"][-60:] if t["mint"] not in ex][::-1]
         eq, s0 = st.get("equity_usd"), st.get("start_equity_usd")
         return {"address": st["address"], "solscan": f"https://solscan.io/account/{st['address']}", "sol": st.get("sol"),
                 "sol_usd": st.get("sol_usd"), "equity_usd": eq, "start_equity_usd": s0, "start_ts": st.get("start_ts"),
                 "change_usd": (eq - s0) if eq is not None and s0 is not None else None,
                 "change_pct": (eq - s0) / s0 if eq is not None and s0 else None, "since_ts": st["since_ts"],
-                "positions": pos, "trades": trades, "equity_history": st["equity_history"][-1000:],
+                "positions": pos, "trades": trades, "untouched": untouched, "equity_history": st["equity_history"][-1000:],
                 "updated_ts": st.get("updated_ts"), "last_error": st.get("last_error"), "holdings_stale": st.get("holdings_stale"),
                 "n_swaps": sum(1 for t in st["trades"] if t["side"] in ("buy", "sell"))}
