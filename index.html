@@ -7,7 +7,7 @@
 <meta name="robots" content="noindex">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Jarvis · Copy Desk (PAPIER)</title>
+<title>Jarvis · Copy Desk (PRAWDZIWE)</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" href="icon-192.png">
@@ -60,7 +60,6 @@ a{color:inherit;text-decoration:none}
 .mode button.on[data-m=real]{color:#7cf2c4;background:rgba(34,227,160,.12)}
 .tag.big{color:#ffd78a;background:rgba(255,190,85,.09);border-color:rgba(255,190,85,.26)}
 .wtags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 2px}
-body.real .tabbar{display:none}
 @keyframes sheen{60%,100%{transform:translateX(100%)}}
 /* glass */
 .g{position:relative;background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.02));border:1px solid var(--edge);border-radius:var(--r);
@@ -197,9 +196,9 @@ section{scroll-margin-top:14px}
   <div class="brand"><b>Jarvis Copy Desk</b><span>kopiowanie portfeli Solany</span></div>
   <div class="live"><span class="dot" id="dot"></span><span id="liveTxt">łączenie…</span></div>
  </div>
- <div class="mode" id="mode" role="tablist"><button data-m="real" class="on"><i></i>Prawdziwe</button><button data-m="paper"><i></i>Papier</button></div>
-<div id="vPaper" hidden>
- <div class="paper"><i></i>PAPIER – bez prawdziwych pieniędzy</div>
+ 
+<div id="vPaper">
+ <div class="paper realb"><i></i>PRAWDZIWE – prawdziwy portfel</div>
  <nav class="tabbar" id="tabbar">
  <a href="#s-home" data-s="s-home" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-5 4 4 8-8"/><path d="M14 8h6v6"/></svg>Pulpit</a>
  <a href="#s-wallets" data-s="s-wallets"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M16 12.5h2M3 10h18M7 6V4.5"/></svg>Portfele</a>
@@ -212,7 +211,7 @@ section{scroll-margin-top:14px}
 
  <section id="s-home">
   <div class="g hero fade">
-   <div class="eyebrow">Equity papierowe <svg class="spark" id="spark" width="78" height="24"></svg></div>
+   <div class="eyebrow">Prawdziwe equity <svg class="spark" id="spark" width="78" height="24"></svg></div>
    <div class="eqrow"><div class="eq num skel" id="eq">$25.00</div></div>
    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span class="pill flat num" id="chg">+$0.00 · +0.00%</span><span class="sub" id="since">od startu</span></div>
    <div class="chart" id="chart"><svg id="svg" preserveAspectRatio="none"></svg><div class="tip num" id="tip"></div></div>
@@ -227,7 +226,7 @@ section{scroll-margin-top:14px}
  </section>
 
  <section id="s-wallets">
-  <div class="sh"><h2>Portfele</h2><span class="cnt" id="wCnt">3</span><span class="aside">% equity na każdy nowy zakup</span></div>
+  <div class="sh"><h2>Portfele</h2><span class="cnt" id="wCnt">3</span><span class="aside">% salda na każdy nowy zakup</span></div>
   <div class="wallets" id="wallets"></div>
  </section>
 
@@ -249,38 +248,7 @@ section{scroll-margin-top:14px}
   <div class="g health" id="health"></div>
  </section>
 
- <footer>Symulacja na papierze – bez portfela, bez Phantoma, bez kluczy i bez prawdziwych pieniędzy.<br>
- Koszty jak w Phantomie: 0,85% za każdy swap, opłata puli i poślizg z notowań Jupitera, opłata sieci.<br>
- Wejście po cenie z chwili wykrycia transakcji portfela. Odświeżanie co 30 s.</footer>
-</div>
-<div id="vReal">
- <div class="paper realb"><i></i>PRAWDZIWE – tylko podgląd portfela</div>
- <section id="r-home">
-  <div class="g hero fade">
-   <div class="eyebrow">Prawdziwe equity <a class="tag link" id="rAddr" target="_blank" rel="noopener" style="margin-left:auto">–</a></div>
-   <div class="eqrow"><div class="eq num skel" id="rEq">$0.00</div></div>
-   <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span class="pill flat num" id="rChg">–</span><span class="sub" id="rSince"></span></div>
-   <div class="chart" id="rChart"><svg id="rSvg" preserveAspectRatio="none"></svg><div class="tip num" id="rTip"></div></div>
-  </div>
-  <div class="stats">
-   <div class="g stat fade"><span><i style="background:var(--v2)"></i>SOL</span><b class="num" id="rSol">–</b><small id="rSolS">&nbsp;</small></div>
-   <div class="g stat fade" style="animation-delay:.05s"><span><i style="background:var(--v1)"></i>W tokenach</span><b class="num" id="rTok">–</b><small id="rTokS">&nbsp;</small></div>
-   <div class="g stat fade" style="animation-delay:.1s"><span><i style="background:var(--v3)"></i>Swapy</span><b class="num" id="rSw">–</b><small id="rSwS">od startu podglądu</small></div>
-   <div class="g stat fade" style="animation-delay:.15s"><span><i style="background:var(--warn)"></i>Odczyt</span><b class="num" id="rUpd">–</b><small id="rUpdS">publiczne RPC</small></div>
-  </div>
- </section>
- <div class="cols">
-  <section id="r-pos">
-   <div class="sh"><h2>Pozycje</h2><span class="cnt" id="rPCnt">0</span></div>
-   <div class="list" id="rOpen"></div>
-  </section>
-  <section id="r-tr">
-   <div class="sh"><h2>Transakcje</h2><span class="aside">z blockchaina · Solscan</span></div>
-   <div class="g feed" id="rTr"></div>
-  </section>
- </div>
- <footer>Prawdziwy portfel – podgląd tylko do odczytu z publicznego RPC Solany (co ~30 s), bez kluczy.<br>
- Ta strona nic nie podpisuje i nic nie wysyła. Wynik pozycji liczony tylko dla zakupów widzianych od startu podglądu.</footer>
+ <footer>Prawdziwy portfel <a href="https://solscan.io/account/Gyt2TBaQTGskoZ2PfUNcVTC3brSRvmgTQEexvgZ4MP34" target="_blank" rel="noopener">Gyt2…MP34</a> – odczyt z publicznego RPC Solany co ~30 s, bez kluczy.<br>Desk wykrywa zakupy portfeli co kilka sekund i daje sygnał. Kupuje i sprzedaje Phantom.<br>Ta strona nic nie podpisuje i nic nie wysyła. $JOY nie jest ruszane i nie wlicza się do equity.</footer>
 </div>
 </div>
 
@@ -310,12 +278,13 @@ function smooth(pts){if(pts.length<3)return pts.map((p,i)=>(i?"L":"M")+p[0].toFi
  for(let i=0;i<pts.length-1;i++){const p0=pts[i-1]||pts[i],p1=pts[i],p2=pts[i+1],p3=pts[i+2]||p2,t=.18;
   d+=`C${(p1[0]+(p2[0]-p0[0])*t).toFixed(1)},${(p1[1]+(p2[1]-p0[1])*t).toFixed(1)} ${(p2[0]-(p3[0]-p1[0])*t).toFixed(1)},${(p2[1]-(p3[1]-p1[1])*t).toFixed(1)} ${p2[0].toFixed(1)},${p2[1].toFixed(1)}`}
  return d}
-function series(){let h=(D.equity_history||[]).slice();const now=Date.now()/1000;h.push([D.generated_ts||now,D.equity]);
- if(range)h=h.filter(p=>p[0]>=now-range);if(h.length<2)h=[[now-60,D.start_equity],[now,D.equity]];
+const RANGE={},TAB={},SHOWN={};
+function series(M,P){const range=RANGE[P]||0;let h=(M.equity_history||[]).slice();const now=Date.now()/1000;h.push([M.generated_ts||now,M.equity]);
+ if(range)h=h.filter(p=>p[0]>=now-range);if(h.length<2)h=[[now-60,M.start_equity],[now,M.equity]];
  if(h.length>240){const k=Math.ceil(h.length/240);h=h.filter((p,i)=>i%k===0||i===h.length-1)}return h}
-function spark(){const s=$("spark");if(!D)return;let h=(D.equity_history||[]).slice(-60);h.push([0,D.equity]);if(h.length<2)h=[[0,D.start_equity],[0,D.equity]];
+function spark(M,P){const s=$(P+"spark");if(!M||!s)return;let h=(M.equity_history||[]).slice(-60);h.push([0,M.equity]);if(h.length<2)h=[[0,M.start_equity],[0,M.equity]];
  const ys=h.map(p=>p[1]);let a=Math.min(...ys),b=Math.max(...ys);if(b-a<1e-9){a-=1;b+=1}
- const pts=h.map((p,i)=>[2+i/(h.length-1)*74,3+(1-(p[1]-a)/(b-a))*18]);const c=D.equity>=D.start_equity?"#22e3a0":"#ff5a7e";
+ const pts=h.map((p,i)=>[2+i/(h.length-1)*74,3+(1-(p[1]-a)/(b-a))*18]);const c=M.equity>=M.start_equity?"#22e3a0":"#ff5a7e";
  s.innerHTML=`<path d="${smooth(pts)}" fill="none" stroke="${c}" stroke-width="1.8" stroke-linecap="round"/><circle cx="${pts[pts.length-1][0]}" cy="${pts[pts.length-1][1]}" r="2.4" fill="${c}"/>`}
 const FIRST={};
 function drawChart(o){
@@ -348,98 +317,94 @@ function drawChart(o){
   tip.style.left=Math.min(W-60,Math.max(60,P[0]))+"px";tip.style.opacity=1;tip.innerHTML=`<b>${usd(h[b][1])}</b> <span class="mut">· ${dt(h[b][0])}</span>`};
  const out=()=>{tip.style.opacity=0;[P_+"cx",P_+"cd"].forEach(s=>{const n=svg.querySelector("#"+s);n&&n.setAttribute("opacity",0)})};
  box.onmousemove=move;box.ontouchstart=move;box.ontouchmove=move;box.onmouseleave=out;box.ontouchend=()=>setTimeout(out,1400)}
-function chart(){if(!D||$("vPaper").hidden)return;if(firstChart){FIRST.p=0;firstChart=false}drawChart({p:"p",svg:$("svg"),box:$("chart"),tip:$("tip"),h:series(),start:D.start_equity,cur:D.equity})}
+function chart(M,P){if(!M)return;drawChart({p:P||"p",svg:$(P+"svg"),box:$(P+"chart"),tip:$(P+"tip"),h:series(M,P),start:M.start_equity,cur:M.equity})}
 
-function countTo(el,to){const from=shownEq==null?to:shownEq;shownEq=to;const fin=()=>{const s=usd(to),i=s.lastIndexOf(".");el.innerHTML=esc(s.slice(0,i))+'<span class="c">'+esc(s.slice(i))+"</span>"};fin();if(from===to||matchMedia("(prefers-reduced-motion: reduce)").matches)return;setTimeout(fin,1200);const t0=performance.now(),dur=900;
+function countTo(el,to,P){P=P||"";const from=SHOWN[P]==null?to:SHOWN[P];SHOWN[P]=to;const fin=()=>{const s=usd(to),i=s.lastIndexOf(".");el.innerHTML=esc(s.slice(0,i))+'<span class="c">'+esc(s.slice(i))+"</span>"};fin();if(from===to||matchMedia("(prefers-reduced-motion: reduce)").matches)return;setTimeout(fin,1200);const t0=performance.now(),dur=900;
  const f=n=>{const k=Math.min(1,(n-t0)/dur),e=1-Math.pow(1-k,3),v=from+(to-from)*e;const s=usd(v),i=s.lastIndexOf(".");el.innerHTML=esc(s.slice(0,i))+'<span class="c">'+esc(s.slice(i))+"</span>";if(k<1)requestAnimationFrame(f)};requestAnimationFrame(f)}
 
 function posRow(p,mini){
- return `<a class="${mini?"row mini":"g row"}" href="${esc(p.url)}" target="_blank" rel="noopener">${tk(p.symbol)}<div class="rm"><b>$${esc(p.symbol)}</b>${mini?"":` <span class="tag" style="padding:2px 8px;font-size:11px">${esc(p.label)}</span>`}
- <div class="s">${usd(p.value)} · od ${hm(p.entry_ts)} · opóźn. ${Math.round(p.delay_s)} s${p.sold_pct>0.001?` · sprzed. ${Math.round(p.sold_pct*100)}%`:""}${p.adds?` · +${p.adds} dokup.`:""}</div></div>
- <div class="rr"><b class="num ${tone(p.pnl_usd)==="flat"?"":tone(p.pnl_usd)}">${usd(p.pnl_usd,1)}</b><span class="pill ${tone(p.pnl_pct)} num">${pct(p.pnl_pct)}</span></div></a>`}
+ return `<a class="${mini?"row mini":"g row"}" href="${esc(p.url)}" target="_blank" rel="noopener">${tk(p.symbol)}<div class="rm"><b>$${esc(p.symbol)}</b>${mini||!p.label?"":` <span class="tag" style="padding:2px 8px;font-size:11px">${esc(p.label)}</span>`}
+ <div class="s">${p.value!=null?usd(p.value):"brak ceny"}${p.entry_ts?` · od ${hm(p.entry_ts)}`:""}${p.delay_s!=null?` · opóźn. ${Math.round(p.delay_s)} s`:""}${p.qtxt?` · ${esc(p.qtxt)}`:""}${p.sold_pct>0.001?` · sprzed. ${Math.round(p.sold_pct*100)}%`:""}${p.adds?` · +${p.adds} dokup.`:""}</div></div>
+ <div class="rr">${p.pnl_usd==null?`<span class="pill flat">bez kosztu wejścia</span>`:`<b class="num ${tone(p.pnl_usd)==="flat"?"":tone(p.pnl_usd)}">${usd(p.pnl_usd,1)}</b><span class="pill ${tone(p.pnl_pct)} num">${pct(p.pnl_pct)}</span>`}</div></a>`}
 
-function render(){
- if(!D)return;const e=$("eq");e.classList.remove("skel");countTo(e,D.equity);
- const c=$("chg");c.className="pill num "+tone(D.change_usd);c.innerHTML=`${arrow(D.change_usd)}${usd(D.change_usd,1)} · ${pct(D.change_pct)}`;
- $("since").textContent=`od startu ${dt(D.start_ts)} · start ${usd(D.start_equity)}`;
- const inv=D.equity-D.cash;$("kCash").textContent=usd(D.cash);$("kCashS").textContent=Math.round(100*D.cash/(D.equity||1))+"% equity";
- $("kInv").textContent=usd(inv);$("kInvS").textContent=(D.positions||[]).length+" otwartych";
- const st=D.stats||{};$("kTr").textContent=st.trades||0;$("kTrS").textContent=st.trades?`${Math.round(100*(st.wins||0)/st.trades)}% na plusie · ${usd(st.realized,1)}`:"zamkniętych";
- $("kDel").textContent=st.avg_delay_s!=null?Math.round(st.avg_delay_s)+" s":"–";
- spark();chart();
- const ws=D.wallets||[];$("wCnt").textContent=ws.length;
- $("wallets").innerHTML=ws.map((w,i)=>{const g=PAL[i%PAL.length],ops=(D.positions||[]).filter(p=>p.wallet===w.key);
+function renderM(M,P){
+ if(!M)return;const e=$(P+"eq");e.classList.remove("skel");countTo(e,M.equity,P);
+ const c=$(P+"chg");c.className="pill num "+tone(M.change_usd);c.innerHTML=`${arrow(M.change_usd)}${usd(M.change_usd,1)} · ${pct(M.change_pct)}`;
+ $(P+"since").textContent=M.sinceTxt||`od startu ${dt(M.start_ts)} · start ${usd(M.start_equity)}`;
+ const inv=M.equity-M.cash;$(P+"kCash").textContent=usd(M.cash);$(P+"kCashS").textContent=Math.round(100*M.cash/(M.equity||1))+"% equity";
+ $(P+"kInv").textContent=usd(inv);$(P+"kInvS").textContent=(M.positions||[]).length+" otwartych";
+ const st=M.stats||{};$(P+"kTr").textContent=st.trades||0;$(P+"kTrS").textContent=st.wins==null?(st.trades?"swapów na portfelu":"swapów od startu podglądu"):st.trades?`${Math.round(100*(st.wins||0)/st.trades)}% na plusie · ${usd(st.realized,1)}`:"zamkniętych";
+ $(P+"kDel").textContent=st.avg_delay_s!=null?Math.round(st.avg_delay_s)+" s":"–";
+ spark(M,P);chart(M,P);
+ const ws=M.wallets||[];$(P+"wCnt").textContent=ws.length;
+ $(P+"wallets").innerHTML=ws.map((w,i)=>{const g=PAL[i%PAL.length],ops=(M.positions||[]).filter(p=>p.wallet===w.key);
   const idle=!w.last_trade_ts&&(!w.last_activity_ts||Date.now()/1000-w.last_activity_ts>3*86400);
   return `<div class="g wal fade" style="animation-delay:${.05*i}s"><div class="glow" style="background:${g[0]}"></div>
   <div class="wh">${av(w.label,i)}<div class="wn"><b>${esc(w.label)}</b><span>${esc(w.address.slice(0,4))}…${esc(w.address.slice(-4))}</span></div><div class="alloc"><b class="num">${Math.round(w.alloc_pct*100)}%</b><span>na zakup</span></div></div>
   <div class="bar"><i style="width:${Math.min(100,w.alloc_pct*400)}%;background:linear-gradient(90deg,${g[0]},${g[1]})"></i></div>
   ${w.filter_label?`<div class="wtags"><span class="tag big">◆ ${esc(w.filter_label)}</span><span class="tag">od ${usd(w.min_buy_usd)}</span>${w.small_skipped?`<span class="tag">pominięte małe: ${w.small_skipped}</span>`:""}</div>`:""}
-  <div class="wg"><div><span>Wynik</span><b class="num ${tone(w.pnl_usd)==="flat"?"":tone(w.pnl_usd)}">${usd(w.pnl_usd,1)}</b></div><div><span>Otwarte</span><b class="num">${w.open}</b></div><div><span>Zamkn.</span><b class="num">${w.trades}${w.trades?`<small class="mut" style="font-size:11px"> · ${Math.round(100*w.wins/w.trades)}%</small>`:""}</b></div></div>
+  <div class="wg"><div><span>Wynik</span><b class="num ${tone(w.pnl_usd)==="flat"?"":tone(w.pnl_usd)}">${usd(w.pnl_usd,1)}</b></div><div><span>Otwarte</span><b class="num">${w.open}</b></div><div><span>Zamkn.</span><b class="num">${w.trades}${w.trades&&w.wins!=null?`<small class="mut" style="font-size:11px"> · ${Math.round(100*w.wins/w.trades)}%</small>`:""}</b></div></div>
   ${ops.length?`<div class="wpos">${ops.map(p=>posRow(p,true)).join("")}</div>`:""}
   <div class="wf">${idle?'<span class="tag idle">● bez aktywności</span>':ops.length?'<span class="tag on">● w pozycji</span>':""}<span>Ostatnia tx ${ago(w.last_activity_ts)}${w.last_trade_ts?` · handel ${ago(w.last_trade_ts)}`:""}</span>
   <a class="tag link" href="${esc(w.solscan)}" target="_blank" rel="noopener">Solscan ↗</a></div></div>`}).join("");
- const op=D.positions||[],cl=D.closed||[];$("pCnt").textContent=op.length;
- $("open").innerHTML=op.length?op.map(p=>posRow(p)).join(""):EMPTY("Czekam na pierwszy zakup portfela…","Gdy któryś z kopiowanych portfeli kupi nowy token, pozycja pojawi się tutaj z wynikiem na żywo.");
- $("closed").innerHTML=cl.length?cl.map(c=>`<a class="g row" href="${esc(c.url)}" target="_blank" rel="noopener">${tk(c.symbol)}<div class="rm"><b>$${esc(c.symbol)}</b> <span class="tag" style="padding:2px 8px;font-size:11px">${esc(c.label)}</span>
+ const op=M.positions||[],cl=M.closed||[];$(P+"pCnt").textContent=op.length;
+ $(P+"open").innerHTML=op.length?op.map(p=>posRow(p)).join(""):EMPTY("Czekam na pierwszy zakup portfela…","Gdy któryś z kopiowanych portfeli kupi nowy token, Phantom kupi go na tym portfelu i pozycja pojawi się tutaj z wynikiem na żywo.");
+ $(P+"closed").innerHTML=cl.length?cl.map(c=>`<a class="g row" href="${esc(c.url)}" target="_blank" rel="noopener">${tk(c.symbol)}<div class="rm"><b>$${esc(c.symbol)}</b> <span class="tag" style="padding:2px 8px;font-size:11px">${esc(c.label)}</span>
   <div class="s">${dt(c.exit_ts)} · ${usd(c.cost)} · ${Math.round(c.hold_min)} min · ${esc(c.reason||"")}</div></div><div class="rr"><b class="num ${tone(c.pnl_usd)==="flat"?"":tone(c.pnl_usd)}">${usd(c.pnl_usd,1)}</b><span class="pill ${tone(c.pnl_pct)} num">${pct(c.pnl_pct)}</span></div></a>`).join(""):EMPTY("Jeszcze bez zamkniętych transakcji","Zamknięcia pojawią się, gdy portfel sprzeda – kopiujemy tę samą część pozycji.");
  const IC={buy:'<path d="M7 17L17 7M9 7h8v8"/>',sell:'<path d="M7 7l10 10M17 9v8H9"/>',skip:'<path d="M6 12h12"/>',info:'<path d="M12 11v6M12 7.5v.5"/>',error:'<path d="M12 7v6M12 16.5v.5"/>'};
- const f=D.feed||[];$("feedAge").textContent=f.length?"ostatnie "+ago(f[0].ts):"";
- $("feed").innerHTML=f.length?f.slice(0,40).map((x,i)=>`<div class="ev" style="animation-delay:${Math.min(i,8)*.04}s"><div class="ei ${esc(x.kind)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${IC[x.kind]||IC.info}</svg></div>
+ const f=M.feed||[];$(P+"feedAge").textContent=f.length?"ostatnie "+ago(f[0].ts):"";
+ $(P+"feed").innerHTML=f.length?f.slice(0,40).map((x,i)=>`<div class="ev" style="animation-delay:${Math.min(i,8)*.04}s"><div class="ei ${esc(x.kind)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${IC[x.kind]||IC.info}</svg></div>
   <div class="et">${x.url?`<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.text)}</a>`:esc(x.text)}<small>${dt(x.ts)} · ${ago(x.ts)}</small></div></div>`).join(""):
-  `<div style="padding:10px 0">${EMPTY("Cisza na rynku","Tu na żywo pojawi się każde kupno i sprzedaż kopiowanych portfeli.").replace('class="empty"','class="empty" style="border:0;background:none"')}</div>`;
- const h=D.health||{},co=D.costs||{};
+  `<div style="padding:10px 0">${EMPTY("Cisza na rynku","Tu na żywo pojawi się każde prawdziwe kupno i sprzedaż z linkiem do Solscan.").replace('class="empty"','class="empty" style="border:0;background:none"')}</div>`;
+ let rows;if(M.healthRows)rows=M.healthRows;else{const h=M.health||{},co=M.costs||{};
  const rows=[["Status",h.status==="ok"?'<span class="tag on">● działa</span>':'<span class="tag idle">● sprawdź</span>'],["Gdzie",esc(h.where)],
-  ["Aktualizacja",`${dt(D.generated_ts)} · ${ago(D.generated_ts)}`],["Ta sesja do",h.run_ends?dt(Date.parse(h.run_ends)/1000)+" · potem kolejna":"–"],
+  ["Aktualizacja",`${dt(M.generated_ts)} · ${ago(M.generated_ts)}`],["Ta sesja do",h.run_ends?dt(Date.parse(h.run_ends)/1000)+" · potem kolejna":"–"],
   ["Sprawdzanie portfeli",h.poll_lag_s!=null?`co ~6 s (ostatnio ${Math.round(h.poll_lag_s)} s)`:"–"],["RPC: zapytania / błędy",`${h.rpc_calls??"–"} / ${h.rpc_errors??"–"}`],
   ["Transakcje",`legacy, v0, v1 (do v${h.tx_version??"?"})`],["Cena SOL",co.sol_usd?usd(co.sol_usd):"–"],
-  ["Opłata Phantom",((co.phantom_fee_pct||0)*100).toFixed(2).replace(".",",")+"% za swap"],["Opłaty zapłacone (papier)",usd(D.fees_paid_usd)],["Notowania",esc(co.quotes||"")]];
+  ["Opłata Phantom",((co.phantom_fee_pct||0)*100).toFixed(2).replace(".",",")+"% za swap"],["Opłaty zapłacone (papier)",usd(M.fees_paid_usd)],["Notowania",esc(co.quotes||"")]];
  ws.forEach(w=>rows.push([esc(w.label),w.last_error?`<span class="dn">błąd: ${esc(w.last_error).slice(0,60)}</span>`:`sprawdzony ${ago(w.last_poll_ts)} · kopie ${w.copied_buys||0}/${w.copied_sells||0}${w.min_buy_usd?` · małe pominięte ${w.small_skipped||0}`:""}`]));
- $("health").innerHTML=rows.map(r=>`<div class="hr"><span>${r[0]}</span><b>${r[1]}</b></div>`).join("");
- renderReal();tick()}
-let rShown=null;
-function rSeries(R){let h=(R.equity_history||[]).slice();const now=Date.now()/1000;if(R.equity_usd!=null)h.push([R.updated_ts||now,R.equity_usd]);
- if(h.length<2&&R.equity_usd!=null)h=[[now-60,R.start_equity_usd??R.equity_usd],[now,R.equity_usd]];
- if(h.length>240){const k=Math.ceil(h.length/240);h=h.filter((p,i)=>i%k===0||i===h.length-1)}return h}
-function renderReal(){const R=D&&D.real;if(!R)return;
- const a=$("rAddr");a.href=R.solscan;a.textContent=R.address.slice(0,4)+"…"+R.address.slice(-4)+" · Solscan ↗";
- const e=$("rEq");if(R.equity_usd!=null){e.classList.remove("skel");const sv=shownEq;shownEq=rShown;countTo(e,R.equity_usd);rShown=shownEq;shownEq=sv}
- const c=$("rChg");if(R.change_usd!=null){c.className="pill num "+tone(R.change_usd);c.innerHTML=`${arrow(R.change_usd)}${usd(R.change_usd,1)} · ${pct(R.change_pct)}`}else{c.className="pill flat num";c.textContent="czekam na odczyt"}
- $("rSince").textContent=R.start_ts?`od pierwszego odczytu ${dt(R.start_ts)} · ${usd(R.start_equity_usd)}`:"";
- $("rSol").textContent=R.sol!=null?(+R.sol).toFixed(4):"–";$("rSolS").textContent=R.sol!=null&&R.sol_usd?usd(R.sol*R.sol_usd)+" · SOL "+usd(R.sol_usd):"\u00a0";
- const ps=R.positions||[],tv=ps.reduce((s,p)=>s+(p.value||0),0);$("rTok").textContent=usd(tv);$("rTokS").textContent=ps.length+(ps.length===1?" token":" tokenów")+(R.holdings_stale?" · stary odczyt":"");
- $("rSw").textContent=R.n_swaps||0;$("rUpd").textContent=R.updated_ts?hm(R.updated_ts):"–";$("rUpdS").textContent=R.last_error?"chwilowy błąd RPC – ponawiam":"publiczne RPC · "+ago(R.updated_ts);
- if(!document.getElementById("vReal").hidden)drawChart({p:"r",svg:$("rSvg"),box:$("rChart"),tip:$("rTip"),h:rSeries(R),start:R.start_equity_usd??R.equity_usd??0,cur:R.equity_usd??0});
- $("rPCnt").textContent=ps.length;
- $("rOpen").innerHTML=ps.length?ps.map(p=>`<a class="g row" href="${esc(p.url)}" target="_blank" rel="noopener">${tk(p.symbol)}<div class="rm"><b>$${esc(p.symbol)}</b>
-  <div class="s">${p.value!=null?usd(p.value):"brak ceny"} · ${(+p.qty).toLocaleString("pl-PL",{maximumFractionDigits:2})} szt.${p.since_ts?` · od ${dt(p.since_ts)}`:""}</div></div>
-  <div class="rr">${p.pnl_usd!=null?`<b class="num ${tone(p.pnl_usd)==="flat"?"":tone(p.pnl_usd)}">${usd(p.pnl_usd,1)}</b><span class="pill ${tone(p.pnl_pct)} num">${pct(p.pnl_pct)}</span>`:`<span class="pill flat">trzymane wcześniej</span>`}</div></a>`).join("")
-  :EMPTY("Brak tokenów w portfelu","Gdy portfel kupi token, pojawi się tutaj z wartością na żywo.");
- const T=R.trades||[],NM={buy:"Kupno",sell:"Sprzedaż",transfer_in:"Wpływ",transfer_out:"Wypływ"},KI={buy:"buy",sell:"sell",transfer_in:"info",transfer_out:"skip"};
- const IC={buy:'<path d="M7 17L17 7M9 7h8v8"/>',sell:'<path d="M7 7l10 10M17 9v8H9"/>',skip:'<path d="M6 12h12"/>',info:'<path d="M12 5v14M5 12h14"/>'};
- $("rTr").innerHTML=T.length?T.slice(0,40).map(t=>`<div class="ev"><div class="ei ${KI[t.side]||"info"}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${IC[KI[t.side]||"info"]}</svg></div>
-  <div class="et"><a href="${esc(t.solscan)}" target="_blank" rel="noopener">${NM[t.side]||esc(t.side)} $${esc(t.symbol)}${t.sol?` za ${(+t.sol).toFixed(4)} SOL`:""}${t.usd?` (${usd(t.usd)})`:""} ↗</a><small>${dt(t.ts)} · ${ago(t.ts)} · <a href="${esc(t.url)}" target="_blank" rel="noopener">wykres</a></small></div></div>`).join("")
-  :`<div style="padding:10px 0">${EMPTY("Bez nowych swapów","Każdy prawdziwy swap tego portfela pojawi się tu z linkiem do Solscan.").replace('class="empty"','class="empty" style="border:0;background:none"')}</div>`}
-let MODE=location.hash==="#papier"?"paper":location.hash==="#prawdziwe"?"real":(localStorage.getItem("deskMode2")==="paper"?"paper":"real");
-function setMode(m){MODE=m;try{localStorage.setItem("deskMode2",m)}catch(e){}
- [...$("mode").children].forEach(b=>b.classList.toggle("on",b.dataset.m===m));$("vPaper").hidden=m!=="paper";$("vReal").hidden=m!=="real";document.body.classList.toggle("real",m==="real");
- history.replaceState(null,"",m==="real"?location.pathname+location.search:"#papier");if(m==="real"){FIRST.r=0;renderReal()}else{FIRST.p=0;chart()}}
-$("mode").onclick=e=>{const b=e.target.closest("button");if(b&&b.dataset.m!==MODE)setMode(b.dataset.m)};
+}
+ $(P+"health").innerHTML=rows.map(r=>`<div class="hr"><span>${r[0]}</span><b>${r[1]}</b></div>`).join("");
+ }
+function render(){if(!D)return;const M=realModel();if(M)renderM(M,"");tick()}
+function realModel(){const R=D&&D.real;if(!R)return null;
+ const now=Date.now()/1000,eq=R.equity_usd??0,s0=R.start_equity_usd??eq,per=R.per_wallet||{};
+ const pos=(R.positions||[]).map(p=>({symbol:p.symbol,url:p.url,label:p.label,wallet:p.wallet,value:p.value,entry_ts:p.since_ts,delay_s:null,sold_pct:0,adds:0,
+  qtxt:(+p.qty).toLocaleString("pl-PL",{maximumFractionDigits:2})+" szt.",pnl_usd:p.pnl_usd,pnl_pct:p.pnl_pct}));
+ const NM={buy:"kupno",sell:"sprzedaż",transfer_in:"wpływ",transfer_out:"wypływ"},KI={buy:"buy",sell:"sell",transfer_in:"info",transfer_out:"skip"};
+ const feed=(R.trades||[]).map(t=>({kind:KI[t.side]||"info",ts:t.ts,url:t.solscan,
+  text:`[PRAWDZIWE] ${t.label?"Kopia "+t.label+": ":""}${NM[t.side]||t.side} $${t.symbol}${t.sol?` za ${(+t.sol).toFixed(4)} SOL`:""}${t.usd?` (${usd(t.usd)})`:""} · Solscan ↗`}));
+ const wallets=(D.wallets||[]).map(w=>{const x=per[w.key]||{};return Object.assign({},w,{open:x.open||0,pnl_usd:x.pnl_usd||0,trades:x.trades||0,wins:null})});
+ const sh=a=>a.slice(0,4)+"…"+a.slice(-4),un=R.untouched||[];
+ const ok=R.updated_ts&&now-R.updated_ts<180&&!R.last_error;
+ const rows=[["Status",ok?'<span class="tag on">● odczyt działa</span>':'<span class="tag idle">● '+(R.last_error?"chwilowy błąd RPC – ponawiam":"czekam na odczyt")+'</span>'],
+  ["Portfel",`<a href="${esc(R.solscan)}" target="_blank" rel="noopener">${esc(sh(R.address))} · Solscan ↗</a>`],
+  ["Ostatni odczyt",R.updated_ts?`${dt(R.updated_ts)} · ${ago(R.updated_ts)}`:"–"],["Źródło","publiczne RPC Solany, co ~30 s, bez kluczy"],
+  ["SOL",R.sol!=null?`${(+R.sol).toFixed(4)} SOL · ${usd(R.sol*(R.sol_usd||0))}`:"–"],["Cena SOL",R.sol_usd?usd(R.sol_usd):"–"],
+  ["Kupowanie","przez Phantoma (sygnał z desku), ta strona nic nie podpisuje"]];
+ un.forEach(u=>rows.push([`$${esc(u.symbol)} – nie ruszane`,`${(+u.qty).toLocaleString("pl-PL",{maximumFractionDigits:0})} szt.${u.value!=null?" · "+usd(u.value):""} · poza equity`]));
+ (D.wallets||[]).forEach(w=>rows.push([esc(w.label),`${Math.round(w.alloc_pct*100)}% na zakup${w.min_buy_usd?` · tylko wejścia od ${usd(w.min_buy_usd)}`:""}`]));
+ return {equity:eq,start_equity:s0,start_ts:R.start_ts,change_usd:eq-s0,change_pct:s0?(eq-s0)/s0:0,cash:(R.sol||0)*(R.sol_usd||0),
+  sinceTxt:R.start_ts?`od pierwszego odczytu ${dt(R.start_ts)} · start ${usd(s0)}`:"czekam na pierwszy odczyt portfela",
+  equity_history:R.equity_history||[],generated_ts:R.updated_ts||D.generated_ts,positions:pos,closed:[],feed,wallets,
+  stats:{trades:R.n_swaps||0,wins:null,avg_delay_s:null},healthRows:rows}}
 function tick(){if(!D)return;const age=Date.now()/1000-(D.generated_ts||0);
  $("dot").className="dot"+(age>600?" bad":(age>180||(D.health||{}).status!=="ok")?" warn":"");
  $("liveTxt").textContent=(age>600?"brak danych · ":age>180?"opóźnione · ":"na żywo · ")+ago(D.generated_ts)}
 async function load(){try{const r=await fetch("data.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)throw new Error("HTTP "+r.status);
  const j=await r.json();if(j.mode!=="paper"||!Array.isArray(j.wallets))throw new Error("czekam na pierwszą aktualizację bota");D=j;lastOk=Date.now();$("err").style.display="none";render()}
  catch(e){if(!D||Date.now()-lastOk>120000){$("err").style.display="block";$("err").textContent="Nie udało się pobrać danych ("+e.message+"). Ponawiam za chwilę."}}}
-$("ranges").onclick=e=>{const b=e.target.closest("button");if(!b)return;range=+b.dataset.r;[...$("ranges").children].forEach(x=>x.classList.toggle("on",x===b));firstChart=true;chart()};
-$("tabs").onclick=e=>{const b=e.target.closest("button");if(!b)return;tab=b.dataset.t;[...$("tabs").children].forEach(x=>x.classList.toggle("on",x===b));$("open").style.display=tab==="open"?"":"none";$("closed").style.display=tab==="closed"?"":"none"};
+function wire(P,M){const rg=$(P+"ranges"),tb=$(P+"tabs");
+ rg.onclick=e=>{const b=e.target.closest("button");if(!b)return;RANGE[P]=+b.dataset.r;[...rg.children].forEach(x=>x.classList.toggle("on",x===b));FIRST[P||"p"]=0;chart(M(),P)};
+ tb.onclick=e=>{const b=e.target.closest("button");if(!b)return;const t=b.dataset.t;[...tb.children].forEach(x=>x.classList.toggle("on",x===b));$(P+"open").style.display=t==="open"?"":"none";$(P+"closed").style.display=t==="closed"?"":"none"}}
+wire("",realModel);
 const links=[...document.querySelectorAll(".tabbar a")];
 if("IntersectionObserver"in window){const io=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting)links.forEach(a=>a.classList.toggle("on",a.dataset.s===en.target.id))})},{rootMargin:"-40% 0px -55% 0px"});
  document.querySelectorAll("section").forEach(s=>io.observe(s))}
-let rz;addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(()=>{MODE==="real"?renderReal():chart()},120)});
-setMode(MODE);
+let rz;addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(()=>chart(realModel(),""),120)});
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)load()});
 load();setInterval(load,30000);setInterval(tick,1000);
-if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js?v=4").catch(()=>{});
+if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js?v=5").catch(()=>{});
 </script>
 </body>
 </html>
