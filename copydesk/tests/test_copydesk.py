@@ -205,7 +205,7 @@ class TDesk(unittest.TestCase):
         s = json.dumps(data)
         for bad in ("secret", "private", "token\":", "seed"): self.assertNotIn(bad, s.lower())
         self.assertEqual(data["badge"], "PAPIER – bez prawdziwych pieniędzy")
-        self.assertEqual(len(data["wallets"]), 6); self.assertEqual(data["positions"][0]["label"], "@SOL589")
+        self.assertEqual(len(data["wallets"]), 5); self.assertEqual(data["positions"][0]["label"], "@SOL589")
         self.assertIn("solscan.io/account/", data["wallets"][0]["solscan"])
 
 class TBigEntries(unittest.TestCase):
@@ -263,6 +263,23 @@ class TBigEntries(unittest.TestCase):
         d2 = D.Desk(self.d.cfg, rpc=self.rpc, prices=lambda ms: {}, quote=lambda *a: None, solpx=lambda: 100.0, clock=lambda: self.t[0])
         self.assertEqual(d2.book["wallets"]["frank"]["start_ts"], self.t[0])
         self.assertEqual(d2.book["wallets"]["unipcs"]["start_ts"], 100000.0)
+
+class TRpcUnsupported(unittest.TestCase):
+    def test_skips_rpc_that_refuses_method(self):
+        hits = []
+        def fake(url, body, timeout=12):
+            hits.append(url)
+            if url == "b": return {"error": {"code": -16401, "message": "Method 'getSignaturesForAddress' is not available for anonymous access."}}
+            return {"result": [1]}
+        old = net.http_json; net.http_json = fake
+        try:
+            r = net.Rpc(["b", "a"])
+            self.assertEqual(r.call("getSignaturesForAddress", []), [1])
+            hits.clear(); r.i = 0
+            for _ in range(3): r.call("getSignaturesForAddress", [])
+            self.assertNotIn("b", hits)
+            hits.clear(); r.i = 0; r.cool = {}; r.call("getBalance", []); self.assertEqual(hits, ["b"])
+        finally: net.http_json = old
 
 class THook(unittest.TestCase):
     def test_payload_and_skip_without_secret(self):
@@ -331,13 +348,12 @@ class TQueueRpc(unittest.TestCase):
 class TConfig(unittest.TestCase):
     def test_config(self):
         a = {w["address"]: w["alloc_pct"] for w in CFG["wallets"]}
-        self.assertEqual(a, {UNI: 0.25, NAWY: 0.10, SOL589: 0.10, FRANK: 0.10, PURPLE: 0.15, PEEPO: 0.10})
+        self.assertEqual(a, {UNI: 0.25, NAWY: 0.10, SOL589: 0.10, FRANK: 0.10, PURPLE: 0.15})
         fr = next(w for w in CFG["wallets"] if w["address"] == FRANK)
         self.assertGreater(fr["min_buy_usd"], 0); self.assertEqual(fr["filter_label"], "tylko duże wejścia")
-        pe = next(w for w in CFG["wallets"] if w["address"] == PEEPO)
-        self.assertEqual(pe["min_buy_usd"], 30); self.assertEqual(pe["filter_label"], "tylko duże wejścia")
+        self.assertNotIn(PEEPO, [w["address"] for w in CFG["wallets"]])
         for w in CFG["wallets"]:
-            if w["address"] not in (FRANK, PEEPO): self.assertFalse(w.get("min_buy_usd"))
+            if w["address"] != FRANK: self.assertFalse(w.get("min_buy_usd"))
         self.assertEqual(CFG["real_wallet"]["address"], REALW)
         self.assertEqual(CFG["start_equity_usd"], 25.0); self.assertEqual(CFG["max_token_pct_of_equity"], 0.40)
         self.assertEqual(CFG["costs"]["phantom_fee_pct"], 0.0085); self.assertEqual(CFG["min_position_usd"], 0.5)

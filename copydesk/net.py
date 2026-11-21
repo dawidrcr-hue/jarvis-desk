@@ -15,17 +15,20 @@ def http_json(url, data=None, timeout=10):
 
 class RpcError(RuntimeError): pass
 
+UNSUPPORTED_MARKERS = ("-16401", "not available for anonymous", "Indexed requests require", "Method not found", "-32601")
+
 class Rpc:
     """Round-robin over public RPC URLs with short per-URL cool-down after errors / 429."""
     def __init__(self, urls, max_version=1, timeout=12):
         self.urls = list(urls); self.i = 0; self.cool = {}; self.timeout = timeout
-        self.max_version = int(max_version); self.calls = 0; self.errors = 0; self.last_ok = None; self.last_error = None
+        self.max_version = int(max_version); self.unsupported = set(); self.calls = 0; self.errors = 0; self.last_ok = None; self.last_error = None
 
     def call(self, method, params, attempts=None):
         err = None
         n = attempts or len(self.urls) * 2
         for k in range(n):
             url = self.urls[(self.i + k) % len(self.urls)]
+            if (url, method) in self.unsupported and len(self.unsupported_for(method)) < len(self.urls): continue
             if time.time() < self.cool.get(url, 0) and k < n - 1: continue
             try:
                 self.calls += 1
@@ -38,6 +41,8 @@ class Rpc:
                 msg = str(e)
                 if "not supported by the requesting client" in msg or "maxSupportedTransactionVersion" in msg:
                     raise                                   # version problem: caller adapts, other URLs would say the same
+                if any(x in msg for x in UNSUPPORTED_MARKERS):
+                    self.unsupported.add((url, method))     # this RPC never serves this method (anonymous): skip it from now on
                 err = e; self.errors += 1; self.cool[url] = time.time() + 5
             except Exception as e:
                 err = e; self.errors += 1
@@ -46,6 +51,9 @@ class Rpc:
             time.sleep(0.3 + 0.4 * k)
         self.last_error = repr(err)[:200]
         raise RpcError(f"{method} failed: {err!r}"[:300])
+
+    def unsupported_for(self, method):
+        return {u for u, m in self.unsupported if m == method}
 
     def signatures(self, address, until=None, limit=100):
         opt = {"limit": limit, "commitment": "confirmed"}
