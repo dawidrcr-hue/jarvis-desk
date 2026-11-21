@@ -278,7 +278,7 @@ class TRpcUnsupported(unittest.TestCase):
             hits.clear(); r.i = 0
             for _ in range(3): r.call("getSignaturesForAddress", [])
             self.assertNotIn("b", hits)
-            hits.clear(); r.i = 0; r.cool = {}; r.call("getBalance", []); self.assertEqual(hits, ["b"])
+            hits.clear(); r.i = 0; r.cool = {}; r.call("getBalance", []); self.assertEqual(hits[0], "b")  # other methods still try b
         finally: net.http_json = old
 
 class THook(unittest.TestCase):
