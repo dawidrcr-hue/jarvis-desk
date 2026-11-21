@@ -1,5 +1,5 @@
 /* Jarvis Copy Desk (PAPIER) v2 — network-first for everything (always fresh), cache only as offline fallback. */
-const CACHE = "jarvis-copy-v2";
+const CACHE = "jarvis-copy-v3";
 self.addEventListener("install", (e) => { self.skipWaiting(); });
 self.addEventListener("activate", (e) => {
   e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== CACHE).map((k) => caches.delete(k)))).then(() => self.clients.claim()));

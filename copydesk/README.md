@@ -13,3 +13,17 @@ Copies public Solana wallets on a $25 paper book. No wallet, no Phantom, no keys
 Copy rules: new buys only after the start; sells proportional; paid add-ons proportional (≤ 40% equity per token); airdrops skipped;
 fill at the price at our detection time (Jupiter quote = pool fee + impact), Phantom 0.85% per side, network 0.000055 SOL,
 token-account rent 0.00204 SOL (refunded on full exit); buys older than 10 min skipped.
+
+## Big entries only (per-wallet filter)
+
+Any wallet in `config.json` can set `"min_buy_usd"` and `"filter_label"`. New buys where the wallet spent less than `min_buy_usd` (SOL × SOL/USD + USDC/USDT) are skipped silently and counted in `small_skipped`. Big ones are copied at the wallet's `alloc_pct`. Sells always copy proportionally. To add another wallet (for example Cupsey) with its own threshold, add one entry to `wallets`. No code change is needed.
+
+A leftover dust balance (less than `dust_pre_fraction` of the balance after the buy) still counts as a new entry.
+
+## Webhook (optional)
+
+When a `copy_buy` / `copy_sell` note is written, the desk POSTs `{note_id, side, ticker, mint, wallet, ts}` to `LIVE_COPY_WEBHOOK_URL` with `Authorization: LIVE_COPY_WEBHOOK_AUTH`. Both are GitHub Actions secrets. The POST runs in a background thread with a 5 s timeout and 2 retries. The URL and auth are never logged. If the secrets are missing, nothing is sent.
+
+## Real view (read-only)
+
+`real_wallet.address` is read from the public RPC every ~30 s: SOL and token balances, prices from DexScreener, and swaps since `real_wallet.since`. The result is shown on the site's "Prawdziwe" tab with Solscan links. No keys are used, and nothing is signed or sent.

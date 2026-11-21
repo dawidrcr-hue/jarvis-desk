@@ -87,7 +87,9 @@ def classify(tx, owner, cfg):
     for d in token_deltas(tx, owner):
         ev = dict(d, sol_spent=round(sol, 9), stable_spent=round(stable, 6), block_time=tx.get("blockTime"))
         if d["side"] == "buy":
-            ev["kind"] = ("addon" if d["pre"] > 1e-12 else "new") if paid else "airdrop"
+            # a leftover/dust balance (< dust_pre_fraction of what he holds after) still counts as a new entry
+            dust = max(1e-12, float(cfg.get("dust_pre_fraction") or 0) * float(d["post"] or 0))
+            ev["kind"] = ("addon" if d["pre"] > dust else "new") if paid else "airdrop"
         else:
             ev["kind"] = "sell"
             f = 1.0 if d["post"] <= 1e-12 else float(d["frac"] or 0)
