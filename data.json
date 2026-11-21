@@ -47,11 +47,11 @@
     "decision": "transfer/airdrop – pomijam"
    }
   ],
-  "last_poll": "2026-11-21T04:37:57+01:00",
+  "last_poll": "2026-11-21T04:38:58+01:00",
   "last_error": null,
   "created": "2026-11-20T13:03:28+01:00"
  },
- "generated": "2026-11-21T04:37:59+01:00",
+ "generated": "2026-11-21T04:39:00+01:00",
  "mode": "PAPER",
  "stats": {
   "equity": 26.4678,
@@ -2057,29 +2057,33 @@
   {
    "t": 1795232279,
    "e": 26.4678
+  },
+  {
+   "t": 1795232341,
+   "e": 26.4678
   }
  ],
  "filter": {
-  "ts": "2026-11-21T04:37:54+01:00",
-  "n": 369,
+  "ts": "2026-11-21T04:38:49+01:00",
+  "n": 383,
   "passed": 0,
   "reject_counts": {
-   "mcap<40000": 93,
-   "liq<30000": 157,
-   "vol_h1<5000": 231,
-   "pair_too_new": 45,
-   "overextended_m5": 2,
-   "mcap>200000": 148,
+   "pair_too_new": 44,
+   "overextended_m5": 1,
+   "downtrend_m5": 327,
+   "mcap>200000": 134,
+   "liq<30000": 183,
+   "volume_fading": 247,
    "overextended_h1": 5,
-   "volume_fading": 208,
-   "downtrend_m5": 307,
+   "vol_h1<5000": 250,
    "downtrend_h6": 270,
-   "downtrend_h1": 297,
-   "low_activity_m5": 227,
-   "sells>buys_m5": 237,
-   "sells>buys_h1": 197,
-   "no_price": 7,
-   "reentry_ban": 3
+   "low_activity_m5": 261,
+   "downtrend_h1": 312,
+   "sells>buys_m5": 254,
+   "sells>buys_h1": 224,
+   "reentry_ban": 3,
+   "mcap<40000": 121,
+   "no_price": 7
   }
  },
  "rugcheck_recent": [
@@ -2249,155 +2253,158 @@
  "near": [
   {
    "symbol": "FIONA",
-   "score": 59.9,
-   "mcap": 81285,
-   "liq": 124854,
-   "chg_m5": 0.21,
-   "chg_h1": 87.9,
+   "score": 64.3,
+   "mcap": 82454,
+   "liq": 125967,
+   "chg_m5": 2.38,
+   "chg_h1": 90.6,
    "reasons": [
     "pair_too_new"
    ]
   },
   {
-   "symbol": "greg",
-   "score": 77.9,
-   "mcap": 359697,
-   "liq": 47107,
-   "chg_m5": 4.95,
-   "chg_h1": 287.0,
-   "reasons": [
-    "mcap>200000 (359697)",
-    "overextended_h1 (287.0%)"
-   ]
-  },
-  {
    "symbol": "PENNY",
-   "score": 66.3,
-   "mcap": 103621,
-   "liq": 30610,
-   "chg_m5": 44.98,
-   "chg_h1": 61.37,
+   "score": 66.1,
+   "mcap": 101385,
+   "liq": 30315,
+   "chg_m5": 30.25,
+   "chg_h1": 57.89,
    "reasons": [
     "pair_too_new",
-    "overextended_m5 (44.98%)"
-   ]
-  },
-  {
-   "symbol": "Trader",
-   "score": 66.0,
-   "mcap": 289624,
-   "liq": 90804,
-   "chg_m5": -9.27,
-   "chg_h1": 50.67,
-   "reasons": [
-    "mcap>200000 (289624)",
-    "downtrend_m5 (-9.27%)"
+    "overextended_m5 (30.25%)"
    ]
   },
   {
    "symbol": "DCTY",
-   "score": 64.4,
-   "mcap": 44464,
-   "liq": 79542,
-   "chg_m5": -0.96,
-   "chg_h1": 18.79,
+   "score": 64.8,
+   "mcap": 44717,
+   "liq": 79816,
+   "chg_m5": -2.39,
+   "chg_h1": 19.47,
    "reasons": [
     "pair_too_new",
-    "downtrend_m5 (-0.96%)"
+    "downtrend_m5 (-2.39%)"
+   ]
+  },
+  {
+   "symbol": "Trader",
+   "score": 64.4,
+   "mcap": 289500,
+   "liq": 90797,
+   "chg_m5": -9.37,
+   "chg_h1": 54.26,
+   "reasons": [
+    "mcap>200000 (289500)",
+    "downtrend_m5 (-9.37%)"
    ]
   },
   {
    "symbol": "bill",
-   "score": 63.9,
-   "mcap": 76783,
-   "liq": 32014,
-   "chg_m5": 4.11,
-   "chg_h1": 14.71,
+   "score": 63.0,
+   "mcap": 77292,
+   "liq": 32129,
+   "chg_m5": 3.49,
+   "chg_h1": 15.47,
    "reasons": [
     "vol_h1<5000",
-    "downtrend_h6 (-16.83%)"
+    "downtrend_h6 (-16.28%)"
    ]
   },
   {
    "symbol": "BABYDOG",
-   "score": 54.5,
-   "mcap": 117268,
-   "liq": 138266,
-   "chg_m5": 0.42,
-   "chg_h1": 26.78,
+   "score": 54.1,
+   "mcap": 117817,
+   "liq": 138925,
+   "chg_m5": -0.23,
+   "chg_h1": 25.91,
    "reasons": [
     "pair_too_new",
-    "volume_fading (0.66)"
-   ]
-  },
-  {
-   "symbol": "SMOOVE",
-   "score": 53.2,
-   "mcap": 107189,
-   "liq": 43163,
-   "chg_m5": 0.93,
-   "chg_h1": 12.81,
-   "reasons": [
-    "vol_h1<5000",
-    "downtrend_h6 (-7.5%)"
+    "downtrend_m5 (-0.23%)"
    ]
   },
   {
    "symbol": "shiit",
-   "score": 49.1,
-   "mcap": 430927,
-   "liq": 52622,
-   "chg_m5": -1.36,
-   "chg_h1": 41.61,
+   "score": 49.3,
+   "mcap": 440974,
+   "liq": 53249,
+   "chg_m5": 4.31,
+   "chg_h1": 47.02,
    "reasons": [
-    "mcap>200000 (430927)",
-    "downtrend_m5 (-1.36%)"
-   ]
-  },
-  {
-   "symbol": "FTR",
-   "score": 47.1,
-   "mcap": 86430,
-   "liq": 32313,
-   "chg_m5": 1.98,
-   "chg_h1": -11.9,
-   "reasons": [
-    "downtrend_h1 (-11.9%)",
-    "downtrend_h6 (0.99%)"
+    "mcap>200000 (440974)",
+    "volume_fading (0.75)"
    ]
   },
   {
    "symbol": "SQQQ",
-   "score": 32.8,
-   "mcap": 666746,
-   "liq": 76312,
-   "chg_m5": 0.54,
+   "score": 25.9,
+   "mcap": 666777,
+   "liq": 76315,
+   "chg_m5": 0.1,
    "chg_h1": 2.25,
    "reasons": [
-    "mcap>200000 (666746)",
+    "mcap>200000 (666777)",
     "downtrend_h6 (-0.07%)"
    ]
   },
   {
-   "symbol": "PYUSD",
+   "symbol": "greg",
+   "score": 61.4,
+   "mcap": 346526,
+   "liq": 46222,
+   "chg_m5": -0.65,
+   "chg_h1": 273.0,
+   "reasons": [
+    "mcap>200000 (346526)",
+    "downtrend_m5 (-0.65%)",
+    "overextended_h1 (273.0%)"
+   ]
+  },
+  {
+   "symbol": "JupUSD",
    "score": 60.0,
-   "mcap": 154358172,
-   "liq": 17592028,
+   "mcap": 64532683,
+   "liq": 3851940,
    "chg_m5": 0.02,
    "chg_h1": 0.0,
    "reasons": [
-    "mcap>200000 (154358172)",
+    "mcap>200000 (64532683)",
     "vol_h1<5000",
     "downtrend_h1 (0.0%)"
+   ]
+  },
+  {
+   "symbol": "DOOD",
+   "score": 57.2,
+   "mcap": 10481687,
+   "liq": 482058,
+   "chg_m5": 1.23,
+   "chg_h1": -1.98,
+   "reasons": [
+    "mcap>200000 (10481687)",
+    "downtrend_h1 (-1.98%)",
+    "downtrend_h6 (-0.83%)"
+   ]
+  },
+  {
+   "symbol": "COINx",
+   "score": 55.8,
+   "mcap": 100145,
+   "liq": 82777,
+   "chg_m5": -1.74,
+   "chg_h1": -1.9,
+   "reasons": [
+    "downtrend_m5 (-1.74%)",
+    "downtrend_h1 (-1.9%)",
+    "downtrend_h6 (-0.64%)"
    ]
   }
  ],
  "sources": {
   "counts": {
+   "gt_trending": 20,
    "pump_graduated_p0": "ERR blocked (Cloudflare 403) - skipped, no bypass",
    "ds_profiles_latest": 24,
-   "gt_trend1h": 20,
-   "jup_toporganic_1h": 47,
+   "jup_toptrending_6h": 50,
    "ray_volume": 47,
    "pump_graduated_p1": "ERR blocked (Cloudflare 403) - skipped, no bypass",
    "ray_standard": 59,
@@ -2407,35 +2414,35 @@
    "pump_adv_graduated": "ERR blocked (Cloudflare 403) - skipped, no bypass",
    "launchlab_new": 136,
    "ds_boosts_latest": 23,
-   "gt_trending": "ERR HTTP Error 429: Too Many Requests",
-   "gt_pumpfun": "ERR cooling after 429",
-   "gt_pumpfun_p2": "ERR cooling after 429",
-   "jup_toptrending_6h": 50,
+   "gt_top_vol": "ERR HTTP Error 429: Too Many Requests",
+   "gt_launchlab": "ERR cooling after 429",
+   "gt_letsbonk": "ERR cooling after 429",
+   "jup_toporganic_6h": 47,
    "ds_boosts_top": 24,
    "ds_cto": 3,
-   "ds_search_letsbonk": 5,
-   "ds_search_meteora": 30,
    "ds_search_orca": 30,
    "ds_search_moonshot": 12,
-   "ds_search_launchlab": 0
+   "ds_search_launchlab": 0,
+   "ds_search_bags": 30,
+   "ds_search_pump": 18
   },
-  "discovered": 446,
+  "discovered": 464,
   "watch": 303,
   "watch_priced": 127,
-  "priced": 369,
-  "priced_of": 374,
-  "seeded": 59,
+  "priced": 383,
+  "priced_of": 391,
+  "seeded": 65,
   "duration_s": 13.22,
-  "discover_s": 9.97,
-  "price_s": 3.24,
-  "ts": 1795232270.7541666
+  "discover_s": 9.98,
+  "price_s": 3.23,
+  "ts": 1795232325.9026191
  },
  "agents": [
   {
    "key": "watchdog",
    "name": "Watchdog",
    "desc": "Pilnuje procesów, restartuje zawieszone",
-   "age_s": 1,
+   "age_s": 2,
    "ok": true,
    "restarts": 0
   },
@@ -2443,7 +2450,7 @@
    "key": "scanner",
    "name": "Scanner + Analityk",
    "desc": "Zbiera coiny z DexScreenera, Jupitera, Raydiuma, GeckoTerminala i ocenia momentum (0–100)",
-   "age_s": 0,
+   "age_s": 1,
    "ok": true,
    "restarts": 2
   },
@@ -2451,7 +2458,7 @@
    "key": "filter",
    "name": "Filtr",
    "desc": "Odrzuca coiny spoza zakresu kapitalizacji (config), bez trendu wzrostowego, z małą płynnością; loguje powody",
-   "age_s": 5,
+   "age_s": 1,
    "ok": true,
    "restarts": 0
   },
