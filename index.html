@@ -197,8 +197,8 @@ section{scroll-margin-top:14px}
   <div class="brand"><b>Jarvis Copy Desk</b><span>kopiowanie portfeli Solany</span></div>
   <div class="live"><span class="dot" id="dot"></span><span id="liveTxt">łączenie…</span></div>
  </div>
- <div class="mode" id="mode" role="tablist"><button data-m="paper" class="on"><i></i>Papier</button><button data-m="real"><i></i>Prawdziwe</button></div>
-<div id="vPaper">
+ <div class="mode" id="mode" role="tablist"><button data-m="real" class="on"><i></i>Prawdziwe</button><button data-m="paper"><i></i>Papier</button></div>
+<div id="vPaper" hidden>
  <div class="paper"><i></i>PAPIER – bez prawdziwych pieniędzy</div>
  <nav class="tabbar" id="tabbar">
  <a href="#s-home" data-s="s-home" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-5 4 4 8-8"/><path d="M14 8h6v6"/></svg>Pulpit</a>
@@ -253,7 +253,7 @@ section{scroll-margin-top:14px}
  Koszty jak w Phantomie: 0,85% za każdy swap, opłata puli i poślizg z notowań Jupitera, opłata sieci.<br>
  Wejście po cenie z chwili wykrycia transakcji portfela. Odświeżanie co 30 s.</footer>
 </div>
-<div id="vReal" hidden>
+<div id="vReal">
  <div class="paper realb"><i></i>PRAWDZIWE – tylko podgląd portfela</div>
  <section id="r-home">
   <div class="g hero fade">
@@ -419,10 +419,10 @@ function renderReal(){const R=D&&D.real;if(!R)return;
  $("rTr").innerHTML=T.length?T.slice(0,40).map(t=>`<div class="ev"><div class="ei ${KI[t.side]||"info"}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${IC[KI[t.side]||"info"]}</svg></div>
   <div class="et"><a href="${esc(t.solscan)}" target="_blank" rel="noopener">${NM[t.side]||esc(t.side)} $${esc(t.symbol)}${t.sol?` za ${(+t.sol).toFixed(4)} SOL`:""}${t.usd?` (${usd(t.usd)})`:""} ↗</a><small>${dt(t.ts)} · ${ago(t.ts)} · <a href="${esc(t.url)}" target="_blank" rel="noopener">wykres</a></small></div></div>`).join("")
   :`<div style="padding:10px 0">${EMPTY("Bez nowych swapów","Każdy prawdziwy swap tego portfela pojawi się tu z linkiem do Solscan.").replace('class="empty"','class="empty" style="border:0;background:none"')}</div>`}
-let MODE=(location.hash==="#prawdziwe"||localStorage.getItem("deskMode")==="real")?"real":"paper";
-function setMode(m){MODE=m;try{localStorage.setItem("deskMode",m)}catch(e){}
+let MODE=location.hash==="#papier"?"paper":location.hash==="#prawdziwe"?"real":(localStorage.getItem("deskMode2")==="paper"?"paper":"real");
+function setMode(m){MODE=m;try{localStorage.setItem("deskMode2",m)}catch(e){}
  [...$("mode").children].forEach(b=>b.classList.toggle("on",b.dataset.m===m));$("vPaper").hidden=m!=="paper";$("vReal").hidden=m!=="real";document.body.classList.toggle("real",m==="real");
- history.replaceState(null,"",m==="real"?"#prawdziwe":location.pathname+location.search);if(m==="real"){FIRST.r=0;renderReal()}else{FIRST.p=0;chart()}}
+ history.replaceState(null,"",m==="real"?location.pathname+location.search:"#papier");if(m==="real"){FIRST.r=0;renderReal()}else{FIRST.p=0;chart()}}
 $("mode").onclick=e=>{const b=e.target.closest("button");if(b&&b.dataset.m!==MODE)setMode(b.dataset.m)};
 function tick(){if(!D)return;const age=Date.now()/1000-(D.generated_ts||0);
  $("dot").className="dot"+(age>600?" bad":(age>180||(D.health||{}).status!=="ok")?" warn":"");
@@ -439,7 +439,7 @@ let rz;addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(()=>{MODE==
 setMode(MODE);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)load()});
 load();setInterval(load,30000);setInterval(tick,1000);
-if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js?v=3").catch(()=>{});
+if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js?v=4").catch(()=>{});
 </script>
 </body>
 </html>
