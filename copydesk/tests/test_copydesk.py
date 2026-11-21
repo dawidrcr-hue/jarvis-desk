@@ -11,6 +11,7 @@ SOL589 = "3SW1va94ZdQGyRVW7hUFj9Mt3BX3KvqCPo42zZDSApFC"
 NAWY = "nAWy4pMBkTsVhK6JWGvVm5VKsyxns3sFz4iYGi38qNc"
 FRANK = "498g1rVnFcnjBjpfw1xyqA1WvgQXUU8RWuELjxkjAayQ"
 PURPLE = "4B84JPcX9D7VX2jmq9nMvGoSmL3GVaxUYCqnuo2ZiTVp"
+PEEPO = "3NqcHvfaPnuz5bPuzAPYUWNsGfcwar7e7xuiW7n4GSBB"
 REALW = "Gyt2TBaQTGskoZ2PfUNcVTC3brSRvmgTQEexvgZ4MP34"
 TOK = "TokMint1111111111111111111111111111111111111"
 
@@ -204,7 +205,7 @@ class TDesk(unittest.TestCase):
         s = json.dumps(data)
         for bad in ("secret", "private", "token\":", "seed"): self.assertNotIn(bad, s.lower())
         self.assertEqual(data["badge"], "PAPIER – bez prawdziwych pieniędzy")
-        self.assertEqual(len(data["wallets"]), 5); self.assertEqual(data["positions"][0]["label"], "@SOL589")
+        self.assertEqual(len(data["wallets"]), 6); self.assertEqual(data["positions"][0]["label"], "@SOL589")
         self.assertIn("solscan.io/account/", data["wallets"][0]["solscan"])
 
 class TBigEntries(unittest.TestCase):
@@ -330,11 +331,13 @@ class TQueueRpc(unittest.TestCase):
 class TConfig(unittest.TestCase):
     def test_config(self):
         a = {w["address"]: w["alloc_pct"] for w in CFG["wallets"]}
-        self.assertEqual(a, {UNI: 0.25, NAWY: 0.10, SOL589: 0.10, FRANK: 0.10, PURPLE: 0.15})
+        self.assertEqual(a, {UNI: 0.25, NAWY: 0.10, SOL589: 0.10, FRANK: 0.10, PURPLE: 0.15, PEEPO: 0.10})
         fr = next(w for w in CFG["wallets"] if w["address"] == FRANK)
         self.assertGreater(fr["min_buy_usd"], 0); self.assertEqual(fr["filter_label"], "tylko duże wejścia")
+        pe = next(w for w in CFG["wallets"] if w["address"] == PEEPO)
+        self.assertEqual(pe["min_buy_usd"], 30); self.assertEqual(pe["filter_label"], "tylko duże wejścia")
         for w in CFG["wallets"]:
-            if w["address"] != FRANK: self.assertFalse(w.get("min_buy_usd"))
+            if w["address"] not in (FRANK, PEEPO): self.assertFalse(w.get("min_buy_usd"))
         self.assertEqual(CFG["real_wallet"]["address"], REALW)
         self.assertEqual(CFG["start_equity_usd"], 25.0); self.assertEqual(CFG["max_token_pct_of_equity"], 0.40)
         self.assertEqual(CFG["costs"]["phantom_fee_pct"], 0.0085); self.assertEqual(CFG["min_position_usd"], 0.5)
